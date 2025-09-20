@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
     <title>Commands anzeigen - Command Vault</title>
-    
+
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles.css">
@@ -44,6 +46,10 @@
             </div>
         </div>
     </nav>
+    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none"
+        role="alert">
+        <span class="text-center" id="errorText"></span>
+    </div>
 
     <!-- Header -->
     <div class="bg-secondary text-white py-4 mt-5">
@@ -68,12 +74,13 @@
     <div class="bg-dark border-bottom border-secondary py-3">
         <div class="container">
             <div class="row g-3 align-items-center">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-text bg-secondary border-secondary text-light">
                             <i class="bi bi-search"></i>
                         </span>
-                        <input type="text" class="form-control bg-dark border-secondary text-light" placeholder="Commands durchsuchen..." id="searchInput">
+                        <input type="text" class="form-control bg-dark border-secondary text-light"
+                            placeholder="Commands durchsuchen..." id="searchInput">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -93,203 +100,21 @@
                         <option value="Database">Database</option>
                         <option value="Framework">Framework</option>
                     </select>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <!-- Commands List -->
     <div class="py-4">
         <div class="container">
-            <!-- Beispiel Commands -->
-            <div class="row g-4">
-                <!-- Command 1 -->
-                <div class="col-lg-6">
-                    <div class="card bg-secondary border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-primary me-2">JavaScript</span>
-                                <span class="badge bg-dark">Git</span>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Bearbeiten</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-copy me-2"></i>Kopieren</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Löschen</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body text-light">
-                            <h5 class="card-title mb-3 text-light">
-                                <i class="bi bi-terminal me-2 text-primary"></i>Git Branch erstellen und wechseln
-                            </h5>
-                            <div class="mb-3">
-                                <label class="form-label text-muted mb-1">Command:</label>
-                                <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
-                                    <code>git checkout -b feature/new-feature-name</code>
-                                    <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-2">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="card-text text-light">
-                                Erstellt einen neuen Branch und wechselt automatisch zu diesem. Sehr nützlich für Feature-Entwicklung mit Git Flow.
-                            </p>
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Hinzugefügt am 15. Dezember 2024
-                            </small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Command 2 -->
-                <div class="col-lg-6">
-                    <div class="card bg-secondary border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-warning text-dark me-2">Python</span>
-                                <span class="badge bg-dark">Framework</span>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Bearbeiten</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-copy me-2"></i>Kopieren</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Löschen</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body text-light">
-                            <h5 class="card-title mb-3 text-light">
-                                <i class="bi bi-terminal me-2 text-primary"></i>Virtual Environment aktivieren
-                            </h5>
-                            <div class="mb-3">
-                                <label class="form-label text-muted mb-1">Command:</label>
-                                <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
-                                    <code>source venv/bin/activate</code>
-                                    <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-2">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="card-text text-light">
-                                Aktiviert eine Python Virtual Environment unter Linux/Mac. Für Windows verwende: venv\Scripts\activate
-                            </p>
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Hinzugefügt am 14. Dezember 2024
-                            </small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Command 3 -->
-                <div class="col-lg-6">
-                    <div class="card bg-secondary border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-info me-2">Docker</span>
-                                <span class="badge bg-dark">Deployment</span>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Bearbeiten</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-copy me-2"></i>Kopieren</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Löschen</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body text-light">
-                            <h5 class="card-title mb-3 text-light">
-                                <i class="bi bi-terminal me-2 text-primary"></i>Docker Container starten
-                            </h5>
-                            <div class="mb-3">
-                                <label class="form-label text-muted mb-1">Command:</label>
-                                <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
-                                    <code>docker run -d -p 8080:80 nginx:latest</code>
-                                    <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-2">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="card-text text-light">
-                                Startet einen Nginx Container im Hintergrund und mappt Port 8080 auf Container Port 80.
-                            </p>
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Hinzugefügt am 13. Dezember 2024
-                            </small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Command 4 -->
-                <div class="col-lg-6">
-                    <div class="card bg-secondary border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-danger me-2">SQL</span>
-                                <span class="badge bg-dark">Database</span>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Bearbeiten</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-copy me-2"></i>Kopieren</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Löschen</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body text-light">
-                            <h5 class="card-title mb-3 text-light">
-                                <i class="bi bi-terminal me-2 text-primary"></i>Tabelle mit Index erstellen
-                            </h5>
-                            <div class="mb-3">
-                                <label class="form-label text-muted mb-1">Command:</label>
-                                <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
-                                    <code>CREATE INDEX idx_user_email ON users(email);</code>
-                                    <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-2">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="card-text text-light">
-                                Erstellt einen Index auf die email-Spalte der users-Tabelle für bessere Abfrage-Performance.
-                            </p>
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Hinzugefügt am 12. Dezember 2024
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Empty State (wenn keine Commands vorhanden) -->
-            <div class="text-center py-5 d-none" id="empty-state">
-                <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
-                <h4 class="text-muted mt-3">Keine Commands gefunden</h4>
-                <p class="text-muted">Füge deinen ersten Command hinzu, um loszulegen!</p>
-                <a href="add-command.html" class="btn btn-primary">
-                    <i class="bi bi-plus-circle me-2"></i>Command hinzufügen
-                </a>
+            <div id="commandsContainer" class="row g-4">
+                <!-- Commands werden hier dynamisch eingefügt -->
             </div>
         </div>
     </div>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="renderer.js"></script>
+    <script type="module" src="view-commands.js"></script>
 </body>
 
 </html>

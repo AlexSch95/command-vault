@@ -1,5 +1,7 @@
+import { showFeedback } from "./shared.js";
+
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     document.getElementById('add-command-btn').addEventListener('click', async (event) => {
         event.preventDefault();
 
@@ -12,10 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const result = await window.electronAPI.dbQuery('INSERT INTO commands (tech, titel, command, beschreibung, source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
             console.log('Datenbank Ergebnis:', result)
-            alert('Command erfolgreich hinzugefügt!');
+            showFeedback({ success: true, message: 'Command erfolgreich hinzugefügt!' });
             document.getElementById('add-command-form').reset();
         } catch (error) {
             console.error('Datenbank Fehler:', error);
+            showFeedback({ success: false, message: 'Fehler beim Hinzufügen des Commands.' });
         }
     });
     
