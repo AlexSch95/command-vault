@@ -1,8 +1,122 @@
+/* Deep Navy Theme - Option 3 */
+:root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-accent: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --accent-color: #0ea5e9;
+}
+
+/* Override Bootstrap dark theme */
+body.bg-dark {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+.text-shadow-outline {
+    text-shadow: 
+        -1px -1px 0 rgba(0, 0, 0, 0.8),
+        1px -1px 0 rgba(0, 0, 0, 0.8),
+        -1px 1px 0 rgba(0, 0, 0, 0.8),
+        1px 1px 0 rgba(0, 0, 0, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Cards */
+.card.bg-secondary {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--bg-accent) !important;
+}
+
+.card-header.bg-dark {
+    background-color: var(--bg-accent) !important;
+}
+
+/* Navigation */
+.navbar.bg-dark {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Hero Section */
+.bg-secondary {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Form Elements */
+.form-control.bg-dark {
+    background-color: var(--bg-accent) !important;
+    border-color: var(--text-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-select.bg-dark {
+    background-color: var(--bg-accent) !important;
+    border-color: var(--text-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-control.bg-dark:focus, .form-select.bg-dark:focus {
+    background-color: var(--bg-accent) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25) !important;
+}
+
+/* Placeholder Text Styling */
+.form-control.bg-dark::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.8 !important;
+}
+
+.form-control.bg-dark:focus::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.6 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #0284c7 !important;
+    border-color: #0284c7 !important;
+}
+
+/* Text colors */
+.text-light {
+    color: var(--text-primary) !important;
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+/* Badges */
+.badge.bg-primary {
+    background-color: var(--accent-color) !important;
+}
+
+/* Dropdowns */
+.dropdown-menu-dark {
+    background-color: var(--bg-accent) !important;
+    border-color: var(--text-secondary) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-secondary) !important;
+}
+
+
+/* Error Box */
 .errorbox {
     z-index: 9999;
     min-width: 300px;
 }
 
+/* Icons should not capture clicks */
 .btn i {
     pointer-events: none;
 }

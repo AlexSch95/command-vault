@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('add-technology-btn').addEventListener('click', async (event) => {
         event.preventDefault();
-
         const tech = document.getElementById('tech');
         const color = document.getElementById('color');
         if (newTechMode === true) {

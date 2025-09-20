@@ -2,10 +2,14 @@ import { showFeedback } from "./shared.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    let commands = [];
+    let commandsArray = [];
     const commandsContainer = document.getElementById('commandsContainer');
 
     loadCommands();
+    technologyFilter();
+
+    document.getElementById('technologyFilter').addEventListener('change', applyFilter);
+    document.getElementById('searchInput').addEventListener('input', applyFilter);
 
     async function loadCommands() {
         try {
@@ -18,20 +22,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     c.source,
                     c.created_at,
                     t.tech_name as tech,
-                    t.color as tech_color
+                    t.color as tech_color,
+                    t.tech_id as tech_id
                 FROM commands c
                 JOIN technologies t ON c.tech_id = t.tech_id
                 ORDER BY c.created_at DESC
             `, []);
-            commands = rows;
-            renderCommands();
+            commandsArray = rows;
+            renderCommands(commandsArray);
         } catch (error) {
             console.error('Datenbank Fehler:', error);
             showFeedback({ success: false, message: 'Fehler beim Laden der Commands.' });
         }
     }
 
-    function renderCommands() {
+    async function technologyFilter() {
+        try {
+            const technologies = await loadTechnologies();
+            console.log(technologies);
+            const technologyFilter = document.getElementById('technologyFilter');
+            technologies.forEach(tech => {
+                const option = document.createElement('option');
+                option.value = tech.tech_id;
+                option.textContent = tech.tech_name;
+                technologyFilter.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Datenbank Fehler:', error);
+            showFeedback({ success: false, message: 'Fehler beim Laden der Technologien.' });
+        }
+    }
+
+    function renderCommands(commands) {
         commandsContainer.innerHTML = '';
         commands.forEach(cmd => {
             const commandCard = document.createElement('div');
@@ -41,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card bg-secondary border-secondary h-100">
                         <div class="card-header bg-dark d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
-                                <span class="badge" style="background-color: ${cmd.tech_color};">${cmd.tech}</span>
+                                <span class="badge" style="background-color: ${cmd.tech_color};"><span class="text-shadow-outline fs-5">${cmd.tech}</span></span>
                             </div>
                             <div class="dropdown">
                                 <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
@@ -78,6 +100,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Filter- und Suchfunktion
+    function applyFilter() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const selectedTechId = document.getElementById('technologyFilter').value;
+        console.log(selectedTechId);
+        
+        let filteredCommands = commandsArray;
+        console.log("vor filter", filteredCommands);
+        
+        // Nach Technologie filtern
+        if (selectedTechId) {
+            filteredCommands = filteredCommands.filter(cmd => 
+                cmd.tech_id == selectedTechId || cmd.tech_id === parseInt(selectedTechId)
+            );
+        }
+        
+        // Nach Suchbegriff filtern (Titel, Command, Beschreibung, Technologie)
+        if (searchTerm) {
+            filteredCommands = filteredCommands.filter(cmd => 
+                cmd.titel.toLowerCase().includes(searchTerm) ||
+                cmd.command.toLowerCase().includes(searchTerm) ||
+                (cmd.beschreibung && cmd.beschreibung.toLowerCase().includes(searchTerm)) ||
+                cmd.tech.toLowerCase().includes(searchTerm)
+            );
+        }
+        console.log("nach filter", filteredCommands);
+        renderCommands(filteredCommands);
+        
+        // Zeige Ergebnis-Info
+        const resultCount = filteredCommands.length;
+        const totalCount = commandsArray.length;
+        console.log(`Gefilterte Commands: ${resultCount} von ${totalCount}`);
+    }
+
     commandsContainer.addEventListener('click', (event) => {
         const target = event.target;
         if (target.classList.contains('delete-command-btn')) {
@@ -102,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function editCommand(commandId) {
-        const cmd = commands.find(c => c.command_id == commandId);
+        const cmd = commandsArray.find(c => c.command_id == commandId);
         const editedCommand = document.getElementById(commandId);
         const technologies = await loadTechnologies();
         
