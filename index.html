@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
+    <title>Command-Vault by Machinezr</title>
+    
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-terminal me-2"></i>
+                <span class="fw-bold">Command Vault</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="bi bi-house me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-command.html">
+                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view-commands.html">
+                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-secondary text-white py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-3">Command Vault</h1>
+                    <p class="lead mb-4">Verwalte deine wichtigsten Programmierbefehle an einem Ort. Speichere, organisiere und finde schnell die Commands, die du brauchst.</p>
+                    <div class="d-flex gap-3">
+                        <a href="add-command.html" class="btn btn-light btn-lg">
+                            <i class="bi bi-plus-circle me-2"></i>Neuen Command hinzufügen
+                        </a>
+                        <a href="view-commands.html" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-search me-2"></i>Commands durchsuchen
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <i class="bi bi-terminal" style="font-size: 10rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 bg-secondary border-secondary">
+                        <div class="card-body text-center text-light">
+                            <i class="bi bi-code-square text-primary mb-3" style="font-size: 3rem;"></i>
+                            <h5 class="card-title">Multi-Language Support</h5>
+                            <p class="card-text">Unterstützt Commands für alle Programmiersprachen - von Python bis JavaScript, von Bash bis PowerShell.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 bg-secondary border-secondary">
+                        <div class="card-body text-center text-light">
+                            <i class="bi bi-search text-primary mb-3" style="font-size: 3rem;"></i>
+                            <h5 class="card-title">Schnelle Suche</h5>
+                            <p class="card-text">Finde deine gespeicherten Commands schnell und einfach durch intelligente Suchfunktionen.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 bg-secondary border-secondary">
+                        <div class="card-body text-center text-light">
+                            <i class="bi bi-shield-check text-primary mb-3" style="font-size: 3rem;"></i>
+                            <h5 class="card-title">Lokale Speicherung</h5>
+                            <p class="card-text">Alle deine Commands werden sicher lokal in einer SQLite-Datenbank gespeichert.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
