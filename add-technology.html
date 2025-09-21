@@ -7,7 +7,7 @@
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
-    <title>Command hinzufügen - Command Vault</title>
+    <title>Technologien verwalten - Command Vault</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
@@ -34,20 +34,22 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
+                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-gear"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item" href="add-technology.html"><i class="bi bi-palette me-2"></i>Technologien verwalten</a></li>
+                            <li><a class="dropdown-item" href="add-technology.html"><i
+                                        class="bi bi-palette me-2"></i>Technologien verwalten</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -55,7 +57,8 @@
         </div>
     </nav>
     <!-- Ersetze dein aktuelles errorMessage div mit: -->
-    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none" role="alert">
+    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none mt-5"
+        role="alert">
         <span class="text-center" id="errorText"></span>
     </div>
 
@@ -65,9 +68,9 @@
             <div class="row align-items-center">
                 <div class="col">
                     <h1 class="h3 mb-0">
-                        <i class="bi bi-plus-circle me-2"></i>Neuen Command hinzufügen
+                        <i class="bi bi-plus-circle me-2"></i>Neu Technologie hinzufügen
                     </h1>
-                    <p class="mb-0 mt-2">Speichere einen neuen Programmierbefehl in deiner Command-Bibliothek</p>
+                    <p class="mb-0 mt-2">Speichere eine neue Technologie in deiner Command-Bibliothek oder bearbeite eine bestehende.</p>
                 </div>
             </div>
         </div>
@@ -78,7 +81,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="card bg-secondary border-secondary">
+                    <div class="card bg-secondary border-secondary p-3 rounded-5">
                         <div class="card-body">
                             <form id="add-technology-form">
                                 <div class="row g-3">
@@ -90,17 +93,18 @@
 
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Color Picker hinzufügen -->
                                     <div class="col-md-4">
                                         <label for="color" class="form-label fw-semibold text-light">
                                             <i class="bi bi-palette me-1"></i>Farbe
                                         </label>
-                                        <input type="color" class="form-control form-control-lg bg-dark border-secondary" 
-                                            id="color" value="#007bff" title="Wähle eine Farbe für die Technologie">
+                                        <input type="color"
+                                            class="form-control form-control-lg bg-dark border-secondary" id="color"
+                                            value="#007bff" title="Wähle eine Farbe für die Technologie">
                                     </div>
                                 </div>
-                                
+
                                 <!-- Optional: Hex-Wert anzeigen -->
                                 <div class="row g-3 mt-2">
                                     <div class="col-md-12">
@@ -109,12 +113,15 @@
                                         </small>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mt-4 d-flex gap-3">
                                     <button type="submit" id="add-technology-btn" class="btn btn-primary btn-lg">
                                         <i class="bi bi-save me-2"></i>Technologie abspeichern
                                     </button>
-                                    <button type="reset" id="reset-btn" class="btn btn-danger btn-lg">
+                                    <button id="delete-technology-btn" class="btn btn-danger btn-lg" disabled>
+                                        <i class="bi bi-trash me-2"></i>Technologie löschen
+                                    </button>
+                                    <button type="reset" id="reset-btn" class="btn btn-outline-secondary btn-lg">
                                         <i class="bi bi-arrow-clockwise me-2"></i>Zurücksetzen
                                     </button>
                                 </div>

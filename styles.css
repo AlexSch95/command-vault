@@ -120,3 +120,7 @@ body.bg-dark {
 .btn i {
     pointer-events: none;
 }
+
+a i {
+    pointer-events: none;
+}

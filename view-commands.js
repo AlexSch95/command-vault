@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCommands(commands) {
         commandsContainer.innerHTML = '';
+        if (commands.length === 0) {
+            commandsContainer.innerHTML = '<h2 class="text-center text-muted mt-5">Hier ist noch nichts... Füge einen neuen Command hinzu!</h2>';
+            return;
+        }
         commands.forEach(cmd => {
             const commandCard = document.createElement('div');
             commandCard.classList.add('col-lg-6');
@@ -70,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>Zur Quelle</a></li>
                                     <li><a class="dropdown-item edit-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-pencil me-2"></i>Bearbeiten</a></li>
                                     <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-trash me-2"></i>Löschen</a></li>
                                 </ul>
@@ -83,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <label class="form-label text-muted mb-1">Command:</label>
                                 <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
                                     <code>${cmd.command}</code>
-                                    <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-2">
+                                    <button class="btn btn-outline-light copy-cmd-btn btn-sm position-absolute top-0 end-0 m-2" data-command='${cmd.command}'>
                                         <i class="bi bi-copy"></i>
                                     </button>
                                 </div>
@@ -142,8 +147,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (target.classList.contains('edit-command-btn')) {
             const commandId = target.getAttribute('data-id');
             editCommand(commandId);
+        } else if (target.classList.contains('view-source-btn')) {
+            const linkToSource = target.getAttribute('data-linktosource');
+            window.open(linkToSource, '_blank');
+        } else if (target.classList.contains('copy-cmd-btn')) {
+            const command = target.getAttribute('data-command');
+            copyToClipboard(command);
         }
     });
+
+    async function copyToClipboard(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        showFeedback({ success: true, message: 'Command in Zwischenablage kopiert!' });
+    } catch (error) {
+        console.error('Fehler beim Kopieren:', error);
+        showFeedback({ success: false, message: 'Fehler beim Kopieren in Zwischenablage.' });
+    }
+}
 
 
     async function deleteCommand(commandId) {

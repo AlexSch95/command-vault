@@ -32,12 +32,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
+                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -54,24 +54,25 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="bg-secondary text-white py-5" style="margin-top: 76px; min-height: 60vh;">
-        <div class="container h-100">
-            <div class="row align-items-center h-100">
-                <div class="col-lg-6">
-                    <h1 class="display-3 fw-bold mb-4">Command Vault</h1>
-                    <p class="lead mb-5 fs-4">Verwalte deine wichtigsten Programmierbefehle an einem Ort. Speichere, organisiere und finde schnell die Commands, die du brauchst.</p>
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a href="add-command.html" class="btn btn-light btn-lg px-4 py-3">
-                            <i class="bi bi-plus-circle me-2"></i>Neuen Command hinzufügen
-                        </a>
-                        <a href="view-commands.html" class="btn btn-outline-light btn-lg px-4 py-3">
-                            <i class="bi bi-search me-2"></i>Commands durchsuchen
-                        </a>
+    <div class="py-5 mt-5">
+        <div class="container">
+            <div class="bg-secondary text-white p-5 rounded-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <p class="lead mb-5 fs-4">Verwalte deine wichtigsten Befehle an einem Ort. Speichere, organisiere und finde schnell die Befehle, die du brauchst. Vergessen war gestern.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="add-command.html" class="btn btn-light btn-lg px-4 py-3">
+                                <i class="bi bi-plus-circle me-2"></i>Neuen Befehl hinzufügen
+                            </a>
+                            <a href="view-commands.html" class="btn btn-outline-light btn-lg px-4 py-3">
+                                <i class="bi bi-search me-2"></i>Befehle durchsuchen
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="text-center">
-                        <i class="bi bi-terminal" style="font-size: 12rem; opacity: 0.4;"></i>
+                    <div class="col-lg-6">
+                        <div class="text-center">
+                            <i class="bi bi-terminal" style="font-size: 12rem; opacity: 0.4;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,33 +80,33 @@
     </div>
 
     <!-- Features Section -->
-    <div class="py-5" style="min-height: 40vh;">
-        <div class="container h-100">
-            <div class="row g-4 h-100 align-items-center">
-                <div class="col-md-4">
-                    <div class="card h-100 bg-secondary border-secondary shadow-lg">
-                        <div class="card-body text-center text-light p-4">
+    <div>
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-md-4 d-flex">
+                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                        <div class="card-body text-center text-light p-4 d-flex flex-column">
                             <i class="bi bi-code-square text-primary mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-4 mb-3">Multi-Language Support</h5>
-                            <p class="card-text fs-5">Unterstützt Commands für alle Programmiersprachen - von Python bis JavaScript, von Bash bis PowerShell.</p>
+                            <h5 class="card-title fs-5 mb-3">Personalisierung</h5>
+                            <p class="card-text flex-grow-1">Strukturiere deine Befehle nach Kategorien und Tags für eine bessere Übersicht die genau für DICH gemacht ist.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card h-100 bg-secondary border-secondary shadow-lg">
-                        <div class="card-body text-center text-light p-4">
+                <div class="col-md-4 d-flex">
+                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                        <div class="card-body text-center text-light p-4 d-flex flex-column">
                             <i class="bi bi-search text-primary mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-4 mb-3">Schnelle Suche</h5>
-                            <p class="card-text fs-5">Finde deine gespeicherten Commands schnell und einfach durch intelligente Suchfunktionen.</p>
+                            <h5 class="card-title fs-5 mb-3">Schnelle Suche</h5>
+                            <p class="card-text flex-grow-1">Finde deine gespeicherten Befehle schnell und einfach durch intelligente Such- und Filterfunktionen.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card h-100 bg-secondary border-secondary shadow-lg">
-                        <div class="card-body text-center text-light p-4">
+                <div class="col-md-4 d-flex">
+                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                        <div class="card-body text-center text-light p-4 d-flex flex-column">
                             <i class="bi bi-shield-check text-primary mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-4 mb-3">Lokale Speicherung</h5>
-                            <p class="card-text fs-5">Alle deine Commands werden sicher lokal in einer SQLite-Datenbank gespeichert.</p>
+                            <h5 class="card-title fs-5 mb-3">Lokale Speicherung</h5>
+                            <p class="card-text flex-grow-1">Alle deine Befehle werden sicher lokal in einer SQLite-Datenbank gespeichert. </p>
                         </div>
                     </div>
                 </div>

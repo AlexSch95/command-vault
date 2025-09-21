@@ -7,7 +7,7 @@
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
-    <title>Command hinzufügen - Command Vault</title>
+    <title>Befehl hinzufügen - Command Vault</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
@@ -34,12 +34,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
+                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -55,7 +55,7 @@
         </div>
     </nav>
     <!-- Ersetze dein aktuelles errorMessage div mit: -->
-    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none" role="alert">
+    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none mt-5" role="alert">
         <span class="text-center" id="errorText"></span>
     </div>
 
@@ -65,9 +65,9 @@
             <div class="row align-items-center">
                 <div class="col">
                     <h1 class="h3 mb-0">
-                        <i class="bi bi-plus-circle me-2"></i>Neuen Command hinzufügen
+                        <i class="bi bi-plus-circle me-2"></i>Neuen Befehl hinzufügen
                     </h1>
-                    <p class="mb-0 mt-2">Speichere einen neuen Programmierbefehl in deiner Command-Bibliothek</p>
+                    <p class="mb-0 mt-2">Speichere einen neuen Befehl in deinem Command-Vault</p>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="card bg-secondary border-secondary">
+                    <div class="card bg-secondary border-secondary p-3 rounded-5">
                         <div class="card-body">
                             <form id="add-command-form">
                                 <div class="row g-3">
@@ -98,12 +98,12 @@
                                     </label>
                                     <input type="text"
                                         class="form-control form-control-lg bg-dark border-secondary text-light"
-                                        id="title" required>
+                                        id="title" placeholder="Titel des Befehls" required>
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="command" class="form-label fw-semibold text-light">
-                                        <i class="bi bi-terminal me-1"></i>Command
+                                        <i class="bi bi-terminal me-1"></i>Befehl
                                     </label>
                                     <div class="position-relative">
                                         <textarea
