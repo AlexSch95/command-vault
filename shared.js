@@ -19,3 +19,20 @@ export function showFeedback(result) {
     errorBox.classList.remove("show", "alert-danger", "alert-success");
   }, 3000);
 }
+
+export async function loadGlobalTheme() {
+    try {
+        const savedTheme = await window.electronAPI.loadTheme();
+        
+        if (savedTheme) {
+            const root = document.documentElement;
+            root.style.setProperty('--bg-primary', savedTheme.bgPrimary);
+            root.style.setProperty('--bg-secondary', savedTheme.bgSecondary);
+            root.style.setProperty('--border-color', savedTheme.borderColor);
+            root.style.setProperty('--text-primary', savedTheme.textPrimary);
+            root.style.setProperty('--accent-color', savedTheme.accentColor);
+        }
+    } catch (error) {
+        console.error('Fehler beim Laden des globalen Themes:', error);
+    }
+}

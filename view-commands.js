@@ -1,10 +1,11 @@
-import { showFeedback } from "./shared.js";
+import { showFeedback, loadGlobalTheme } from "./shared.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     let commandsArray = [];
     const commandsContainer = document.getElementById('commandsContainer');
-
+    
+    loadGlobalTheme();
     loadCommands();
     technologyFilter();
 
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             commandCard.classList.add('col-lg-6');
             commandCard.id = `${cmd.command_id}`;
             commandCard.innerHTML = `
-                    <div class="card bg-secondary border-secondary h-100">
+                    <div class="card bg-secondary shadow border-secondary h-100">
                         <div class="card-header bg-dark d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <span class="badge" style="background-color: ${cmd.tech_color};"><span class="text-shadow-outline fs-5">${cmd.tech}</span></span>
@@ -190,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
         });
         
-        editedCommand.innerHTML = `<div class="card bg-secondary border-secondary h-100">
+        editedCommand.innerHTML = `<div class="card bg-secondary shadow border-secondary h-100">
                         <div class="card-header bg-dark d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <select class="form-select bg-dark border-secondary text-light" id="edit-tech-${cmd.command_id}">

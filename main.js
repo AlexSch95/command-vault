@@ -1,6 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
-const sqlite3 = require('sqlite3').verbose()
-const path = require('path')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+const fs = require('fs');
 
 let db;
 
@@ -25,6 +26,9 @@ const createWindow = () => {
 // Datenbank initialisieren
 app.whenReady().then(() => {
     db = new sqlite3.Database('database.db')
+
+    // Foreign Keys aktivieren (wichtig für CASCADE DELETE)
+    db.run('PRAGMA foreign_keys = ON;')
 
     // Tabelle erstellen falls sie nicht existiert
     db.run(`CREATE TABLE IF NOT EXISTS technologies (
@@ -65,6 +69,31 @@ app.whenReady().then(() => {
             }
         })
     })
+
+    ipcMain.handle('load-theme', async () => {
+        try {
+            const themePath = path.join(__dirname, 'user-theme.json');
+            if (fs.existsSync(themePath)) {
+                const themeData = fs.readFileSync(themePath, 'utf8');
+                return JSON.parse(themeData);
+            }
+            return null; // Standard Theme verwenden
+        } catch (error) {
+            console.error('Fehler beim Laden des Themes:', error);
+            return null;
+        }
+    });
+
+    ipcMain.handle('save-theme', async (event, themeData) => {
+        try {
+            const themePath = path.join(__dirname, 'user-theme.json');
+            fs.writeFileSync(themePath, JSON.stringify(themeData, null, 2));
+            return { success: true, message: 'Theme erfolgreich gespeichert!' };
+        } catch (error) {
+            console.error('Fehler beim Speichern des Themes:', error);
+            return { success: false, message: 'Fehler beim Speichern des Themes.' };
+        }
+    });
 
     createWindow()
 })

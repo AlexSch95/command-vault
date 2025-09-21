@@ -2,9 +2,8 @@
 :root {
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
-    --bg-accent: #334155;
+    --border-color: #334155;
     --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
     --accent-color: #0ea5e9;
 }
 
@@ -26,11 +25,11 @@ body.bg-dark {
 /* Cards */
 .card.bg-secondary {
     background-color: var(--bg-secondary) !important;
-    border-color: var(--bg-accent) !important;
+    border-color: var(--border-color) !important;
 }
 
 .card-header.bg-dark {
-    background-color: var(--bg-accent) !important;
+    background-color: var(--bg-secondary) !important;
 }
 
 /* Navigation */
@@ -45,44 +44,118 @@ body.bg-dark {
 
 /* Form Elements */
 .form-control.bg-dark {
-    background-color: var(--bg-accent) !important;
-    border-color: var(--text-secondary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
 }
 
 .form-select.bg-dark {
-    background-color: var(--bg-accent) !important;
-    border-color: var(--text-secondary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
 }
 
+.form-select.bg-dark option {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-select.bg-dark option:hover {
+    background-color: var(--border-color) !important;
+    background: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-select.bg-dark option:focus {
+    background-color: var(--border-color) !important;
+    background: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-select.bg-dark option:checked {
+    background-color: var(--bg-secondary) !important;
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.text-danger {
+    color: #ff2727 !important; /* Helleres Rot für bessere Sichtbarkeit */
+}
+
+.form-select.bg-dark option:selected {
+    background-color: var(--accent-color) !important;
+    background: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Webkit spezifisch */
+.form-select.bg-dark option:hover {
+    background-color: var(--border-color) !important;
+    background: var(--border-color) !important;
+}
+
+/* Firefox spezifisch */
+@-moz-document url-prefix() {
+    .form-select.bg-dark option:hover {
+        background-color: var(--border-color) !important;
+        background: var(--border-color) !important;
+    }
+    .form-select.bg-dark option:focus {
+        background-color: var(--border-color) !important;
+        background: var(--border-color) !important;
+    }
+}
+
+.form-select.bg-dark:hover {
+    background-color: var(--bg-secondary) !important;
+    filter: brightness(1.2) !important;
+}
+
 .form-control.bg-dark:focus, .form-select.bg-dark:focus {
-    background-color: var(--bg-accent) !important;
-    border-color: var(--accent-color) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
     box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25) !important;
 }
 
 /* Placeholder Text Styling */
 .form-control.bg-dark::placeholder {
-    color: var(--text-secondary) !important;
-    opacity: 0.8 !important;
+    color: var(--text-primary) !important;
+    opacity: 0.7 !important;
 }
 
 .form-control.bg-dark:focus::placeholder {
-    color: var(--text-secondary) !important;
-    opacity: 0.6 !important;
+    color: var(--text-primary) !important;
+    opacity: 0.4 !important;
 }
 
 /* Buttons */
 .btn-primary {
+    color: var(--text-primary) !important;
     background-color: var(--accent-color) !important;
     border-color: var(--accent-color) !important;
 }
 
+.btn-outline-primary {
+    color: var(--text-primary) !important;
+    background-color: #ffffff00;
+    border-color: var(--accent-color) !important;
+}
+
+.text-accent {
+    color: var(--accent-color) !important;
+}
+
+.text-primary {
+    color: var(--text-primary) !important;
+}
+
 .btn-primary:hover {
-    background-color: #0284c7 !important;
-    border-color: #0284c7 !important;
+    filter: brightness(1.2) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--accent-color) !important;
 }
 
 /* Text colors */
@@ -91,7 +164,8 @@ body.bg-dark {
 }
 
 .text-muted {
-    color: var(--text-secondary) !important;
+    color: var(--text-primary) !important;
+    opacity: 0.7 !important;
 }
 
 /* Badges */
@@ -101,12 +175,24 @@ body.bg-dark {
 
 /* Dropdowns */
 .dropdown-menu-dark {
-    background-color: var(--bg-accent) !important;
-    border-color: var(--text-secondary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
 }
 
-.dropdown-item:hover {
-    background-color: var(--bg-secondary) !important;
+.dropdown-item {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Zusätzlich für aktive/selected Items: */
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
 }
 
 

@@ -1,7 +1,7 @@
-import { showFeedback } from "./shared.js";
+import { showFeedback, loadGlobalTheme } from "./shared.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    loadGlobalTheme();
     loadTechnologies();
 
     document.getElementById('add-command-btn').addEventListener('click', async (event) => {

@@ -2,7 +2,11 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
+                               <a class="nav-link active text-primary" href="view-commands.html">
+                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
+                        </a>              <a class="nav-link text-primary" href="add-command.html">
+                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
+                        </a> <meta charset="UTF-8" />
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy"
@@ -14,13 +18,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-dark text-light">
+<body class="bg-dark text-primary">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <i class="bi bi-terminal me-2"></i>
-                <span class="fw-bold">Command Vault</span>
+                <span class="fw-bold text-primary">Command Vault</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -28,26 +32,27 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link text-primary" href="index.html">
                             <i class="bi bi-house me-1"></i>Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="add-command.html">
+                        <a class="nav-link text-primary" href="add-command.html">
                             <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="view-commands.html">
+                        <a class="nav-link text-primary active" href="view-commands.html">
                             <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-gear"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                             <li><a class="dropdown-item" href="add-technology.html"><i class="bi bi-palette me-2"></i>Technologien verwalten</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear-fill me-2"></i>Einstellungen</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -60,7 +65,7 @@
     </div>
 
     <!-- Header -->
-    <div class="bg-secondary text-white py-4 mt-5">
+    <div class="bg-secondary text-primary py-4">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col">
@@ -84,15 +89,15 @@
             <div class="row g-3 align-items-center">
                 <div class="col-md-9">
                     <div class="input-group">
-                        <span class="input-group-text bg-secondary border-secondary text-light">
+                        <span class="input-group-text bg-secondary border-secondary text-primary">
                             <i class="bi bi-search"></i>
                         </span>
-                        <input type="text" class="form-control bg-dark border-secondary text-light"
+                        <input type="text" class="form-control bg-dark border-secondary text-primary"
                             placeholder="Commands durchsuchen..." id="searchInput">
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select bg-dark border-secondary text-light" id="technologyFilter">
+                    <select class="form-select bg-dark border-secondary text-primary" id="technologyFilter">
                         <option value="">Alle Technologien</option>
                     </select>
                 </div>

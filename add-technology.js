@@ -1,8 +1,9 @@
-import { showFeedback } from "./shared.js";
+import { showFeedback, loadGlobalTheme } from "./shared.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-
     let newTechMode = false;
+    
+    loadGlobalTheme();
     loadTechnologies();
 
     document.getElementById('add-technology-btn').addEventListener('click', async (event) => {
