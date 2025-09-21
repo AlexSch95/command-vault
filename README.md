@@ -13,7 +13,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Technologie-Management**: Organisiere Befehle nach Technologien (Git, Linux, Docker, etc.)
 - **Intelligente Suche**: Finde Befehle schnell über Titel, Command oder Technologie
 - **One-Click Copy**: Kopiere Commands direkt in die Zwischenablage
-- **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert
+- **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert 
 
 ### 🎨 **Theme & Personalisierung**
 - **Light/Dark Mode**: Vordefinierte Theme-Modi
