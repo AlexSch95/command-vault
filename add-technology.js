@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // "Neu" Button erstellen
             const newButton = document.createElement('button');
             newButton.type = 'button';
-            newButton.textContent = '+';
+            newButton.textContent = 'Neue Technologie';
             newButton.id = 'new-tech-btn';
-            newButton.className = 'btn btn-outline-light btn-sm';
+            newButton.className = 'btn btn-primary btn-sm';
             
             // Flex Container befüllen
             flexContainer.appendChild(techSelect);
