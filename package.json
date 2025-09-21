@@ -23,7 +23,7 @@
     "sqlite3": "^5.1.7"
   },
   "build": {
-    "appId": "com.yourname.command-vault",
+    "appId": "com.AlexSch95.command-vault",
     "productName": "Command Vault",
     "directories": {
       "output": "dist"

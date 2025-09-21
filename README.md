@@ -1,6 +1,17 @@
 # Command Vault
 
-Eine moderne Electron-App zur Verwaltung und Organisation deiner wichtigsten Programmierbefehle.
+Eine moderne Electron-App zur Verwaltung und Organisation d### **Installation**
+```bash
+# Repository klonen
+git clone https://github.com/AlexSch95/command-vault.git
+cd command-vault
+
+# Dependencies installieren
+npm install
+
+# App starten
+npm start
+```gsten Programmierbefehle.
 
 ## 📖 Übersicht
 
@@ -79,14 +90,14 @@ CREATE TABLE commands (
 ### **Installation**
 ```bash
 # Repository klonen
-git clone https://github.com/username/command-vault.git
+git clone https://github.com/AlexSch95/command-vault.git
 cd command-vault
 
 # Dependencies installieren
 npm install
 
 # App starten
-npm start
+npm run start
 ```
 
 ### **Build für Production**
@@ -94,10 +105,11 @@ npm start
 # Electron App builden
 npm run build
 
-# Für verschiedene Plattformen
-npm run build:win    # Windows
-npm run build:mac    # macOS
-npm run build:linux  # Linux
+# Distribution erstellen (ohne Publishing)
+npm run dist
+
+# Nur für Windows
+npm run build-win
 ```
 
 ## 📂 Projektstruktur
