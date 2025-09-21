@@ -16,7 +16,7 @@
 
 <body class="bg-dark text-primary">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <i class="bi bi-terminal me-2"></i>
@@ -26,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="index.html">
                             <i class="bi bi-house me-1"></i>Home
@@ -42,23 +42,20 @@
                             <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-gear"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item" href="add-technology.html"><i class="bi bi-palette me-2"></i>Technologien verwalten</a></li>
-                            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear-fill me-2"></i>Einstellungen</a></li>
-                        </ul>
-                    </li>
                 </ul>
+                <div class="navbar-nav">
+                    <a class="nav-link text-primary active" href="settings.html" id="navbarDropdown">
+                        <i class="bi bi-gear"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Error Message -->
-    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none text-center" role="alert">
-        <span id="errorText"></span>
+    <div id="errorMessage" class="errorbox alert position-fixed top-25 text-center start-50 mt-5 translate-middle fade d-none"
+        role="alert">
+        <span class="text-center" id="errorText"></span>
     </div>
 
     <!-- Header -->
@@ -82,92 +79,154 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <!-- Farben Section -->
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
-                                    <i class="bi bi-palette me-2"></i>Farben
+                                    <i class="bi bi-palette me-2"></i>Techhnologien verwalten
                                 </h5>
-                                
-                                <!-- Theme Voreinstellungen -->
-                                <div class="mb-4">
-                                    <h6 class="text-primary mb-3">
-                                        <i class="bi bi-brightness-high me-2"></i>Theme Voreinstellungen
-                                    </h6>
-                                    <div class="d-flex gap-3 justify-content-center">
-                                        <button type="button" class="btn btn-primary px-4" id="light-mode-btn">
-                                            <i class="bi bi-sun me-2"></i>Light Mode
+                                <form id="add-technology-form">
+                                    <div class="row g-3">
+                                        <div class="col-md-8">
+                                            <label for="tech" class="form-label fw-semibold text-primary">
+                                                <i class="bi bi-gear me-1"></i>Technologie
+                                            </label>
+                                            <div id="tech-container">
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Color Picker hinzufügen -->
+                                        <div class="col-md-4">
+                                            <label for="color" class="form-label fw-semibold text-primary">
+                                                <i class="bi bi-palette me-1"></i>Farbe
+                                            </label>
+                                            <input type="color"
+                                                class="form-control form-control-lg bg-dark border-secondary" id="color"
+                                                value="#007bff" title="Wähle eine Farbe für die Technologie">
+                                        </div>
+                                    </div>
+
+                                    <!-- Optional: Hex-Wert anzeigen -->
+                                    <div class="row g-3 mt-2">
+                                        <div class="col-md-12">
+                                            <small class="text-primary">
+                                                Hex-Code: <span id="hex-display">#007bff</span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 d-flex gap-3">
+                                        <button type="submit" id="add-technology-btn" class="btn btn-primary btn-lg">
+                                            <i class="bi bi-save me-2"></i>Technologie abspeichern
                                         </button>
-                                        <button type="button" class="btn btn-primary px-4" id="dark-mode-btn">
-                                            <i class="bi bi-moon me-2"></i>Dark Mode
+                                        <button id="delete-technology-btn" class="btn btn-danger btn-lg" disabled>
+                                            <i class="bi bi-trash me-2"></i>Technologie löschen
+                                        </button>
+                                        <button type="reset" id="reset-btn" class="btn btn-outline-primary btn-lg">
+                                            <i class="bi bi-arrow-clockwise me-2"></i>Zurücksetzen
                                         </button>
                                     </div>
-                                </div>
-                                
-                                <hr class="my-4 text-primary opacity-25">
-                                
-                                <!-- Benutzerdefinierte Farben -->
-                                <div class="mb-3">
-                                    <h6 class="text-primary mb-3">
-                                        <i class="bi bi-sliders me-2"></i>Benutzerdefinierte Farben
-                                    </h6>
-                                </div>
-                                
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="bg-primary-color" class="form-label text-primary">
-                                            Hintergrundfarbe
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary" 
-                                                   id="bg-primary-color" value="#0f172a" title="Hintergrund Primär">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
+                            <div class="card-body">
+                                <!-- Farben Section -->
+                                <div class="mb-5">
+                                    <h5 class="text-primary mb-4">
+                                        <i class="bi bi-palette me-2"></i>Farben
+                                    </h5>
+
+                                    <!-- Theme Voreinstellungen -->
+                                    <div class="mb-4">
+                                        <h6 class="text-primary mb-3">
+                                            <i class="bi bi-brightness-high me-2"></i>Theme Voreinstellungen
+                                        </h6>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <button type="button" class="btn btn-primary px-4" id="light-mode-btn">
+                                                <i class="bi bi-sun me-2"></i>Light Mode
+                                            </button>
+                                            <button type="button" class="btn btn-primary px-4" id="dark-mode-btn">
+                                                <i class="bi bi-moon me-2"></i>Dark Mode
+                                            </button>
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-md-6">
-                                        <label for="bg-secondary-color" class="form-label text-primary">
-                                            Karten Hintergrund
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary" 
-                                                   id="bg-secondary-color" value="#1e293b" title="Hintergrund Sekundär">
+
+                                    <hr class="my-4 text-primary opacity-25">
+
+                                    <!-- Benutzerdefinierte Farben -->
+                                    <div class="mb-3">
+                                        <h6 class="text-primary mb-3">
+                                            <i class="bi bi-sliders me-2"></i>Benutzerdefinierte Farben
+                                        </h6>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="bg-primary-color" class="form-label text-primary">
+                                                Hintergrundfarbe
+                                            </label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control bg-dark border-secondary"
+                                                    id="bg-primary-color" value="#0f172a" title="Hintergrund Primär">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="bg-secondary-color" class="form-label text-primary">
+                                                Karten Hintergrund
+                                            </label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control bg-dark border-secondary"
+                                                    id="bg-secondary-color" value="#1e293b"
+                                                    title="Hintergrund Sekundär">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="border-color" class="form-label text-primary">
+                                                Rahmenfarbe
+                                            </label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control bg-dark border-secondary"
+                                                    id="border-color" value="#334155" title="Rahmenfarbe">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="text-primary-color" class="form-label text-primary">
+                                                Textfarbe
+                                            </label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control bg-dark border-secondary"
+                                                    id="text-primary-color" value="#f1f5f9" title="Text Primär">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="accent-color" class="form-label text-primary">
+                                                Akzentfarbe (Buttons etc.)
+                                            </label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control bg-dark border-secondary"
+                                                    id="accent-color" value="#0ea5e9" title="Akzentfarbe">
+                                            </div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-md-6">
-                                        <label for="border-color" class="form-label text-primary">
-                                            Rahmenfarbe
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary" 
-                                                   id="border-color" value="#334155" title="Rahmenfarbe">
-                                        </div>
+
+                                    <div class="text-center mt-4">
+                                        <button type="button" class="btn btn-primary btn-lg px-5" id="save-theme-btn">
+                                            <i class="bi bi-check-circle me-2"></i>Übernehmen
+                                        </button>
                                     </div>
-                                    
-                                    <div class="col-md-6">
-                                        <label for="text-primary-color" class="form-label text-primary">
-                                            Textfarbe
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary" 
-                                                   id="text-primary-color" value="#f1f5f9" title="Text Primär">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-6">
-                                        <label for="accent-color" class="form-label text-primary">
-                                            Akzentfarbe (Buttons etc.)
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary" 
-                                                   id="accent-color" value="#0ea5e9" title="Akzentfarbe">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="text-center mt-4">
-                                    <button type="button" class="btn btn-primary btn-lg px-5" id="save-theme-btn">
-                                        <i class="bi bi-check-circle me-2"></i>Übernehmen
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -175,10 +234,52 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="settings.js"></script>
+        <div class="pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
+                            <div class="card-body">
+                                <div class="mb-5">
+                                    <h5 class="text-primary mb-4">
+                                        <i class="bi bi-database me-2"></i>Datenbank verwalten
+                                    </h5>
+                                    
+                                    <!-- Warnung für Datenbank Reset -->
+                                    <div class="alert alert-warning bg-dark border-warning text-warning mb-4" role="alert">
+                                        <div class="d-flex align-items-start">
+                                            <i class="bi bi-exclamation-triangle-fill me-3 mt-1" style="font-size: 1.2rem;"></i>
+                                            <div>
+                                                <h6 class="alert-heading text-warning mb-2">
+                                                    <strong>Achtung: Gefährliche Aktion</strong>
+                                                </h6>
+                                                <p class="mb-2">
+                                                    Diese Funktion löscht <strong>alle</strong> gespeicherten Commands und Technologien unwiderruflich aus der Datenbank.
+                                                </p>
+                                                <p class="mb-0 small">
+                                                    <strong>Hinweis:</strong> Es wird empfohlen, vor der Bereinigung ein Backup der Daten zu erstellen.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Reset Button -->
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-danger btn-lg px-5" id="reset-database-btn">
+                                            <i class="bi bi-trash3 me-2"></i>Datenbank bereinigen
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="module" src="settings.js"></script>
 </body>
 
 </html>

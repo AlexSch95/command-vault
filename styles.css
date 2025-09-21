@@ -37,6 +37,39 @@ body.bg-dark {
     background-color: var(--bg-secondary) !important;
 }
 
+/* Active Navbar Item Indicator */
+.nav-link.active {
+    position: relative;
+}
+
+.bg-dangerous {
+    background-color: #780000 !important; /* Helleres Rot für bessere Sichtbarkeit */
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+    animation: activeNavSlide 0.3s ease-in-out;
+}
+
+@keyframes activeNavSlide {
+    from {
+        width: 0%;
+        opacity: 0;
+    }
+    to {
+        width: 60%;
+        opacity: 1;
+    }
+}
+
 /* Hero Section */
 .bg-secondary {
     background-color: var(--bg-secondary) !important;
