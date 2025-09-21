@@ -72,7 +72,7 @@ app.whenReady().then(() => {
 
     ipcMain.handle('load-theme', async () => {
         try {
-            const themePath = path.join(__dirname, 'user-theme.json');
+            const themePath = path.join(app.getPath('userData'), 'user-theme.json');
             if (fs.existsSync(themePath)) {
                 const themeData = fs.readFileSync(themePath, 'utf8');
                 return JSON.parse(themeData);
@@ -86,7 +86,7 @@ app.whenReady().then(() => {
 
     ipcMain.handle('save-theme', async (event, themeData) => {
         try {
-            const themePath = path.join(__dirname, 'user-theme.json');
+            const themePath = path.join(app.getPath('userData'), 'user-theme.json');
             fs.writeFileSync(themePath, JSON.stringify(themeData, null, 2));
             return { success: true, message: 'Theme erfolgreich gespeichert!' };
         } catch (error) {
