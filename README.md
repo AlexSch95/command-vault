@@ -13,7 +13,8 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Technologie-Management**: Organisiere Befehle nach Technologien (Git, Linux, Docker, etc.)
 - **Intelligente Suche**: Finde Befehle schnell über Titel, Command oder Technologie
 - **One-Click Copy**: Kopiere Commands direkt in die Zwischenablage
-- **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert 
+- **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert
+- **Update-Funktion**: Automatische Updates können über den Einstellungsbereich durchgeführt werden 
 
 ### 🎨 **Theme & Personalisierung**
 - **Light/Dark Mode**: Vordefinierte Theme-Modi
@@ -76,7 +77,7 @@ CREATE TABLE commands (
 - Node.js (Version 14 oder höher)
 - npm
 
-### **Installation**
+### **In der Entwicklungsumgebung**
 ```bash
 # Repository klonen
 git clone https://github.com/AlexSch95/command-vault.git
@@ -85,20 +86,8 @@ cd command-vault
 # Dependencies installieren
 npm install
 
-# App starten
+# App ohne Build starten
 npm run start
-```
-
-### **Build für Production**
-```bash
-# Electron App builden
-npm run build
-
-# Distribution erstellen (ohne Publishing)
-npm run dist
-
-# Nur für Windows
-npm run build-win
 ```
 
 ## 📂 Projektstruktur
