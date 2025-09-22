@@ -1,6 +1,6 @@
 {
   "name": "command-vault",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Eine moderne Electron-App zur Verwaltung von Programmierbefehlen",
   "main": "main.js",
   "scripts": {
