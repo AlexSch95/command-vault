@@ -36,7 +36,9 @@ const createWindow = () => {
 
 //desc: App initialisierung und DB und Tabellen erstellen wenn noch keine vorhanden
 app.whenReady().then(() => {
-    db = new sqlite3.Database('database.db')
+    //desc: Datenbank im User Data Directory öffnen damit bei autoupdate keine Probleme auftreten (db gelöscht)
+    const dbPath = path.join(app.getPath('userData'), 'database.db');
+    db = new sqlite3.Database(dbPath);
 
     //desc: Foreign Keys aktivieren (damit ON DELETE CASCADE funktioniert)
     db.run('PRAGMA foreign_keys = ON;')
@@ -62,13 +64,13 @@ app.whenReady().then(() => {
     ipcMain.handle('db-query', async (event, sql, params) => {
         return new Promise((resolve, reject) => {
             if (sql.trim().startsWith('SELECT')) {
-                // Für SELECT-Queries
+                //desc: Für SELECT-Queries
                 db.all(sql, params, (err, rows) => {
                     if (err) reject(err)
                     else resolve(rows)
                 })
             } else {
-                // Für INSERT, UPDATE, DELETE-Queries
+                //desc: Für INSERT, UPDATE, DELETE-Queries
                 db.run(sql, params, function (err) {
                     if (err) reject(err)
                     else resolve({
