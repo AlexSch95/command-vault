@@ -1,4 +1,4 @@
 node_modules
-*.db
+database.db
 dist/
 user-theme.json

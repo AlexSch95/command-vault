@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                             </div>
                             <p class="card-text text-light">
-                            <span>${cmd.beschreibung}</span>
+                            <div class="command-description">${cmd.beschreibung}</div>
                             </p>
                             <small class="text-muted">
                                 <i class="bi bi-clock me-1"></i>Hinzugefügt am ${new Date(cmd.created_at).toLocaleDateString()}
