@@ -42,12 +42,14 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "icon.ico",
-      "publisherName": "AlexSch95"
+      "icon": "icon.ico"
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Command Vault"
     },
     "publish": [
       {
