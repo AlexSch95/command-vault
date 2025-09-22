@@ -398,4 +398,64 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.remove();
         });
     }
+
+    // Update-Funktionalität
+    document.getElementById('check-updates-btn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('check-updates-btn');
+        const statusDiv = document.getElementById('update-status');
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i>Suche...';
+        
+        try {
+            await window.electronAPI.checkForUpdates();
+            showUpdateStatus('Suche nach Updates...', 'info');
+        } catch (error) {
+            showUpdateStatus('Fehler beim Suchen nach Updates', 'danger');
+        }
+        
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-search me-2"></i>Nach Updates suchen';
+        }, 3000);
+    });
+
+    // Update Event Listeners
+    window.electronAPI.onUpdateAvailable?.((event, info) => {
+        showUpdateStatus(`Update verfügbar: v${info.version}`, 'success');
+        document.getElementById('update-progress').classList.remove('d-none');
+    });
+
+    window.electronAPI.onDownloadProgress?.((event, progress) => {
+        const progressBar = document.querySelector('#update-progress .progress-bar');
+        progressBar.style.width = `${progress.percent}%`;
+        progressBar.textContent = `${Math.round(progress.percent)}%`;
+    });
+
+    window.electronAPI.onUpdateDownloaded?.((event, info) => {
+        const statusDiv = document.getElementById('update-status');
+        statusDiv.innerHTML = `
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle me-2"></i>
+                Update v${info.version} heruntergeladen! 
+                <button class="btn btn-sm btn-primary ms-2" onclick="restartForUpdate()">
+                    Neu starten und installieren
+                </button>
+            </div>
+        `;
+    });
+
+    function showUpdateStatus(message, type) {
+        const statusDiv = document.getElementById('update-status');
+        statusDiv.classList.remove('d-none');
+        statusDiv.innerHTML = `
+            <div class="alert alert-${type}">
+                <i class="bi bi-info-circle me-2"></i>${message}
+            </div>
+        `;
+    }
+
+    function restartForUpdate() {
+        window.electronAPI.restartApp();
+    }
 });

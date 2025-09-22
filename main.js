@@ -2,11 +2,13 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+const { autoUpdater } = require('electron-updater');
 
 let db;
+let mainWindow;
 
 const createWindow = () => {
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1600,
         height: 900,
         resizable: true,
@@ -20,7 +22,16 @@ const createWindow = () => {
         }
     })
 
-    win.loadFile('index.html')
+    mainWindow.loadFile('index.html')
+    
+    // In Production: Nach 3 Sekunden nach Updates suchen
+    if (!app.isPackaged) {
+        mainWindow.webContents.openDevTools();
+    } else {
+        setTimeout(() => {
+            autoUpdater.checkForUpdatesAndNotify();
+        }, 3000);
+    }
 }
 
 // Datenbank initialisieren
@@ -95,5 +106,53 @@ app.whenReady().then(() => {
         }
     });
 
+    // IPC Handlers für Updates
+    ipcMain.handle('restart-app', () => {
+        autoUpdater.quitAndInstall();
+    });
+
+    ipcMain.handle('check-for-updates', () => {
+        if (app.isPackaged) {
+            autoUpdater.checkForUpdatesAndNotify();
+        }
+    });
+
     createWindow()
 })
+
+// Auto-Updater Events
+autoUpdater.on('checking-for-update', () => {
+    console.log('Checking for update...');
+});
+
+autoUpdater.on('update-available', (info) => {
+    console.log('Update available.');
+    if (mainWindow) {
+        mainWindow.webContents.send('update-available', info);
+    }
+});
+
+autoUpdater.on('update-not-available', (info) => {
+    console.log('Update not available.');
+});
+
+autoUpdater.on('error', (err) => {
+    console.log('Error in auto-updater. ' + err);
+});
+
+autoUpdater.on('download-progress', (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+    console.log(log_message);
+    if (mainWindow) {
+        mainWindow.webContents.send('download-progress', progressObj);
+    }
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+    console.log('Update downloaded');
+    if (mainWindow) {
+        mainWindow.webContents.send('update-downloaded', info);
+    }
+});

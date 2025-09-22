@@ -1,17 +1,18 @@
 {
   "name": "command-vault",
   "version": "1.0.1",
-  "description": "",
+  "description": "Eine moderne Electron-App zur Verwaltung von Programmierbefehlen",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
     "dist": "electron-builder --publish=never",
-    "build-win": "electron-builder --win"
+    "build-win": "electron-builder --win",
+    "publish": "electron-builder --publish=always"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "AlexSch95",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "electron": "^38.1.2",
@@ -20,7 +21,8 @@
   "dependencies": {
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "electron-updater": "^6.1.8"
   },
   "build": {
     "appId": "com.AlexSch95.command-vault",
@@ -40,11 +42,19 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "icon.ico"
+      "icon": "icon.ico",
+      "publisherName": "AlexSch95"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "AlexSch95",
+        "repo": "command-vault"
+      }
+    ]
   }
 }
