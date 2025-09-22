@@ -438,11 +438,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="alert alert-success">
                 <i class="bi bi-check-circle me-2"></i>
                 Update v${info.version} heruntergeladen! 
-                <button class="btn btn-sm btn-primary ms-2" onclick="restartForUpdate()">
+                <button class="btn btn-sm btn-primary ms-2" id="restart-update-btn">
                     Neu starten und installieren
                 </button>
             </div>
         `;
+        
+        // Event Listener für den Restart Button hinzufügen
+        document.getElementById('restart-update-btn').addEventListener('click', () => {
+            window.electronAPI.restartApp();
+        });
     });
 
     function showUpdateStatus(message, type) {
@@ -453,9 +458,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="bi bi-info-circle me-2"></i>${message}
             </div>
         `;
-    }
-
-    function restartForUpdate() {
-        window.electronAPI.restartApp();
     }
 });
