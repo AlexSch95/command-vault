@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('technologyFilter').addEventListener('change', applyFilter);
     document.getElementById('searchInput').addEventListener('input', applyFilter);
 
+    //desc: lädt die commands aus der db
     async function loadCommands() {
         try {
             const rows = await window.electronAPI.dbQuery(`
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: füllt den tech filter mit den technologien aus der db
     async function technologyFilter() {
         try {
             const technologies = await loadTechnologies();
@@ -54,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: renderfunktion für die command cards
     function renderCommands(commands) {
         commandsContainer.innerHTML = '';
         if (commands.length === 0) {
@@ -106,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filter- und Suchfunktion
+    //desc: filter und suchfunktion, beides gleichzeitig möglich
     function applyFilter() {
         const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
         const selectedTechId = document.getElementById('technologyFilter').value;
@@ -115,14 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let filteredCommands = commandsArray;
         console.log("vor filter", filteredCommands);
         
-        // Nach Technologie filtern
         if (selectedTechId) {
             filteredCommands = filteredCommands.filter(cmd => 
                 cmd.tech_id == selectedTechId || cmd.tech_id === parseInt(selectedTechId)
             );
         }
         
-        // Nach Suchbegriff filtern (Titel, Command, Beschreibung, Technologie)
         if (searchTerm) {
             filteredCommands = filteredCommands.filter(cmd => 
                 cmd.titel.toLowerCase().includes(searchTerm) ||
@@ -131,15 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 cmd.tech.toLowerCase().includes(searchTerm)
             );
         }
-        console.log("nach filter", filteredCommands);
         renderCommands(filteredCommands);
-        
-        // Zeige Ergebnis-Info
-        const resultCount = filteredCommands.length;
-        const totalCount = commandsArray.length;
-        console.log(`Gefilterte Commands: ${resultCount} von ${totalCount}`);
     }
-
+    //desc: eventlistener für die command cards (löschen, bearbeiten, quelle öffnen, command kopieren)
     commandsContainer.addEventListener('click', (event) => {
         const target = event.target;
         if (target.classList.contains('delete-command-btn')) {
@@ -157,17 +152,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    //desc: kopierfunktion für den command
     async function copyToClipboard(text) {
-    try {
-        await navigator.clipboard.writeText(text);
-        showFeedback({ success: true, message: 'Command in Zwischenablage kopiert!' });
-    } catch (error) {
-        console.error('Fehler beim Kopieren:', error);
-        showFeedback({ success: false, message: 'Fehler beim Kopieren in Zwischenablage.' });
+        try {
+            await navigator.clipboard.writeText(text);
+            showFeedback({ success: true, message: 'Command in Zwischenablage kopiert!' });
+        } catch (error) {
+            console.error('Fehler beim Kopieren:', error);
+            showFeedback({ success: false, message: 'Fehler beim Kopieren in Zwischenablage.' });
+        }
     }
-}
 
-
+    //desc: löscht einen command aus der db
     async function deleteCommand(commandId) {
         try {
             const result = await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
@@ -179,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: bearbeitet einen command, verwandelt die card in ein editierbares form
     async function editCommand(commandId) {
         const cmd = commandsArray.find(c => c.command_id == commandId);
         const editedCommand = document.getElementById(commandId);
@@ -241,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //desc: speichert die änderungen eines bearbeiteten commands
     async function saveCommand(commandId) {
         const tech_id = document.getElementById(`edit-tech-${commandId}`).value;
         const titel = document.getElementById(`edit-titel-${commandId}`).value;
@@ -259,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: lädt alle technologien aus der db und gibt sie zurück
     async function loadTechnologies() { 
         try {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');

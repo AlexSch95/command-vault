@@ -1,9 +1,12 @@
 import { showFeedback, loadGlobalTheme } from "./shared.js";
 
+//desc: lädt alles erst, wenn das DOM vollständig geladen ist
 document.addEventListener('DOMContentLoaded', () => {
+    //desc: initiales laden des contents, theme wird geladen und alle technologien
     loadGlobalTheme();
     loadTechnologies();
 
+    //desc: eventlistener auf den form button zum eintragen eines neuen commands
     document.getElementById('add-command-btn').addEventListener('click', async (event) => {
         event.preventDefault();
 
@@ -23,13 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
             showFeedback({ success: false, message: 'Fehler beim Hinzufügen des Commands.' });
         }
     });
-    
+
+    //desc: um das form zu resetten
     document.getElementById('reset-btn').addEventListener('click', (event) => {
         event.preventDefault();
         document.getElementById('add-command-form').reset();
     });
 
-    async function loadTechnologies() { 
+    //desc: lädt alle technologien aus der db und füllt den select tag mit den technologien
+    async function loadTechnologies() {
         try {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
             const techSelect = document.getElementById('tech');
@@ -47,4 +52,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-            

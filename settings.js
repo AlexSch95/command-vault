@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGlobalTheme();
     setupCurrentColors();
 
+    //desc: lädt die user-theme.json und wendet die aktuellen Farben im Color Picker an
     async function setupCurrentColors() {
         try {
             const savedTheme = await window.electronAPI.loadTheme();
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
+    //desc: Speichert die ausgewählten Farben in die user-theme.json und wendet sie sofort an
     async function saveTheme() {
         try {
             const themeData = {
@@ -32,12 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 timestamp: new Date().toISOString()
             };
 
-            console.log(themeData);
-
             const result = await window.electronAPI.saveTheme(themeData);
 
             if (result.success) {
-                // Theme sofort anwenden
                 applyTheme(themeData);
                 showFeedback(result);
             } else {
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function applyTheme(themeData) {
-        // CSS Custom Properties dynamisch setzen
         const root = document.documentElement;
         root.style.setProperty('--bg-primary', themeData.bgPrimary);
         root.style.setProperty('--bg-secondary', themeData.bgSecondary);
@@ -60,27 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
         root.style.setProperty('--accent-color', themeData.accentColor);
     }
 
+    //desc: vordefinierter Lightmode, aktualisiert auch den Color picker um den Lightmode noch anpassen zu können
     async function applyLightMode() {
-        // Light Mode Theme Farben
         const lightTheme = {
-            bgPrimary: '#ffffff',        // Weißer Hintergrund
-            bgSecondary: '#f8f9fa',      // Sehr helles Grau für Cards
-            borderColor: '#dee2e6',      // Helles Grau für Rahmen
-            textPrimary: '#212529',      // Dunkler Text
-            accentColor: '#21b9ffff'       // Himmelsblau
+            bgPrimary: '#ffffffff',
+            bgSecondary: '#e5e5e5ff',
+            borderColor: '#dee2e6',
+            textPrimary: '#212529',
+            accentColor: '#21b9ffff'
         };
 
-        // Color Picker aktualisieren
         document.getElementById('bg-primary-color').value = lightTheme.bgPrimary;
         document.getElementById('bg-secondary-color').value = lightTheme.bgSecondary;
         document.getElementById('border-color').value = lightTheme.borderColor;
         document.getElementById('text-primary-color').value = lightTheme.textPrimary;
         document.getElementById('accent-color').value = lightTheme.accentColor;
 
-        // Theme anwenden
         applyTheme(lightTheme);
 
-        // Theme speichern
         try {
             const themeData = {
                 ...lightTheme,
@@ -99,27 +93,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: vordefinierter Darkmode
     async function applyDarkMode() {
-        // Dark Mode Theme Farben (Deep Navy Theme)
         const darkTheme = {
-            bgPrimary: '#0f172a',        // Tiefes Navy
-            bgSecondary: '#1e293b',      // Navy-Grau
-            borderColor: '#334155',      // Heller Navy
-            textPrimary: '#f1f5f9',      // Sehr helles Grau
+            bgPrimary: '#0f172a',
+            bgSecondary: '#1e293b',
+            borderColor: '#334155',
+            textPrimary: '#f1f5f9',
             accentColor: '#0d6efd'
         };
 
-        // Color Picker aktualisieren
         document.getElementById('bg-primary-color').value = darkTheme.bgPrimary;
         document.getElementById('bg-secondary-color').value = darkTheme.bgSecondary;
         document.getElementById('border-color').value = darkTheme.borderColor;
         document.getElementById('text-primary-color').value = darkTheme.textPrimary;
         document.getElementById('accent-color').value = darkTheme.accentColor;
 
-        // Theme anwenden
         applyTheme(darkTheme);
 
-        // Theme speichern
         try {
             const themeData = {
                 ...darkTheme,
@@ -138,17 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //desc: Eventlistener für die Buttons
     document.getElementById('save-theme-btn').addEventListener('click', saveTheme);
     document.getElementById('light-mode-btn').addEventListener('click', applyLightMode);
     document.getElementById('dark-mode-btn').addEventListener('click', applyDarkMode);
     document.getElementById('reset-database-btn').addEventListener('click', handleDatabaseReset);
 
-
+    //desc: flag für den Modus - entweder aktuelle Technologien (->false) oder neue Technologie (->true)
     let newTechMode = false;
 
     loadGlobalTheme();
     loadTechnologies();
 
+    //desc: schickt die änderungen ab, wenn newtechmode true dann insert into, wenn false dann update
     document.getElementById('add-technology-btn').addEventListener('click', async (event) => {
         event.preventDefault();
         const tech = document.getElementById('tech');
@@ -175,17 +168,22 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTechnologies();
     });
 
+    //desc: formular resetten
     document.getElementById('reset-btn').addEventListener('click', (event) => {
         event.preventDefault();
         document.getElementById('add-technology-form').reset();
         window.location.reload();
     });
 
+    //desc: updatet die hex-anzeige wenn der colorpicker wert sich ändert
     document.getElementById('color').addEventListener('input', (event) => {
         const hexDisplay = document.getElementById('hex-display');
         hexDisplay.textContent = event.target.value;
     });
 
+    //desc: löschfunktion für vorhandene technologien mit modal
+    //desc: modal verlangt den Technologienamen als bestätigungstext
+    //desc: weist mehrfach darauf hin, dass löschen der Tech dazu führt, dass alle zugeordneten Commands gelöscht werden
     document.getElementById('delete-technology-btn').addEventListener('click', async (event) => {
         event.preventDefault();
         const tech = document.getElementById('tech');

@@ -23,8 +23,8 @@ const createWindow = () => {
     })
 
     mainWindow.loadFile('index.html')
-    
-    // In Production: Nach 3 Sekunden nach Updates suchen
+
+    // desc: devtools werden automatisch geöffnet wenn in der entwicklungsumgebung
     if (!app.isPackaged) {
         mainWindow.webContents.openDevTools();
     } else {
@@ -34,14 +34,13 @@ const createWindow = () => {
     }
 }
 
-// Datenbank initialisieren
+//desc: App initialisierung und DB und Tabellen erstellen wenn noch keine vorhanden
 app.whenReady().then(() => {
     db = new sqlite3.Database('database.db')
 
-    // Foreign Keys aktivieren (wichtig für CASCADE DELETE)
+    //desc: Foreign Keys aktivieren (damit ON DELETE CASCADE funktioniert)
     db.run('PRAGMA foreign_keys = ON;')
 
-    // Tabelle erstellen falls sie nicht existiert
     db.run(`CREATE TABLE IF NOT EXISTS technologies (
         tech_id INTEGER PRIMARY KEY AUTOINCREMENT,
         tech_name TEXT NOT NULL UNIQUE,
@@ -59,7 +58,7 @@ app.whenReady().then(() => {
         FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
     )`)
 
-    // Modernisierter Handler für verschiedene SQL-Operationen
+    //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet
     ipcMain.handle('db-query', async (event, sql, params) => {
         return new Promise((resolve, reject) => {
             if (sql.trim().startsWith('SELECT')) {
@@ -81,6 +80,7 @@ app.whenReady().then(() => {
         })
     })
 
+    //desc: Theme laden
     ipcMain.handle('load-theme', async () => {
         try {
             const themePath = path.join(app.getPath('userData'), 'user-theme.json');
@@ -95,6 +95,7 @@ app.whenReady().then(() => {
         }
     });
 
+    //desc: theme speichern
     ipcMain.handle('save-theme', async (event, themeData) => {
         try {
             const themePath = path.join(app.getPath('userData'), 'user-theme.json');
@@ -106,7 +107,7 @@ app.whenReady().then(() => {
         }
     });
 
-    // IPC Handlers für Updates
+    //desc: updatefunktionen
     ipcMain.handle('restart-app', () => {
         autoUpdater.quitAndInstall();
     });

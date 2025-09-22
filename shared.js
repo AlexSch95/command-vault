@@ -1,3 +1,4 @@
+//desc: feedback funktion
 export function showFeedback(result) {
   // responseBody dekonstruieren
   const { success, message } = result;
@@ -20,6 +21,7 @@ export function showFeedback(result) {
   }, 3000);
 }
 
+//desc: lädt das gespeicherte theme und wendet es an
 export async function loadGlobalTheme() {
     try {
         const savedTheme = await window.electronAPI.loadTheme();

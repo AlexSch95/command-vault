@@ -2,11 +2,7 @@
 <html>
 
 <head>
-                               <a class="nav-link active text-primary" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Commands anzeigen
-                        </a>              <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Command hinzufügen
-                        </a> <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy"
@@ -56,12 +52,12 @@
         </div>
     </nav>
 
-    <div id="errorMessage" class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none mt-5 text-center"
+    <div id="errorMessage"
+        class="errorbox alert position-fixed top-25 start-50 translate-middle fade d-none mt-5 text-center"
         role="alert">
         <span class="text-center" id="errorText"></span>
     </div>
 
-    <!-- Header -->
     <div class="bg-secondary text-primary py-4">
         <div class="container">
             <div class="row align-items-center">
@@ -80,7 +76,6 @@
         </div>
     </div>
 
-    <!-- Search and Filter -->
     <div class="bg-secondary border-bottom border-secondary py-3">
         <div class="container">
             <div class="row g-3 align-items-center">
@@ -105,7 +100,6 @@
     <div class="py-4">
         <div class="container">
             <div id="commandsContainer" class="row g-4">
-                <!-- Commands werden hier dynamisch eingefügt -->
             </div>
         </div>
     </div>
