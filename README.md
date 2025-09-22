@@ -47,6 +47,12 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **IPC (Inter-Process Communication)** - Sichere Kommunikation zwischen Main- und Renderer-Process
 - **Modular JavaScript** - ES6 Module-System
 
+### **Datenbank und User-Theme**
+- **Speicherort**: Die Datenbank und das User-Theme wird in folgendem Pfad gespeichert
+```
+%APPDATA%/command-vault/
+```
+
 ## 🗄️ Datenbankschema
 
 ```sql
