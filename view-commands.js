@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const commandCard = document.createElement('div');
             commandCard.classList.add('col-lg-6');
             commandCard.id = `${cmd.command_id}`;
+            const markdownDescription = cmd.beschreibung ? marked.parse(cmd.beschreibung) : '';
             commandCard.innerHTML = `
                     <div class="card bg-secondary shadow border-secondary h-100">
                         <div class="card-header bg-dark d-flex align-items-center justify-content-between">
@@ -90,17 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             </h5>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">Command:</label>
-                                <div class="bg-dark text-white p-3 rounded font-monospace position-relative">
-                                    <code>${cmd.command}</code>
+                                <div class="bg-dark text-white p-3 mb-2 rounded font-monospace position-relative">
+                                    <code class="viewcmd-block">${cmd.command}</code>
                                     <button class="btn btn-outline-light copy-cmd-btn btn-sm position-absolute top-0 end-0 m-2" data-command='${cmd.command}'>
                                         <i class="bi bi-copy"></i>
                                     </button>
                                 </div>
                             </div>
                             <p class="card-text text-light">
-                            <div class="command-description">${cmd.beschreibung}</div>
+                            <div class="command-description markdown-content mb-3">${markdownDescription}</div>
                             </p>
-                            <small class="text-muted">
+                            <small class="text-muted position-absolute bottom-0 end-0 p-3">
                                 <i class="bi bi-clock me-1"></i>Hinzugefügt am ${new Date(cmd.created_at).toLocaleDateString()}
                             </small>
                         </div>
@@ -217,7 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">Beschreibung:</label>
                                 <textarea class="form-control bg-dark border-secondary text-light" id="edit-beschreibung-${cmd.command_id}" rows="3">${cmd.beschreibung || ''}</textarea>
-                            </div>
+                                <small class="text-muted text-end d-block">Markdown wird unterstützt.</small>
+                                </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">Quelle:</label>
                                 <input type="url" class="form-control bg-dark border-secondary text-light" value="${cmd.source || ''}" id="edit-source-${cmd.command_id}">
