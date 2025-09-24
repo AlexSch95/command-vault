@@ -37,6 +37,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **JavaScript (ES6+)** - Moderne JavaScript-Features und Module
 - **Bootstrap 5** - Responsive UI-Framework
 - **Bootstrap Icons** - Umfangreiche Icon-Bibliothek
+- **Marked.js** - Markdown Parser für formatierte Beschreibungen
 
 ### **Backend/Desktop**
 - **Electron** - Cross-Platform Desktop App Framework
