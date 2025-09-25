@@ -1,7 +1,23 @@
 import { showFeedback, loadGlobalTheme } from "./shared.js";
 
 //desc: lädt alles erst, wenn das DOM vollständig geladen ist
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    if (window.i18n) {
+        await window.i18n.ready;
+    }
+
+    const languageSwitchers = document.querySelectorAll('.language-switcher');
+    languageSwitchers.forEach(switcher => {
+        switcher.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const selectedLang = switcher.getAttribute('data-language');
+            await window.switchLanguage(selectedLang);
+            window.i18n.updatePage();
+        });
+    });
+    
+    
     //desc: initiales laden des contents, theme wird geladen und alle technologien
     loadGlobalTheme();
     loadTechnologies();
@@ -19,11 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const result = await window.electronAPI.dbQuery('INSERT INTO commands (tech_id, titel, command, beschreibung, source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
             console.log('Datenbank Ergebnis:', result)
-            showFeedback({ success: true, message: 'Command erfolgreich hinzugefügt!' });
+            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.commandSaved") : "Befehl erfolgreich hinzugefügt!"}` });
             document.getElementById('add-command-form').reset();
         } catch (error) {
             console.error('Datenbank Fehler:', error);
-            showFeedback({ success: false, message: 'Fehler beim Hinzufügen des Commands.' });
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.commandSaveError") : "Fehler beim Hinzufügen des Befehls."}` });
         }
     });
 

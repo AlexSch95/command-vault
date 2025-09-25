@@ -15,7 +15,6 @@
 </head>
 
 <body class="bg-dark text-primary">
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -29,20 +28,32 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="index.html">
-                            <i class="bi bi-house me-1"></i>Home
+                            <i class="bi bi-house me-1"></i>
+                            <span data-i18n="nav.home">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>
+                            <span data-i18n="nav.addCommand">Befehl hinzufügen</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
+                            <i class="bi bi-list-ul me-1"></i>
+                            <span data-i18n="nav.viewCommands">Befehle anzeigen</span>
                         </a>
                     </li>
                 </ul>
+                <div class="dropdown me-4">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
+                    </ul>
+                </div>
                 <div class="navbar-nav">
                     <a class="nav-link text-primary active" href="settings.html" id="navbarDropdown">
                         <i class="bi bi-gear"></i>
@@ -53,7 +64,8 @@
     </nav>
 
     <!-- Error Message -->
-    <div id="errorMessage" class="errorbox alert position-fixed top-25 text-center start-50 mt-5 translate-middle fade d-none"
+    <div id="errorMessage"
+        class="errorbox alert position-fixed top-25 text-center start-50 mt-5 translate-middle fade d-none"
         role="alert">
         <span class="text-center" id="errorText"></span>
     </div>
@@ -64,9 +76,11 @@
             <div class="row align-items-center">
                 <div class="col">
                     <h1 class="h3 mb-0">
-                        <i class="bi bi-gear-fill me-2"></i>Einstellungen
+                        <i class="bi bi-gear-fill me-2"></i>
+                        <span data-i18n="pages.settings.title">Einstellungen</span>
                     </h1>
-                    <p class="mb-0 mt-2">Konfiguriere deine Command Vault Anwendung</p>
+                    <p class="mb-0 mt-2" data-i18n="pages.settings.subtitle">Passe Command Vault an deine Bedürfnisse an
+                    </p>
                 </div>
             </div>
         </div>
@@ -81,13 +95,16 @@
                         <div class="card-body">
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
-                                    <i class="bi bi-palette me-2"></i>Techhnologien verwalten
+                                    <i class="bi bi-palette me-2"></i>
+                                    <span data-i18n="pages.settings.technologyManagement">Technologien verwalten</span>
                                 </h5>
                                 <form id="add-technology-form">
                                     <div class="row g-3">
                                         <div class="col-md-8">
                                             <label for="tech" class="form-label fw-semibold text-primary">
-                                                <i class="bi bi-gear me-1"></i>Technologie
+                                                <i class="bi bi-gear me-1"></i>
+                                                <span data-i18n="pages.settings.chooseTechnologie">Wähle eine
+                                                    Technologie</span>
                                             </label>
                                             <div id="tech-container">
 
@@ -97,11 +114,12 @@
                                         <!-- Color Picker hinzufügen -->
                                         <div class="col-md-4">
                                             <label for="color" class="form-label fw-semibold text-primary">
-                                                <i class="bi bi-palette me-1"></i>Farbe
+                                                <i class="bi bi-palette me-1"></i>
+                                                <span data-i18n="pages.settings.color">Farbe</span>
                                             </label>
                                             <input type="color"
                                                 class="form-control form-control-lg bg-dark border-secondary" id="color"
-                                                value="#007bff" title="Wähle eine Farbe für die Technologie">
+                                                value="#007bff">
                                         </div>
                                     </div>
 
@@ -109,20 +127,24 @@
                                     <div class="row g-3 mt-2">
                                         <div class="col-md-12">
                                             <small class="text-primary">
-                                                Hex-Code: <span id="hex-display">#007bff</span>
+                                                Hex-Code: <span id="hex-display"></span>
                                             </small>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 d-flex gap-3">
                                         <button type="submit" id="add-technology-btn" class="btn btn-primary btn-lg">
-                                            <i class="bi bi-save me-2"></i>Technologie abspeichern
+                                            <i class="bi bi-save me-2"></i>
+                                            <span data-i18n="pages.settings.saveTechnology">Technologie
+                                                abspeichern</span>
                                         </button>
                                         <button id="delete-technology-btn" class="btn btn-danger btn-lg" disabled>
-                                            <i class="bi bi-trash me-2"></i>Technologie löschen
+                                            <i class="bi bi-trash me-2"></i>
+                                            <span data-i18n="pages.settings.deleteTechnology">Technologie löschen</span>
                                         </button>
                                         <button type="reset" id="reset-btn" class="btn btn-outline-primary btn-lg">
-                                            <i class="bi bi-arrow-clockwise me-2"></i>Zurücksetzen
+                                            <i class="bi bi-arrow-clockwise me-2"></i>
+                                            <span data-i18n="pages.settings.reset">Zurücksetzen</span>
                                         </button>
                                     </div>
                                 </form>
@@ -142,20 +164,24 @@
                                 <!-- Farben Section -->
                                 <div class="mb-5">
                                     <h5 class="text-primary mb-4">
-                                        <i class="bi bi-palette me-2"></i>Farben
+                                        <i class="bi bi-palette me-2"></i>
+                                        <span data-i18n="pages.settings.themeSettingsHeader">Darstellung anpassen</span>
                                     </h5>
 
                                     <!-- Theme Voreinstellungen -->
                                     <div class="mb-4">
                                         <h6 class="text-primary mb-3">
-                                            <i class="bi bi-brightness-high me-2"></i>Theme Voreinstellungen
+                                            <i class="bi bi-brightness-high me-2"></i>
+                                            <span data-i18n="pages.settings.presetThemes">Voreinstellungen</span>
                                         </h6>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <button type="button" class="btn btn-primary px-4" id="light-mode-btn">
-                                                <i class="bi bi-sun me-2"></i>Light Mode
+                                                <i class="bi bi-sun me-2"></i>
+                                                <span data-i18n="pages.settings.lightTheme">Helles Design</span>
                                             </button>
                                             <button type="button" class="btn btn-primary px-4" id="dark-mode-btn">
-                                                <i class="bi bi-moon me-2"></i>Dark Mode
+                                                <i class="bi bi-moon me-2"></i>
+                                                <span data-i18n="pages.settings.darkTheme">Dunkles Design</span>
                                             </button>
                                         </div>
                                     </div>
@@ -165,66 +191,70 @@
                                     <!-- Benutzerdefinierte Farben -->
                                     <div class="mb-3">
                                         <h6 class="text-primary mb-3">
-                                            <i class="bi bi-sliders me-2"></i>Benutzerdefinierte Farben
+                                            <i class="bi bi-sliders me-2"></i>
+                                            <span data-i18n="pages.settings.customColors">Benutzerdefinierte
+                                                Farben</span>
                                         </h6>
                                     </div>
 
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label for="bg-primary-color" class="form-label text-primary">
-                                                Hintergrundfarbe
+                                                <span data-i18n="pages.settings.backgroundColor">Hintergrundfarbe</span>
                                             </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <input type="color" class="form-control bg-dark border-secondary"
-                                                    id="bg-primary-color" value="#0f172a" title="Hintergrund Primär">
+                                                    id="bg-primary-color" value="#0f172a">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="bg-secondary-color" class="form-label text-primary">
-                                                Karten Hintergrund
+                                                <span data-i18n="pages.settings.cardBackgroundColor">Karten
+                                                    Hintergrundfarbe</span>
                                             </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <input type="color" class="form-control bg-dark border-secondary"
-                                                    id="bg-secondary-color" value="#1e293b"
-                                                    title="Hintergrund Sekundär">
+                                                    id="bg-secondary-color" value="#1e293b">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="border-color" class="form-label text-primary">
-                                                Rahmenfarbe
+                                                <span data-i18n="pages.settings.borderColor">Rahmenfarbe</span>
                                             </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <input type="color" class="form-control bg-dark border-secondary"
-                                                    id="border-color" value="#334155" title="Rahmenfarbe">
+                                                    id="border-color" value="#334155">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="text-primary-color" class="form-label text-primary">
-                                                Textfarbe
+                                                <span data-i18n="pages.settings.textColor">Textfarbe</span>
                                             </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <input type="color" class="form-control bg-dark border-secondary"
-                                                    id="text-primary-color" value="#f1f5f9" title="Text Primär">
+                                                    id="text-primary-color" value="#f1f5f9">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="accent-color" class="form-label text-primary">
-                                                Akzentfarbe (Buttons etc.)
+                                                <span data-i18n="pages.settings.accentColor">Akzentfarbe (Buttons
+                                                    etc.)</span>
                                             </label>
                                             <div class="d-flex align-items-center gap-2">
                                                 <input type="color" class="form-control bg-dark border-secondary"
-                                                    id="accent-color" value="#0ea5e9" title="Akzentfarbe">
+                                                    id="accent-color" value="#0ea5e9">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="text-center mt-4">
                                         <button type="button" class="btn btn-primary btn-lg px-5" id="save-theme-btn">
-                                            <i class="bi bi-check-circle me-2"></i>Übernehmen
+                                            <i class="bi bi-check-circle me-2"></i>
+                                            <span data-i18n="pages.settings.saveTheme">Design speichern</span>
                                         </button>
                                     </div>
                                 </div>
@@ -243,32 +273,35 @@
                             <div class="card-body">
                                 <div class="mb-5">
                                     <h5 class="text-primary mb-4">
-                                        <i class="bi bi-database me-2"></i>Datenbank verwalten
+                                        <i class="bi bi-database me-2"></i>
+                                        <span data-i18n="pages.settings.manageDbTitle">Datenbank verwalten</span>
                                     </h5>
-                                    
+
                                     <!-- Warnung für Datenbank Reset -->
-                                    <div class="alert alert-warning bg-dark border-warning text-warning mb-4" role="alert">
+                                    <div class="alert alert-warning bg-dark border-warning text-warning mb-4"
+                                        role="alert">
                                         <div class="d-flex align-items-start">
-                                            <i class="bi bi-exclamation-triangle-fill me-3 mt-1" style="font-size: 1.2rem;"></i>
+                                            <i class="bi bi-exclamation-triangle-fill me-3 mt-1"
+                                                style="font-size: 1.2rem;"></i>
                                             <div>
-                                                <h6 class="alert-heading text-warning mb-2">
-                                                    <strong>Achtung: Gefährliche Aktion</strong>
+                                                <h5 class="alert-heading text-warning mb-4">
+                                                    <strong data-i18n="pages.settings.dangerousAction">Achtung: Gefährliche Aktion</strong>
                                                 </h6>
-                                                <p class="mb-2">
-                                                    Diese Funktion löscht <strong>alle</strong> gespeicherten Commands und Technologien unwiderruflich aus der Datenbank.
+                                                <p class="mb-2" data-i18n="pages.settings.resetDbWarning">
+                                                    Dies wird alle deine gespeicherten Befehle und Technologien dauerhaft löschen. Diese Aktion kann nicht rückgängig gemacht werden.
                                                 </p>
-                                                <p class="mb-0 small">
-                                                    <strong>Hinweis:</strong> Es wird empfohlen, vor der Bereinigung ein Backup der Daten zu erstellen.
+                                                <p class="mb-0 small" data-i18n="pages.settings.backupDbHint">
+                                                    Es wird empfohlen, vor der Bereinigung ein Backup deiner Datenbank zu erstellen. Die Datenbank findest du unter dem Pfad %appdata%/command-vault/ unter dem Namen database.db
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Reset Button -->
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-danger btn-lg px-5" id="reset-database-btn">
-                                            <i class="bi bi-trash3 me-2"></i>Datenbank bereinigen
-                                        </button>
+                                        <div class="text-center mt-4">
+                                            <button type="button" class="btn btn-danger btn-lg px-5"
+                                                id="reset-database-btn">
+                                                <i class="bi bi-trash3 me-2"></i>
+                                                <span data-i18n="pages.settings.resetDbButton">Datenbank bereinigen</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -286,24 +319,26 @@
                             <div class="card-body">
                                 <div class="mb-5">
                                     <h5 class="text-primary mb-4">
-                                        <i class="bi bi-arrow-clockwise me-2"></i>Anwendung aktualisieren
+                                        <i class="bi bi-arrow-clockwise me-2"></i>
+                                        <span data-i18n="pages.settings.updateAppTitle">Anwendung aktualisieren</span>
                                     </h5>
-                                    
+
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <p class="text-primary"><span class="fw-bold"></span></p>
                                             <button type="button" class="btn btn-primary" id="check-updates-btn">
-                                                <i class="bi bi-search me-2"></i>Nach Updates suchen
+                                                <i class="bi bi-search me-2"></i>
+                                                <span data-i18n="pages.settings.checkUpdatesButton">Nach Updates suchen</span>
                                             </button>
                                         </div>
-                                        
+
                                         <div class="col-12">
                                             <div id="update-status" class="mt-3 d-none">
-                                                <!-- Update-Status wird hier angezeigt -->
                                             </div>
-                                            
+
                                             <div class="progress mt-3 d-none" id="update-progress">
-                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%"></div>
+                                                <div class="progress-bar bg-primary" role="progressbar"
+                                                    style="width: 0%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -316,6 +351,7 @@
         </div>
 
         <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="i18n.js"></script>
         <script type="module" src="settings.js"></script>
 </body>
 
