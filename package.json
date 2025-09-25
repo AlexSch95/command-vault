@@ -38,7 +38,9 @@
       "*.css",
       "*.js",
       "node_modules/bootstrap/**/*",
-      "node_modules/sqlite3/**/*"
+      "node_modules/sqlite3/**/*",
+      "node_modules/marked/**/*",
+      "locales/**/*"
     ],
     "win": {
       "target": "nsis",

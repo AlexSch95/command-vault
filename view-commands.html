@@ -15,7 +15,6 @@
 </head>
 
 <body class="bg-dark text-primary">
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -29,20 +28,32 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="index.html">
-                            <i class="bi bi-house me-1"></i>Home
+                            <i class="bi bi-house me-1"></i>
+                            <span data-i18n="nav.home">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>
+                            <span data-i18n="nav.addCommand">Befehl hinzufügen</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary active" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
+                            <i class="bi bi-list-ul me-1"></i>
+                            <span data-i18n="nav.viewCommands">Befehle anzeigen</span>
                         </a>
                     </li>
                 </ul>
+                <div class="dropdown me-4">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
+                    </ul>
+                </div>
                 <div class="navbar-nav">
                     <a class="nav-link text-primary" href="settings.html" id="navbarDropdown">
                         <i class="bi bi-gear"></i>
@@ -63,13 +74,15 @@
             <div class="row align-items-center">
                 <div class="col">
                     <h1 class="h3 mb-0">
-                        <i class="bi bi-list-ul me-2"></i>Mein Command-Vault
+                        <i class="bi bi-list-ul me-2"></i>
+                        <span data-i18n="pages.viewCommands.title"></span>
                     </h1>
-                    <p class="mb-0 mt-2">Durchsuche und verwalte deine gespeicherten Befehle</p>
+                    <p class="mb-0 mt-2" data-i18n="pages.viewCommands.subtitle"></p>
                 </div>
                 <div class="col-auto">
                     <a href="add-command.html" class="btn btn-outline-light">
-                        <i class="bi bi-plus-circle me-2"></i>Neuen Befehl hinzufügen
+                        <i class="bi bi-plus-circle me-2"></i>
+                        <span data-i18n="pages.viewCommands.addNew">Neuen Befehl hinzufügen</span>
                     </a>
                 </div>
             </div>
@@ -85,12 +98,12 @@
                             <i class="bi bi-search"></i>
                         </span>
                         <input type="text" class="form-control bg-dark border-secondary text-primary"
-                            placeholder="Commands durchsuchen..." id="searchInput">
+                            placeholder="Commands durchsuchen..." data-i18n="pages.viewCommands.searchPlaceholder" id="searchInput">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select bg-dark border-secondary text-primary" id="technologyFilter">
-                        <option value="">Alle Technologien</option>
+                        <option value="" data-i18n="pages.viewCommands.allTechnologies">Alle Technologien</option>
                     </select>
                 </div>
             </div>
@@ -106,6 +119,7 @@
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/marked/lib/marked.umd.js"></script>
+    <script src="i18n.js"></script>
     <script type="module" src="view-commands.js"></script>
 </body>
 

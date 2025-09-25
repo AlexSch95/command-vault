@@ -28,20 +28,32 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-primary active" href="index.html">
-                            <i class="bi bi-house me-1"></i>Home
+                            <i class="bi bi-house me-1"></i>
+                            <span data-i18n="nav.home">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>Befehl hinzufügen
+                            <i class="bi bi-plus-circle me-1"></i>
+                            <span data-i18n="nav.addCommand">Befehl hinzufügen</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-primary" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>Befehle anzeigen
+                            <i class="bi bi-list-ul me-1"></i>
+                            <span data-i18n="nav.viewCommands">Befehle anzeigen</span>
                         </a>
                     </li>
                 </ul>
+                <div class="dropdown me-4">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
+                        <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
+                    </ul>
+                </div>
                 <div class="navbar-nav">
                     <a class="nav-link text-primary" href="settings.html" id="navbarDropdown">
                         <i class="bi bi-gear"></i>
@@ -56,14 +68,14 @@
             <div class="card bg-secondary border-secondary shadow-lg text-primary p-5 rounded-5">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
-                        <p class="lead mb-5 fs-4">Verwalte deine wichtigsten Befehle an einem Ort. Speichere,
+                        <p class="lead mb-5 fs-4" data-i18n="pages.index.welcomeText">Verwalte deine wichtigsten Befehle an einem Ort. Speichere,
                             organisiere und finde schnell die Befehle, die du brauchst. Vergessen war gestern.</p>
                         <div class="d-flex gap-3 flex-wrap">
                             <a href="add-command.html" class="btn btn-primary btn-lg px-4 py-3">
-                                <i class="bi bi-plus-circle me-2"></i>Neuen Befehl hinzufügen
+                                <i class="bi bi-plus-circle me-2"></i><span data-i18n="pages.index.newCmdButton">Neuen Befehl hinzufügen</span>
                             </a>
                             <a href="view-commands.html" class="btn btn-outline-primary btn-lg px-4 py-3">
-                                <i class="bi bi-search me-2"></i>Befehle durchsuchen
+                                <i class="bi bi-search me-2"></i><span data-i18n="pages.index.findCmdButton">Befehle durchsuchen</span>
                             </a>
                         </div>
                     </div>
@@ -84,8 +96,8 @@
                     <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
                         <div class="card-body text-center text-primary p-4 d-flex flex-column">
                             <i class="bi bi-code-square text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3">Personalisierung</h5>
-                            <p class="card-text flex-grow-1">Strukturiere deine Befehle nach Kategorien und Tags für
+                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature1Title">Personalisierung</h5>
+                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature1Desc">Strukturiere deine Befehle nach Kategorien und Tags für
                                 eine bessere Übersicht die genau für DICH gemacht ist.</p>
                         </div>
                     </div>
@@ -94,8 +106,8 @@
                     <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
                         <div class="card-body text-center text-primary p-4 d-flex flex-column">
                             <i class="bi bi-search text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3">Schnelle Suche</h5>
-                            <p class="card-text flex-grow-1">Finde deine gespeicherten Befehle schnell und einfach durch
+                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature2Title">Schnelle Suche</h5>
+                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature2Desc">Finde deine gespeicherten Befehle schnell und einfach durch
                                 intelligente Such- und Filterfunktionen.</p>
                         </div>
                     </div>
@@ -104,8 +116,8 @@
                     <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
                         <div class="card-body text-center text-primary p-4 d-flex flex-column">
                             <i class="bi bi-shield-check text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3">Lokale Speicherung</h5>
-                            <p class="card-text flex-grow-1">Alle deine Befehle werden sicher lokal in einer
+                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature3Title">Lokale Speicherung</h5>
+                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature3Desc">Alle deine Befehle werden sicher lokal in einer
                                 SQLite-Datenbank gespeichert. </p>
                         </div>
                     </div>
@@ -115,5 +127,6 @@
     </div>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="i18n.js"></script>
     <script type="module" src="index.js"></script>
 </body>

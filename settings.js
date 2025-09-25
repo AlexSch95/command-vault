@@ -1,6 +1,21 @@
 import { showFeedback, loadGlobalTheme } from "./shared.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    if (window.i18n) {
+        await window.i18n.ready;
+    }
+
+    const languageSwitchers = document.querySelectorAll('.language-switcher');
+    languageSwitchers.forEach(switcher => {
+        switcher.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const selectedLang = switcher.getAttribute('data-language');
+            await window.switchLanguage(selectedLang);
+            loadTechnologies();
+        });
+    });
+
     loadGlobalTheme();
     setupCurrentColors();
 
@@ -43,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Fehler beim Speichern des Themes:', error);
-            showFeedback({ success: false, message: 'Fehler beim Speichern des Themes.' });
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
         }
     }
 
@@ -83,13 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await window.electronAPI.saveTheme(themeData);
             if (result.success) {
-                showFeedback({ success: true, message: 'Light Mode aktiviert!' });
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.lightThemeApplied") : "Helles Design angewendet."}` });
             } else {
                 showFeedback(result);
             }
         } catch (error) {
             console.error('Fehler beim Speichern des Light Themes:', error);
-            showFeedback({ success: false, message: 'Fehler beim Speichern des Themes.' });
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
         }
     }
 
@@ -119,13 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await window.electronAPI.saveTheme(themeData);
             if (result.success) {
-                showFeedback({ success: true, message: 'Dark Mode aktiviert!' });
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.darkThemeApplied") : "Dunkles Design angewendet."}` });
             } else {
                 showFeedback(result);
             }
         } catch (error) {
             console.error('Fehler beim Speichern des Dark Themes:', error);
-            showFeedback({ success: false, message: 'Fehler beim Speichern des Themes.' });
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
         }
     }
 
@@ -149,20 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newTechMode === true) {
             try {
                 const result = await window.electronAPI.dbQuery('INSERT INTO technologies (tech_name, color) VALUES (?, ?)', [tech.value, color.value]);
-                showFeedback({ success: true, message: 'Technologie erfolgreich hinzugefügt!' });
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.technologySaved") : "Technologie erfolgreich gespeichert."}` });
                 document.getElementById('add-technology-form').reset();
             } catch (error) {
                 console.error('Datenbank Fehler:', error);
-                showFeedback({ success: false, message: 'Fehler beim Hinzufügen der Technologie.' });
+                showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.technologySaveError") : "Fehler beim Hinzufügen der Technologie."}` });
             }
         } else if (newTechMode === false) {
             try {
                 const result = await window.electronAPI.dbQuery('UPDATE technologies SET color = ? WHERE tech_id = ?', [color.value, tech.value]);
-                showFeedback({ success: true, message: 'Technologie erfolgreich aktualisiert!' });
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.technologyUpdated") : "Technologie erfolgreich aktualisiert."}` });
                 document.getElementById('add-technology-form').reset();
             } catch (error) {
                 console.error('Datenbank Fehler:', error);
-                showFeedback({ success: false, message: 'Fehler beim Aktualisieren der Technologie.' });
+                showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.technologyUpdateError") : "Fehler beim Aktualisieren der Technologie."}` });
             }
         }
         loadTechnologies();
@@ -198,18 +213,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="modal-dialog">
                     <div class="modal-content bg-dark">
                         <div class="modal-header border-secondary">
-                            <h5 class="modal-title text-light">Technologie löschen</h5>
+                            <h5 class="modal-title text-light">${window.i18n ? window.i18n.translate("pages.settings.delTechModal.title") : "Technologie löschen"}</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body text-light">
-                            <p><strong>ACHTUNG:</strong> Dadurch werden alle zugehörigen Commands ebenfalls gelöscht!</p>
-                            <p>Gib den Namen der Technologie "<strong>${techName}</strong>" ein, um das Löschen zu bestätigen:</p>
+                            <p>${window.i18n ? window.i18n.translate("pages.settings.delTechModal.warning") : "ACHTUNG: Dadurch werden alle zugehörigen Commands ebenfalls gelöscht!"}</p>
+                            <p>${window.i18n ? window.i18n.translate("pages.settings.delTechModal.confirmThisp1") : "Gib den Namen der Technologie"} 
+                            "<strong>${techName}</strong>" 
+                            ${window.i18n ? window.i18n.translate("pages.settings.delTechModal.confirmThisp2") : "ein, um das Löschen zu bestätigen:"}</p>
                             <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
                                    id="confirmTechName" placeholder="${techName}" autocomplete="off">
                         </div>
                         <div class="modal-footer border-secondary">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                            <button type="button" class="btn btn-danger" id="confirmDelete" disabled>Löschen</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            ${window.i18n ? window.i18n.translate("pages.settings.delTechModal.cancelButton") : "Abbrechen"}
+                            </button>
+                            <button type="button" class="btn btn-danger" id="confirmDelete" disabled>
+                            ${window.i18n ? window.i18n.translate("pages.settings.delTechModal.deleteButton") : "Löschen"}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -238,13 +259,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (confirmInput.value === techName) {
                     try {
                         const result = await window.electronAPI.dbQuery('DELETE FROM technologies WHERE tech_id = ?', [tech.value]);
-                        showFeedback({ success: true, message: 'Technologie erfolgreich gelöscht!' });
+                        showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.technologyDeleted") : "Technologie erfolgreich gelöscht!"}` });
                         document.getElementById('add-technology-form').reset();
                         loadTechnologies();
                         bootstrapModal.hide();
                     } catch (error) {
                         console.error('Datenbank Fehler:', error);
-                        showFeedback({ success: false, message: 'Fehler beim Löschen der Technologie.' });
+                        showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.technologyDeleteError") : "Fehler beim Löschen der Technologie."}` });
                     }
                 }
             });
@@ -261,9 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
             newTechMode = false;
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
 
-            // Container für Select + Button erstellen
             const techContainer = document.getElementById('tech-container');
-            techContainer.innerHTML = ''; // Container leeren
+            techContainer.innerHTML = '';
 
             const flexContainer = document.createElement('div');
             flexContainer.className = 'd-flex align-items-center gap-2';
@@ -271,7 +291,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const techSelect = document.createElement('select');
             techSelect.id = 'tech';
             techSelect.className = 'form-select form-select-lg bg-dark border-secondary text-light flex-grow-1';
-            techSelect.innerHTML = '<option value="">Technologie auswählen...</option>';
+            if (technologies.length === 0) {
+                techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("labels.technologyPlaceholderNone") : "Hier ist noch nichts..."}</option>`;
+            } else {
+                techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("labels.technologyPlaceholder") : "Technologie auswählen..."}</option>`;
+            }
 
             technologies.forEach(tech => {
                 const option = document.createElement('option');
@@ -284,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // "Neu" Button erstellen
             const newButton = document.createElement('button');
             newButton.type = 'button';
-            newButton.textContent = 'Neue Technologie';
+            newButton.textContent = `${window.i18n ? window.i18n.translate("pages.settings.addTechButton") : "Neue Technologie"}`;
             newButton.id = 'new-tech-btn';
             newButton.className = 'btn btn-primary btn-sm';
 
@@ -305,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             newButton.addEventListener('click', () => {
                 newTechMode = true;
                 document.getElementById('tech-container').innerHTML = `
-                    <input type="text" id="tech" class="form-control form-control-lg bg-dark border-secondary text-light" placeholder="z.B. Linux, JavaScript, Python..." required>
+                    <input type="text" id="tech" class="form-control form-control-lg bg-dark border-secondary text-light" placeholder="Linux, JavaScript, Python..." required>
                 `;
                 document.getElementById('color').value = '#007bff';
                 document.getElementById('hex-display').textContent = '#007bff';
@@ -327,24 +351,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="modal-content bg-secondary">
                     <div class="modal-header border-secondary">
                         <h5 class="modal-title text-danger">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>Datenbank bereinigen
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            ${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.title") : "Datenbank bereinigen"}
                         </h5>
                         <button type="button" class="btn-close btn-close-white btn-outline-primary" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body text-light">
                         <div class="alert alert-danger bg-secondary border-danger mb-4 text-primary" role="alert">
-                            <p class="mb-2"><strong>LETZTE WARNUNG:</strong></p>
-                            <p class="mb-2">Diese Aktion wird <strong>ALLE</strong> Commands und Technologien unwiderruflich löschen!</p>
-                            <p class="mb-0 small">Stelle sicher, dass du ein Backup hast, bevor du fortfährst.</p>
+                            <p class="mb-2">
+                            <strong>${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.lastWarning") : "LETZTE WARNUNG:"}</strong>
+                            </p>
+                            <p class="mb-2"><strong>${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.warningText1") : "Diese Aktion wird ALLE Befehle und Technologien unwiderruflich löschen!"}</strong></p>
+                            <p class="mb-0 small">${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.warningText2") : "Stelle sicher, dass du ein Backup hast, bevor du fortfährst."}</p>
                         </div>
-                        <p>Gib "<strong>DATENBANK BEREINIGEN</strong>" ein, um das Löschen zu bestätigen:</p>
+                        <p>
+                        ${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.confirmThis1") : "Gib "}
+                        "<strong>${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.confirmThisWord") : "DATENBANK BEREINIGEN"}</strong>" ein, um das Löschen zu bestätigen:</p>
                         <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
-                               id="confirmResetText" placeholder="DATENBANK BEREINIGEN" autocomplete="off">
+                               id="confirmResetText" placeholder="${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.confirmThisWord") : "DATENBANK BEREINIGEN"}" autocomplete="off">
                     </div>
                     <div class="modal-footer border-secondary">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                            ${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.cancelButton") : "Abbrechen"}
+                        </button>
                         <button type="button" class="btn btn-danger" id="confirmReset" disabled>
-                            <i class="bi bi-trash3 me-2"></i>Datenbank bereinigen
+                            <i class="bi bi-trash3 me-2"></i>${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.deleteButton") : "Datenbank bereinigen"}
                         </button>
                     </div>
                 </div>
@@ -357,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const confirmInput = document.getElementById('confirmResetText');
         const confirmButton = document.getElementById('confirmReset');
-        const requiredText = 'DATENBANK BEREINIGEN';
+        const requiredText = `${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.confirmThisWord") : "DATENBANK BEREINIGEN"}`;
         
         // Input-Validierung in Echtzeit
         confirmInput.addEventListener('input', () => {
@@ -375,9 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Beide Tabellen löschen (commands zuerst wegen Foreign Key)
                     await window.electronAPI.dbQuery('DELETE FROM commands');
                     await window.electronAPI.dbQuery('DELETE FROM technologies');
-                    
-                    showFeedback({ success: true, message: 'Datenbank erfolgreich bereinigt!' });
-                    
+
+                    showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.dbResetSuccess") : "Datenbank erfolgreich bereinigt!"}` });
+
                     // Seite neu laden um UI zu aktualisieren
                     setTimeout(() => {
                         window.location.reload();
@@ -386,12 +417,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     bootstrapModal.hide();
                 } catch (error) {
                     console.error('Datenbank Fehler:', error);
-                    showFeedback({ success: false, message: 'Fehler beim Bereinigen der Datenbank.' });
+                    showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.dbResetError") : "Fehler beim Bereinigen der Datenbank."}` });
                 }
             }
         });
         
-        // Modal nach Schließen entfernen
         modal.addEventListener('hidden.bs.modal', () => {
             modal.remove();
         });
@@ -403,24 +433,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusDiv = document.getElementById('update-status');
         
         btn.disabled = true;
-        btn.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i>Suche...';
-        
+        btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.updateArea.checking") : "Suche nach Updates..."}`;
+
         try {
             await window.electronAPI.checkForUpdates();
-            showUpdateStatus('Suche nach Updates...', 'info');
+            showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.updateArea.checking") : "Suche nach Updates..."}`, 'info');
         } catch (error) {
-            showUpdateStatus('Fehler beim Suchen nach Updates', 'danger');
+            showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.updateArea.error") : "Fehler beim Suchen nach Updates"}`, 'danger');
         }
         
         setTimeout(() => {
             btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-search me-2"></i>Nach Updates suchen';
+            btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.updateArea.notAvailable") : "Keine Updates verfügbar. Du bist auf dem neuesten Stand!"}`;
         }, 3000);
     });
 
     // Update Event Listeners
     window.electronAPI.onUpdateAvailable?.((event, info) => {
-        showUpdateStatus(`Update verfügbar: v${info.version}`, 'success');
+        showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.updateArea.available") : "Update verfügbar: v"}${info.version}`, 'success');
         document.getElementById('update-progress').classList.remove('d-none');
     });
 
@@ -435,9 +465,9 @@ document.addEventListener('DOMContentLoaded', () => {
         statusDiv.innerHTML = `
             <div class="alert alert-success">
                 <i class="bi bi-check-circle me-2"></i>
-                Update v${info.version} heruntergeladen! 
+                Update v${info.version}${window.i18n ? window.i18n.translate("pages.settings.updateArea.downloaded") : " heruntergeladen."}
                 <button class="btn btn-sm btn-primary ms-2" id="restart-update-btn">
-                    Neu starten und installieren
+                    ${window.i18n ? window.i18n.translate("pages.settings.updateArea.restartAndInstall") : "Neu starten & installieren"}
                 </button>
             </div>
         `;
