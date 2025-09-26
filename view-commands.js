@@ -117,7 +117,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p class="card-text text-light">
                             <div class="command-description markdown-content mb-3">${markdownDescription}</div>
                             </p>
-                            <small class="text-muted position-absolute bottom-0 end-0 p-3">
+                            
+                            <small class="text-muted position-absolute bottom-0 end-0 p-3 pt-5">
+
                                 <i class="bi bi-clock me-1"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.createdAt") : "Hinzugefügt am"} ${new Date(cmd.created_at).toLocaleDateString()}
                             </small>
                         </div>
