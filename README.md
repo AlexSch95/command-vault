@@ -17,7 +17,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Update-Funktion**: Automatische Updates können über den Einstellungsbereich durchgeführt werden 
 
 ### 🎨 **Theme & Personalisierung**
-- **Light/Dark Mode**: Vordefinierte Theme-Modi
+- **Vordefinierte Themes**: Light-, Dark-, Coffee- und Navytheme
 - **Custom Themes**: Vollständig anpassbare Farbschemata
 - **Live Preview**: Themes werden sofort angewendet
 - **Persistente Einstellungen**: Themes bleiben nach Neustart erhalten
@@ -25,9 +25,11 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 ### ⚙️ **Erweiterte Funktionen**
 - **CRUD-Operationen**: Erstellen, Bearbeiten, Löschen von Commands und Technologien
 - **Inline-Editing**: Bearbeite Commands direkt in der Übersicht
+- **Markdown**: Beschreibungen unterstützen Markdown
 - **Modal-Bestätigungen**: Sichere Lösch-Dialoge mit Bestätigungseingabe
 - **Responsive Design**: Funktioniert auf verschiedenen Bildschirmgrößen
-- **Datenbank-Management**: Komplette Datenbankbereinigung mit Sicherheitsabfragen
+- **Datenbank-Management**: Datenbank-Backups und Bereinigung über die App möglich
+- **Updates**: Automatische Updatefunktion
 
 ## 🛠️ Technologien
 
