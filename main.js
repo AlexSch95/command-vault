@@ -18,7 +18,7 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js') // <- Das ist wichtig!
+            preload: path.join(__dirname, 'preload.js')
         }
     })
 
@@ -60,6 +60,27 @@ app.whenReady().then(() => {
         FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
     )`)
 
+    ipcMain.handle('create-db-backup', async () => {
+        try {
+            const dbPath = path.join(app.getPath('userData'), 'database.db');
+            const backupPath = path.join(app.getPath('userData'), 'backups');
+
+            if (!fs.existsSync(backupPath)) {
+                fs.mkdirSync(backupPath, { recursive: true });
+            }
+
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const backupFile = path.join(backupPath, `database-backup-${timestamp}.db`);
+
+            fs.copyFileSync(dbPath, backupFile);
+
+            return { success: true, path: backupFile };
+        } catch (error) {
+            console.error('Fehler beim Erstellen des Backups:', error);
+            return { success: false, message: 'Db Backup failed'};
+        }
+    });
+
     //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet
     ipcMain.handle('db-query', async (event, sql, params) => {
         return new Promise((resolve, reject) => {
@@ -90,7 +111,7 @@ app.whenReady().then(() => {
                 const themeData = fs.readFileSync(themePath, 'utf8');
                 return JSON.parse(themeData);
             }
-            return null; // Standard Theme verwenden
+            return null;
         } catch (error) {
             console.error('Fehler beim Laden des Themes:', error);
             return null;

@@ -1,4 +1,5 @@
 import { showFeedback, loadGlobalTheme } from "./shared.js";
+import { themes } from "./presetThemes.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -6,6 +7,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.i18n.ready;
     }
 
+    //desc: flag für den Modus - entweder aktuelle Technologien (->false) oder neue Technologie (->true)
+    let newTechMode = false;
+
+    //desc: initiale funktionsaufrufe
+    loadGlobalTheme();
+    loadTechnologies();
+    setupCurrentColors();
+
+    //desc: Event Listener für den Sprachwechsel
     const languageSwitchers = document.querySelectorAll('.language-switcher');
     languageSwitchers.forEach(switcher => {
         switcher.addEventListener('click', async (event) => {
@@ -15,9 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadTechnologies();
         });
     });
-
-    loadGlobalTheme();
-    setupCurrentColors();
 
     //desc: lädt die user-theme.json und wendet die aktuellen Farben im Color Picker an
     async function setupCurrentColors() {
@@ -30,131 +37,67 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('border-color').value = savedTheme.borderColor;
                 document.getElementById('text-primary-color').value = savedTheme.textPrimary;
                 document.getElementById('accent-color').value = savedTheme.accentColor;
+                document.getElementById('text-color-code').value = savedTheme.textColorCode;
             }
         } catch (error) {
-            console.error('Fehler beim Laden des globalen Themes:', error);
+            console.error('Fehler beim Laden der aktuellen Farben', error);
         }
     }
 
-    //desc: Speichert die ausgewählten Farben in die user-theme.json und wendet sie sofort an
-    async function saveTheme() {
-        try {
-            const themeData = {
-                bgPrimary: document.getElementById('bg-primary-color').value,
-                bgSecondary: document.getElementById('bg-secondary-color').value,
-                borderColor: document.getElementById('border-color').value,
-                textPrimary: document.getElementById('text-primary-color').value,
-                accentColor: document.getElementById('accent-color').value,
-                timestamp: new Date().toISOString()
-            };
-
-            const result = await window.electronAPI.saveTheme(themeData);
-
-            if (result.success) {
-                applyTheme(themeData);
-                showFeedback(result);
-            } else {
-                showFeedback(result);
-            }
-        } catch (error) {
-            console.error('Fehler beim Speichern des Themes:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
-        }
+    //desc: generiert ein objekt aus den aktuell ausgewählten farben und ruft damit applyTheme auf
+    function customTheme() {
+        const themeData = {
+            bgPrimary: document.getElementById('bg-primary-color').value,
+            bgSecondary: document.getElementById('bg-secondary-color').value,
+            borderColor: document.getElementById('border-color').value,
+            textPrimary: document.getElementById('text-primary-color').value,
+            accentColor: document.getElementById('accent-color').value,
+            textColorCode: document.getElementById('text-color-code').value
+        };
+        applyTheme(themeData);
     }
 
+    //desc: wendet ein theme an, wenn string dann aus presetThemes.js, wenn objekt dann custom
+    async function applyTheme(chosenTheme) {
+        let themeData;
 
-    function applyTheme(themeData) {
+        if (typeof chosenTheme === 'string') {
+            themeData = themes[chosenTheme]
+        } else {
+            themeData = chosenTheme;
+        }
+
         const root = document.documentElement;
         root.style.setProperty('--bg-primary', themeData.bgPrimary);
         root.style.setProperty('--bg-secondary', themeData.bgSecondary);
         root.style.setProperty('--border-color', themeData.borderColor);
         root.style.setProperty('--text-primary', themeData.textPrimary);
         root.style.setProperty('--accent-color', themeData.accentColor);
-    }
-
-    //desc: vordefinierter Lightmode, aktualisiert auch den Color picker um den Lightmode noch anpassen zu können
-    async function applyLightMode() {
-        const lightTheme = {
-            bgPrimary: '#ffffffff',
-            bgSecondary: '#e5e5e5ff',
-            borderColor: '#dee2e6',
-            textPrimary: '#212529',
-            accentColor: '#21b9ffff'
-        };
-
-        document.getElementById('bg-primary-color').value = lightTheme.bgPrimary;
-        document.getElementById('bg-secondary-color').value = lightTheme.bgSecondary;
-        document.getElementById('border-color').value = lightTheme.borderColor;
-        document.getElementById('text-primary-color').value = lightTheme.textPrimary;
-        document.getElementById('accent-color').value = lightTheme.accentColor;
-
-        applyTheme(lightTheme);
-
+        root.style.setProperty('--text-color-code', themeData.textColorCode);
         try {
-            const themeData = {
-                ...lightTheme,
-                timestamp: new Date().toISOString()
-            };
-
             const result = await window.electronAPI.saveTheme(themeData);
             if (result.success) {
-                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.lightThemeApplied") : "Helles Design angewendet."}` });
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.themeApplied") : "Design angewendet."}` });
             } else {
                 showFeedback(result);
             }
         } catch (error) {
-            console.error('Fehler beim Speichern des Light Themes:', error);
+            console.error('Fehler beim Speichern des vordefinierten Themes:', error);
             showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
-        }
-    }
-
-    //desc: vordefinierter Darkmode
-    async function applyDarkMode() {
-        const darkTheme = {
-            bgPrimary: '#0f172a',
-            bgSecondary: '#1e293b',
-            borderColor: '#334155',
-            textPrimary: '#f1f5f9',
-            accentColor: '#0d6efd'
-        };
-
-        document.getElementById('bg-primary-color').value = darkTheme.bgPrimary;
-        document.getElementById('bg-secondary-color').value = darkTheme.bgSecondary;
-        document.getElementById('border-color').value = darkTheme.borderColor;
-        document.getElementById('text-primary-color').value = darkTheme.textPrimary;
-        document.getElementById('accent-color').value = darkTheme.accentColor;
-
-        applyTheme(darkTheme);
-
-        try {
-            const themeData = {
-                ...darkTheme,
-                timestamp: new Date().toISOString()
-            };
-
-            const result = await window.electronAPI.saveTheme(themeData);
-            if (result.success) {
-                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.darkThemeApplied") : "Dunkles Design angewendet."}` });
-            } else {
-                showFeedback(result);
-            }
-        } catch (error) {
-            console.error('Fehler beim Speichern des Dark Themes:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
+        } finally {
+            setupCurrentColors();
         }
     }
 
     //desc: Eventlistener für die Buttons
-    document.getElementById('save-theme-btn').addEventListener('click', saveTheme);
-    document.getElementById('light-mode-btn').addEventListener('click', applyLightMode);
-    document.getElementById('dark-mode-btn').addEventListener('click', applyDarkMode);
+    document.getElementById('save-theme-btn').addEventListener('click', customTheme);
     document.getElementById('reset-database-btn').addEventListener('click', handleDatabaseReset);
-
-    //desc: flag für den Modus - entweder aktuelle Technologien (->false) oder neue Technologie (->true)
-    let newTechMode = false;
-
-    loadGlobalTheme();
-    loadTechnologies();
+    document.getElementById('preset-themes').addEventListener('click', (event) => {
+        const theme = event.target.dataset.theme;
+        if (theme) {
+            applyTheme(theme);
+        }
+    });
 
     //desc: schickt die änderungen ab, wenn newtechmode true dann insert into, wenn false dann update
     document.getElementById('add-technology-btn').addEventListener('click', async (event) => {
@@ -305,14 +248,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 techSelect.appendChild(option);
             });
 
-            // "Neu" Button erstellen
             const newButton = document.createElement('button');
             newButton.type = 'button';
             newButton.textContent = `${window.i18n ? window.i18n.translate("pages.settings.addTechButton") : "Neue Technologie"}`;
             newButton.id = 'new-tech-btn';
             newButton.className = 'btn btn-primary btn-sm';
 
-            // Flex Container befüllen
             flexContainer.appendChild(techSelect);
             flexContainer.appendChild(newButton);
             techContainer.appendChild(flexContainer);
@@ -341,8 +282,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function handleDatabaseReset(event) {
         event.preventDefault();
-        
-        // Modal für Datenbank-Reset erstellen
+
         const modal = document.createElement('div');
         modal.className = 'modal fade';
         modal.id = 'resetDatabaseModal';
@@ -381,16 +321,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(modal);
         const bootstrapModal = new bootstrap.Modal(modal);
         bootstrapModal.show();
-        
+
         const confirmInput = document.getElementById('confirmResetText');
         const confirmButton = document.getElementById('confirmReset');
         const requiredText = `${window.i18n ? window.i18n.translate("pages.settings.clearDbModal.confirmThisWord") : "DATENBANK BEREINIGEN"}`;
-        
-        // Input-Validierung in Echtzeit
+
         confirmInput.addEventListener('input', () => {
             if (confirmInput.value === requiredText) {
                 confirmButton.disabled = false;
@@ -398,22 +337,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 confirmButton.disabled = true;
             }
         });
-        
-        // Bestätigung Event Listener
+
         confirmButton.addEventListener('click', async () => {
             if (confirmInput.value === requiredText) {
                 try {
-                    // Beide Tabellen löschen (commands zuerst wegen Foreign Key)
                     await window.electronAPI.dbQuery('DELETE FROM commands');
                     await window.electronAPI.dbQuery('DELETE FROM technologies');
 
                     showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.dbResetSuccess") : "Datenbank erfolgreich bereinigt!"}` });
 
-                    // Seite neu laden um UI zu aktualisieren
                     setTimeout(() => {
                         window.location.reload();
                     }, 2000);
-                    
+
                     bootstrapModal.hide();
                 } catch (error) {
                     console.error('Datenbank Fehler:', error);
@@ -421,17 +357,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
         });
-        
+
         modal.addEventListener('hidden.bs.modal', () => {
             modal.remove();
         });
     }
 
-    // Update-Funktionalität
+    document.getElementById('backup-database-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('backup-database-btn');
+        const oldBtn = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.backupArea.starting") : "Backup wird erstellt..."}`;
+
+        try {
+            const result = await window.electronAPI.createDbBackup();
+            if (result.success) {
+                showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.backupSuccess") : "Backup erfolgreich erstellt!"}` });
+                document.getElementById('backup-path').textContent = `${window.i18n ? window.i18n.translate("pages.settings.backupArea.backupCreatedInfo") : "Backup erstellt in: "} ${result.path}`;
+            } else {
+                showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.dbBackupFailed") : "Fehler beim Erstellen des Backups."}` });
+            }
+        } catch (error) {
+            console.error('Fehler beim Erstellen des Backups:', error);
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.dbBackupFailed") : "Fehler beim Erstellen des Backups."}` });
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = oldBtn;
+        }
+    });
+
     document.getElementById('check-updates-btn')?.addEventListener('click', async () => {
         const btn = document.getElementById('check-updates-btn');
         const statusDiv = document.getElementById('update-status');
-        
+
         btn.disabled = true;
         btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.updateArea.checking") : "Suche nach Updates..."}`;
 
@@ -441,14 +399,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.updateArea.error") : "Fehler beim Suchen nach Updates"}`, 'danger');
         }
-        
+
         setTimeout(() => {
             btn.disabled = false;
             btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.checkUpdatesButton") : "Nach Updates suchen"}`;
         }, 3000);
     });
 
-    // Update Event Listeners
     window.electronAPI.onUpdateAvailable?.((event, info) => {
         showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.updateArea.available") : "Update verfügbar: v"}${info.version}`, 'success');
         document.getElementById('update-progress').classList.remove('d-none');
@@ -471,8 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </button>
             </div>
         `;
-        
-        // Event Listener für den Restart Button hinzufügen
+
         document.getElementById('restart-update-btn').addEventListener('click', () => {
             window.electronAPI.restartApp();
         });

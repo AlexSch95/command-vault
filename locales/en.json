@@ -41,6 +41,7 @@
       "descriptionPlaceholder": "Enter your description here... (Markdown supported)",
       "sourcePlaceholder": "Link to the command's source",
       "technologyPlaceholder": "Select a category...",
+      "noTechPlaceholder": "No categories available. Go to settings to add one.",
       "save": "Save Command",
       "cancel": "Reset"
     },
@@ -57,12 +58,15 @@
       "presetThemes": "Presets",
       "lightTheme": "Light Theme",
       "darkTheme": "Dark Theme",
+      "coffeeTheme": "Coffee Theme",
+      "navyTheme": "Navy Theme",
       "customColors": "Custom Colors",
       "backgroundColor": "Background Color",
       "borderColor": "Border Color",
       "accentColor": "Accent Color (Buttons, etc.)",
       "cardBackgroundColor": "Card Background Color",
       "textColor": "Text Color",
+      "textColorCode": "Text Color (Code Block)",
       "saveTheme": "Save Theme",
       "manageDbTitle": "Manage Database",
       "dangerousAction": "Warning: Dangerous Action",
@@ -99,6 +103,14 @@
         "downloading": "Downloading update...",
         "restartAndInstall": "Restart & Install",
         "downloaded": " downloaded! Restart the application to install."
+      },
+      "backupArea": {
+        "title": "Backup Database",
+        "description": "Create a backup copy of your current database. The backup will be saved with the date and time in a separate backups directory.",
+        "location": "Backups are stored in %appdata%/command-vault/backups/.",
+        "startBackupButton": "Create Backup",
+        "starting": "Backup is being created...",
+        "backupCreatedInfo": "Backup created in directory: "
       }
     }
   },
@@ -118,9 +130,10 @@
     "technologyDeleteError": "Error deleting category",
     "dbResetSuccess": "Database successfully reset",
     "dbResetError": "Error resetting database",
+    "backupSuccess": "Backup successfully created!",
+    "dbBackupFailed": "Error creating backup.",
     "themeSaveError": "Error saving theme",
-    "lightThemeApplied": "Light theme applied",
-    "darkThemeApplied": "Dark theme applied"
+    "themeApplied": "Theme applied"
   },
   "labels": {
     "source": "Source (optional)",

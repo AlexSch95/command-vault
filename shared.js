@@ -33,6 +33,7 @@ export async function loadGlobalTheme() {
             root.style.setProperty('--border-color', savedTheme.borderColor);
             root.style.setProperty('--text-primary', savedTheme.textPrimary);
             root.style.setProperty('--accent-color', savedTheme.accentColor);
+            root.style.setProperty('--text-color-code', savedTheme.textColorCode);
         }
     } catch (error) {
         console.error('Fehler beim Laden des globalen Themes:', error);

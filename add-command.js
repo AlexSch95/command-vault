@@ -53,8 +53,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadTechnologies() {
         try {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
-            const techSelect = document.getElementById('tech');
-            console.log(technologies);
+            const techOptions = document.getElementById('tech-options');
+            if (technologies.length < 1) {
+                techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span><a href="settings.html" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i>
+                            </a>`;
+                return;
+            }
+            const techSelect = document.createElement('select');
+            techSelect.className = 'form-select-lg form-select bg-dark border-secondary text-primary';
+            techSelect.id = 'tech';
+            techSelect.required = true;
+            techOptions.appendChild(techSelect);
             technologies.forEach(tech => {
                 const option = document.createElement('option');
                 option.value = tech.tech_id;

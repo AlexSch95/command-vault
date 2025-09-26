@@ -5,6 +5,7 @@
     --border-color: #334155;
     --text-primary: #f1f5f9;
     --accent-color: #0ea5e9;
+    --text-color-code: #0ea5e9;
 }
 
 /* Override Bootstrap dark theme */
@@ -236,9 +237,9 @@ body.bg-dark {
 }
 
 code {
-    background-color: var(--bg-secondary) !important;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--border-color) !important;
+    background-color: transparent !important;
+    color: var(--text-color-code) !important;
+    border: none !important;
     white-space: pre-wrap !important;
     word-break: break-word !important;
     overflow-wrap: break-word !important;
@@ -439,4 +440,65 @@ a i {
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+/* Settings Floating Action Button */
+.settings-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 2px solid var(--border-color);
+}
+
+.settings-button:hover {
+    background-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+    text-decoration: none;
+}
+
+.settings-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+}
+
+button i,
+button span,
+button .bi {
+    pointer-events: none;
+}
+
+/* Rotation Animation beim Hover */
+.settings-button:hover i {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.settings-button i {
+    transition: transform 0.3s ease;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .settings-button {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
 }
