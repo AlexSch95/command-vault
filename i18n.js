@@ -15,8 +15,8 @@ class I18n {
             return true;
         } catch (error) {
             console.error('Failed to load language:', error);
-            if (lang !== 'de') {
-                return await this.loadLanguage('de');
+            if (lang !== 'en') {
+                return await this.loadLanguage('en');
             }
             return false;
         }

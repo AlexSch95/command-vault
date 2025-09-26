@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         setTimeout(() => {
             btn.disabled = false;
-            btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.updateArea.notAvailable") : "Keine Updates verfügbar. Du bist auf dem neuesten Stand!"}`;
+            btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.checkUpdatesButton") : "Nach Updates suchen"}`;
         }, 3000);
     });
 
