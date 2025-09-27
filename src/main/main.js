@@ -18,11 +18,11 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, '../preload/preload.js')
         }
     })
 
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile(path.join(__dirname, '../renderer/pages/index.html'))
 
     // desc: devtools werden automatisch geöffnet wenn in der entwicklungsumgebung
     if (!app.isPackaged) {

@@ -1,4 +1,4 @@
-import { showFeedback, loadGlobalTheme } from "./shared.js";
+import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
 
 //desc: lädt alles erst, wenn das DOM vollständig geladen ist
 document.addEventListener('DOMContentLoaded', async () => {
@@ -35,11 +35,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const result = await window.electronAPI.dbQuery('INSERT INTO commands (tech_id, titel, command, beschreibung, source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
             console.log('Datenbank Ergebnis:', result)
-            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("messages.commandSaved") : "Befehl erfolgreich hinzugefügt!"}` });
+            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.cmdSaved") : "Befehl erfolgreich hinzugefügt!"}` });
             document.getElementById('add-command-form').reset();
         } catch (error) {
             console.error('Datenbank Fehler:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("messages.commandSaveError") : "Fehler beim Hinzufügen des Befehls."}` });
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.cmdSaveError") : "Fehler beim Hinzufügen des Befehls."}` });
         }
     });
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
             const techOptions = document.getElementById('tech-options');
             if (technologies.length < 1) {
-                techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span><a href="settings.html" class="btn btn-outline-primary btn-sm">
+                techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.form.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span><a href="settings.html" class="btn btn-outline-primary btn-sm">
                                 <i class="bi bi-arrow-right"></i>
                             </a>`;
                 return;

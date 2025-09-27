@@ -5,9 +5,9 @@
     <meta charset="UTF-8" />
     <title>Command-Vault: Settings</title>
 
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body class="bg-dark text-primary">
@@ -77,9 +77,9 @@
                 <div class="col">
                     <h1 class="h3 mb-0">
                         <i class="bi bi-gear-fill me-2"></i>
-                        <span data-i18n="pages.settings.title">Einstellungen</span>
+                        <span data-i18n="pages.settings.banner.title">Einstellungen</span>
                     </h1>
-                    <p class="mb-0 mt-2" data-i18n="pages.settings.subtitle">Passe Command Vault an deine Bedürfnisse an
+                    <p class="mb-0 mt-2" data-i18n="pages.settings.banner.subtitle">Passe Command Vault an deine Bedürfnisse an
                     </p>
                 </div>
             </div>
@@ -96,14 +96,14 @@
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-palette me-2"></i>
-                                    <span data-i18n="pages.settings.technologyManagement">Technologien verwalten</span>
+                                    <span data-i18n="pages.settings.categories.title">Technologien verwalten</span>
                                 </h5>
                                 <form id="add-technology-form">
                                     <div class="row g-3">
                                         <div class="col-md-8">
                                             <label for="tech" class="form-label fw-semibold text-primary">
                                                 <i class="bi bi-gear me-1"></i>
-                                                <span data-i18n="pages.settings.chooseTechnologie">Wähle eine
+                                                <span data-i18n="pages.settings.categories.choose">Wähle eine
                                                     Technologie</span>
                                             </label>
                                             <div id="tech-container">
@@ -112,7 +112,7 @@
                                         <div class="col-md-4">
                                             <label for="color" class="form-label fw-semibold text-primary">
                                                 <i class="bi bi-palette me-1"></i>
-                                                <span data-i18n="pages.settings.color">Farbe</span>
+                                                <span data-i18n="pages.settings.categories.color">Farbe</span>
                                             </label>
                                             <input type="color"
                                                 class="form-control form-control-lg bg-dark border-secondary" id="color"
@@ -129,16 +129,16 @@
                                     <div class="mt-4 d-flex gap-3">
                                         <button type="submit" id="add-technology-btn" class="btn btn-primary btn-lg">
                                             <i class="bi bi-save me-2"></i>
-                                            <span data-i18n="pages.settings.saveTechnology">Technologie
+                                            <span data-i18n="pages.settings.categories.buttons.save">Technologie
                                                 abspeichern</span>
                                         </button>
                                         <button id="delete-technology-btn" class="btn btn-danger btn-lg" disabled>
                                             <i class="bi bi-trash me-2"></i>
-                                            <span data-i18n="pages.settings.deleteTechnology">Technologie löschen</span>
+                                            <span data-i18n="pages.settings.categories.buttons.delete">Technologie löschen</span>
                                         </button>
                                         <button type="reset" id="reset-btn" class="btn btn-outline-primary btn-lg">
                                             <i class="bi bi-arrow-clockwise me-2"></i>
-                                            <span data-i18n="pages.settings.reset">Zurücksetzen</span>
+                                            <span data-i18n="pages.settings.categories.buttons.reset">Zurücksetzen</span>
                                         </button>
                                     </div>
                                 </form>
@@ -159,33 +159,33 @@
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-palette me-2"></i>
-                                    <span data-i18n="pages.settings.themeSettingsHeader">Darstellung anpassen</span>
+                                    <span data-i18n="pages.settings.themes.title">Darstellung anpassen</span>
                                 </h5>
                                 <div class="mb-4">
                                     <h6 class="text-primary mb-3">
                                         <i class="bi bi-brightness-high me-2"></i>
-                                        <span data-i18n="pages.settings.presetThemes">Voreinstellungen</span>
+                                        <span data-i18n="pages.settings.themes.preset.title">Voreinstellungen</span>
                                     </h6>
                                     <div class="d-flex gap-3 justify-content-center" id="preset-themes">
                                         <button type="button" class="btn btn-primary px-4" data-theme="light"
                                             id="light-mode-btn">
                                             <i class="bi bi-sun me-2"></i>
-                                            <span data-i18n="pages.settings.lightTheme">Helles Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.lightTheme">Helles Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="dark"
                                             id="dark-mode-btn">
                                             <i class="bi bi-moon me-2"></i>
-                                            <span data-i18n="pages.settings.darkTheme">Dunkles Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.darkTheme">Dunkles Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="coffee"
                                             id="coffee-mode-btn">
                                             <i class="bi bi-cup me-2"></i>
-                                            <span data-i18n="pages.settings.coffeeTheme">Coffee Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.coffeeTheme">Coffee Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="navy"
                                             id="navy-mode-btn">
                                             <i class="bi bi-palette me-2"></i>
-                                            <span data-i18n="pages.settings.navyTheme">Navy Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.navyTheme">Navy Design</span>
                                         </button>
                                     </div>
                                 </div>
@@ -193,14 +193,14 @@
                                 <div class="mb-3">
                                     <h6 class="text-primary mb-3">
                                         <i class="bi bi-sliders me-2"></i>
-                                        <span data-i18n="pages.settings.customColors">Benutzerdefinierte
+                                        <span data-i18n="pages.settings.themes.custom.title">Benutzerdefinierte
                                             Farben</span>
                                     </h6>
                                 </div>
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="bg-primary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.backgroundColor">Hintergrundfarbe</span>
+                                            <span data-i18n="pages.settings.themes.custom.backgroundColor">Hintergrundfarbe</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
                                             <input type="color" class="form-control bg-dark border-secondary"
@@ -209,7 +209,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="bg-secondary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.cardBackgroundColor">Karten
+                                            <span data-i18n="pages.settings.themes.custom.cardBackgroundColor">Karten
                                                 Hintergrundfarbe</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
@@ -219,7 +219,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="border-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.borderColor">Rahmenfarbe</span>
+                                            <span data-i18n="pages.settings.themes.custom.borderColor">Rahmenfarbe</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
                                             <input type="color" class="form-control bg-dark border-secondary"
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="text-primary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.textColor">Textfarbe</span>
+                                            <span data-i18n="pages.settings.themes.custom.textColor">Textfarbe</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
                                             <input type="color" class="form-control bg-dark border-secondary"
@@ -237,7 +237,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="text-color-code" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.textColorCode">Textfarbe (Codeblock)</span>
+                                            <span data-i18n="pages.settings.themes.custom.textColorCode">Textfarbe (Codeblock)</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
                                             <input type="color" class="form-control bg-dark border-secondary"
@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="accent-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.accentColor">Akzentfarbe (Buttons
+                                            <span data-i18n="pages.settings.themes.custom.accentColor">Akzentfarbe (Buttons
                                                 etc.)</span>
                                         </label>
                                         <div class="d-flex align-items-center gap-2">
@@ -258,7 +258,7 @@
                                 <div class="text-center mt-4">
                                     <button type="button" class="btn btn-primary btn-lg px-5" id="save-theme-btn">
                                         <i class="bi bi-check-circle me-2"></i>
-                                        <span data-i18n="pages.settings.saveTheme">Design speichern</span>
+                                        <span data-i18n="pages.settings.themes.custom.saveTheme">Design speichern</span>
                                     </button>
                                 </div>
                             </div>
@@ -278,7 +278,7 @@
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-arrow-clockwise me-2"></i>
-                                    <span data-i18n="pages.settings.updateAppTitle">Anwendung aktualisieren</span>
+                                    <span data-i18n="pages.settings.update.title">Anwendung aktualisieren</span>
                                 </h5>
 
                                 <div class="row g-3">
@@ -286,7 +286,7 @@
                                         <p class="text-primary"><span class="fw-bold"></span></p>
                                         <button type="button" class="btn btn-primary" id="check-updates-btn">
                                             <i class="bi bi-search me-2"></i>
-                                            <span data-i18n="pages.settings.checkUpdatesButton">Nach Updates
+                                            <span data-i18n="pages.settings.update.checkButton">Nach Updates
                                                 suchen</span>
                                         </button>
                                     </div>
@@ -318,19 +318,19 @@
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-shield-check me-2"></i>
-                                    <span data-i18n="pages.settings.backupArea.title">Datenbank sichern</span>
+                                    <span data-i18n="pages.settings.backupDb.title">Datenbank sichern</span>
                                 </h5>
 
                                 <div class="alert alert-info bg-dark border-info text-info mb-4" role="alert">
                                     <div class="d-flex align-items-start">
                                         <i class="bi bi-info-circle-fill me-3 mt-1" style="font-size: 1.2rem;"></i>
                                         <div>
-                                            <p class="mb-2" data-i18n="pages.settings.backupArea.description">
+                                            <p class="mb-2" data-i18n="pages.settings.backupDb.description">
                                                 Erstelle eine Sicherungskopie deiner aktuellen Datenbank. Das Backup
                                                 wird mit Datum und Uhrzeit im gleichen Verzeichnis wie die ursprüngliche
                                                 Datenbank gespeichert.
                                             </p>
-                                            <p class="mb-0 small" data-i18n="pages.settings.backupArea.location">
+                                            <p class="mb-0 small" data-i18n="pages.settings.backupDb.location">
                                                 Backups werden unter %appdata%/command-vault/backups/ gespeichert.
                                             </p>
                                         </div>
@@ -340,7 +340,7 @@
                                 <div class="text-center">
                                     <button type="button" class="btn btn-success btn-lg" id="backup-database-btn">
                                         <i class="bi bi-download me-2"></i>
-                                        <span data-i18n="pages.settings.backupArea.startBackupButton">Backup
+                                        <span data-i18n="pages.settings.backupDb.startBackupButton">Backup
                                             erstellen</span>
                                     </button>
                                     <p id="backup-path" class="mt-5 text-primary"></p>
@@ -362,7 +362,7 @@
                             <div class="mb-5">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-database me-2"></i>
-                                    <span data-i18n="pages.settings.manageDbTitle">Datenbank verwalten</span>
+                                    <span data-i18n="pages.settings.clearDb.title">Datenbank bereinigen</span>
                                 </h5>
 
                                 <!-- Warnung für Datenbank Reset -->
@@ -372,15 +372,15 @@
                                             style="font-size: 1.2rem;"></i>
                                         <div>
                                             <h5 class="alert-heading text-warning mb-4">
-                                                <strong data-i18n="pages.settings.dangerousAction">Achtung: Gefährliche
+                                                <strong data-i18n="pages.settings.clearDb.dangerousAction">Achtung: Gefährliche
                                                     Aktion</strong>
                                                 </h6>
-                                                <p class="mb-2" data-i18n="pages.settings.resetDbWarning">
+                                                <p class="mb-2" data-i18n="pages.settings.clearDb.warning">
                                                     Dies wird alle deine gespeicherten Befehle und Technologien
                                                     dauerhaft löschen. Diese Aktion kann nicht rückgängig gemacht
                                                     werden.
                                                 </p>
-                                                <p class="mb-0 small" data-i18n="pages.settings.backupDbHint">
+                                                <p class="mb-0 small" data-i18n="pages.settings.clearDb.backupHint">
                                                     Es wird empfohlen, vor der Bereinigung ein Backup deiner Datenbank
                                                     zu erstellen. Die Datenbank findest du unter dem Pfad
                                                     %appdata%/command-vault/ unter dem Namen database.db
@@ -391,7 +391,7 @@
                                         <button type="button" class="btn btn-danger btn-lg px-5"
                                             id="reset-database-btn">
                                             <i class="bi bi-trash3 me-2"></i>
-                                            <span data-i18n="pages.settings.resetDbButton">Datenbank bereinigen</span>
+                                            <span data-i18n="pages.settings.clearDb.resetDbButton">Datenbank bereinigen</span>
                                         </button>
                                     </div>
                                 </div>
@@ -404,9 +404,9 @@
     </div>
 
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="i18n.js"></script>
-    <script type="module" src="settings.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/shared/i18n.js"></script>
+    <script type="module" src="../js/pages/settings.js"></script>
 </body>
 
 </html>

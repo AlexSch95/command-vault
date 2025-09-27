@@ -1,0 +1,221 @@
+{
+    "nav": {
+        "home": "Startseite",
+        "addCommand": "Befehl hinzufügen",
+        "viewCommands": "Befehle anzeigen",
+        "settings": "Einstellungen"
+    },
+    "pages": {
+        "index": {
+            "welcomeText": "Verwalte deine wichtigsten Befehle an einem Ort. Speichere, organisiere und finde schnell die Befehle, die du brauchst. Vergessen war gestern.",
+            "feature1": {
+                "title": "Personalisierbar",
+                "desc": "Strukturiere deine Befehle nach Kategorien für eine bessere Übersicht die genau für DICH gemacht ist."
+            },
+            "feature2": {
+                "title": "Schnelle Übersicht",
+                "desc": "Finde deine gespeicherten Befehle schnell und einfach durch intelligente Such- und Filterfunktionen."
+            },
+            "feature3": {
+                "title": "Sicher & Lokal",
+                "desc": "Deine Daten bleiben lokal auf deinem Gerät. Keine Cloud, keine Sorgen."
+            },
+            "buttons": {
+                "newCmdButton": "Neuen Befehl hinzufügen",
+                "findCmdButton": "Befehle durchsuchen"
+            }
+        },
+        "viewCommands": {
+            "banner": {
+                "title": "Mein Command-Vault",
+                "subtitle": "Durchsuche und verwalte deine gespeicherten Befehle"
+            },
+            "buttons": {
+                "addNew": "Neuen Befehl hinzufügen",
+                "toSource": "Zur Quelle",
+                "edit": "Bearbeiten",
+                "delete": "Löschen"
+            },
+            "filter": {
+                "searchPlaceholder": "Commands durchsuchen...",
+                "allTechnologies": "Alle Kategorien"
+            },
+            "contentPlaceholder": {
+                "noCommands": "Hier ist noch nichts... Füge deinen ersten Befehl hinzu!"
+            },
+            "cmdCard": {
+                "titleLabel": "Titel",
+                "cmdBoxLabel": "Befehl",
+                "descLabel": "Beschreibung",
+                "sourceLabel": "Quelle",
+                "createdAt": "Hinzugefügt am",
+                "markdownSupported": "Markdown wird unterstützt"
+            },
+            "messages": {
+                "cmdLoadError": "Fehler beim Laden der Befehle.",
+                "categoryLoadError": "Fehler beim Laden der Kategorien.",
+                "cmdDeleted": "Befehl erfolgreich gelöscht.",
+                "cmdDeleteError": "Fehler beim Löschen des Befehls.",
+                "copySuccess": "In Zwischenablage kopiert!",
+                "copyError": "Fehler beim Kopieren in Zwischenablage."
+            }
+        },
+        "addCommand": {
+            "banner": {
+                "title": "Neuen Befehl hinzufügen",
+                "subtitle": "Speichere einen neuen Befehl in deinem Command-Vault"
+            },
+            "form": {
+                "categoryLabel": "Kategorie",
+                "titleLabel": "Titel",
+                "commandLabel": "Befehl",
+                "sourceLabel": "Quelle (optional)",
+                "descriptionLabel": "Beschreibung",
+                "markdownSupported": "Markdown wird unterstützt",
+                "titlePlaceholder": "Titel des Befehls",
+                "commandPlaceholder": "Gib hier deinen Befehl ein...",
+                "sourcePlaceholder": "Link zur Quelle des Befehls",
+                "descriptionPlaceholder": "Gib hier deine Beschreibung ein... (Markdown wird unterstützt)",
+                "noTechPlaceholder": "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."
+            },
+            "buttons": {
+                "save": "Befehl abspeichern",
+                "cancel": "Abbrechen"
+            },
+            "messages": {
+                "cmdSaved": "Befehl erfolgreich gespeichert.",
+                "cmdSaveError": "Fehler beim Speichern des Befehls. Bitte überprüfe deine Eingaben."
+            }
+        },
+        "settings": {
+            "banner": {
+                "title": "Einstellungen",
+                "subtitle": "Passe Command Vault an deine Bedürfnisse an"
+            },
+            "categories": {
+                "title": "Kategorien verwalten",
+                "choose": "Wähle eine Kategorie",
+                "color": "Farbe",
+                "noCategories": "Hier ist noch nichts...",
+                "categoryPlaceholder": "Kategorie auswählen...",
+                "buttons": {
+                    "save": "Kategorie abspeichern",
+                    "delete": "Kategorie löschen",
+                    "reset": "Zurücksetzen",
+                    "addNew": "Neue Kategorie"
+                },
+                "messages": {
+                    "categorySaved": "Kategorie erfolgreich gespeichert.",
+                    "categorySaveError": "Fehler beim Hinzufügen der Kategorie.",
+                    "categoryUpdated": "Kategorie erfolgreich aktualisiert.",
+                    "categoryUpdateError": "Fehler beim Aktualisieren der Kategorie.",
+                    "categoryDeleted": "Kategorie erfolgreich gelöscht.",
+                    "categoryDeleteError": "Fehler beim Löschen der Kategorie."
+                },
+                "modal": {
+                    "title": "Kategorie löschen",
+                    "warning": "ACHTUNG: Dadurch werden alle zugehörigen Commands ebenfalls gelöscht!",
+                    "confirmThisp1": "Gib den Namen der Kategorie",
+                    "confirmThisp2": "ein, um das Löschen zu bestätigen:",
+                    "cancelButton": "Abbrechen",
+                    "deleteButton": "Löschen"
+                }
+            },
+            "themes": {
+                "title": "Darstellung anpassen",
+                "preset": {
+                    "title": "Voreinstellungen",
+                    "lightTheme": "Helles Design",
+                    "darkTheme": "Dunkles Design",
+                    "coffeeTheme": "Coffee Design",
+                    "navyTheme": "Navy Design"
+                },
+                "custom": {
+                    "title": "Benutzerdefinierte Farben",
+                    "backgroundColor": "Hintergrundfarbe",
+                    "borderColor": "Rahmenfarbe",
+                    "accentColor": "Akzentfarbe (Buttons etc.)",
+                    "cardBackgroundColor": "Karten-Hintergrundfarbe",
+                    "textColor": "Textfarbe",
+                    "textColorCode": "Textfarbe (Codeblock)",
+                    "saveTheme": "Design speichern"
+                },
+                "messages": {
+                    "themeApplied": "Design wurde angewendet",
+                    "themeSaveError": "Fehler beim Speichern des Designs"
+                }
+            },
+            "update": {
+                "title": "Anwendung aktualisieren",
+                "checkButton": "Nach Updates suchen",
+                "checking": "Suche nach Updates...",
+                "available": "Update verfügbar: v",
+                "notAvailable": "Keine Updates verfügbar. Du bist auf dem neuesten Stand!",
+                "error": "Fehler beim Überprüfen auf Updates.",
+                "downloading": "Update wird heruntergeladen...",
+                "restartAndInstall": "Neu starten & installieren",
+                "downloaded": " heruntergeladen! Starte die Anwendung neu, um zu installieren.",
+                "checkUpdatesButton": "Nach Updates suchen"
+            },
+            "backupDb": {
+                "title": "Datenbank sichern",
+                "description": "Erstelle eine Sicherungskopie deiner aktuellen Datenbank. Das Backup wird mit Datum und Uhrzeit in einem separaten Backup-Verzeichnis gespeichert.",
+                "location": "Backups werden unter %appdata%/command-vault/backups/ gespeichert.",
+                "startBackupButton": "Backup erstellen",
+                "starting": "Backup wird erstellt...",
+                "backupCreatedInfo": "Backup erstellt in Verzeichnis: ",
+                "messages": {
+                    "backupSuccess": "Backup erfolgreich erstellt!",
+                    "dbBackupFailed": "Fehler beim Erstellen des Backups."
+                }
+            },
+            "clearDb": {
+                "title": "Datenbank bereinigen",
+                "description": "Bereinige deine Datenbank, indem du alle gespeicherten Befehle und Kategorien dauerhaft löschst. Diese Aktion kann nicht rückgängig gemacht werden.",
+                "warning": "WARNUNG: Diese Aktion wird ALLE deine gespeicherten Befehle und Kategorien dauerhaft löschen!",
+                "backupHint": "Es wird empfohlen, vor der Bereinigung ein Backup deiner Datenbank zu erstellen. Die Datenbank findest du unter dem Pfad %appdata%/command-vault/ unter dem Namen database.db",
+                "resetDbButton": "Datenbank bereinigen",
+                "dangerousAction": "Achtung: Gefährliche Aktion",
+                "messages": {
+                    "dbResetSuccess": "Datenbank erfolgreich bereinigt",
+                    "dbResetError": "Fehler beim Bereinigen der Datenbank"
+                },
+                "modal": {
+                    "title": "Datenbank bereinigen",
+                    "lastWarning": "LETZTE WARNUNG:",
+                    "warningText1": "Diese Aktion wird ALLE Befehle und Kategorien unwiderruflich löschen!",
+                    "warningText2": "Stelle sicher, dass du ein Backup hast, bevor du fortfährst.",
+                    "confirmThis1": "Gib ",
+                    "confirmThisWord": "DATENBANK BEREINIGEN",
+                    "confirmThis2": " ein, um das Löschen zu bestätigen:",
+                    "cancelButton": "Abbrechen",
+                    "deleteButton": "Datenbank bereinigen"
+                }
+            },
+            "manageDbTitle": "Datenbank verwalten",
+            "resetDbWarning": "Dies wird alle deine gespeicherten Befehle und Kategorien dauerhaft löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+            "backupDbHint": "Es wird empfohlen, vor der Bereinigung ein Backup deiner Datenbank zu erstellen. Die Datenbank findest du unter dem Pfad %appdata%/command-vault/ unter dem Namen database.db",
+            "resetDbButton": "Datenbank bereinigen",
+            "updateAppTitle": "Anwendung aktualisieren",
+            "checkUpdatesButton": "Nach Updates suchen",
+            "addTechButton": "Neue Kategorie",
+            "updateArea": {
+                "checking": "Suche nach Updates...",
+                "available": "Update verfügbar: v",
+                "notAvailable": "Keine Updates verfügbar. Du bist auf dem neuesten Stand!",
+                "error": "Fehler beim Überprüfen auf Updates.",
+                "downloading": "Update wird heruntergeladen...",
+                "restartAndInstall": "Neu starten & installieren",
+                "downloaded": " heruntergeladen! Starte die Anwendung neu, um zu installieren."
+            },
+            "backupArea": {
+                "title": "Datenbank sichern",
+                "description": "Erstelle eine Sicherungskopie deiner aktuellen Datenbank. Das Backup wird mit Datum und Uhrzeit in einem separaten Backup-Verzeichnis gespeichert.",
+                "location": "Backups werden unter %appdata%/command-vault/backups/ gespeichert.",
+                "startBackupButton": "Backup erstellen",
+                "starting": "Backup wird erstellt...",
+                "backupCreatedInfo": "Backup erstellt in Verzeichnis: "
+            }
+        }
+    }
+}

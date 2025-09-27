@@ -2,9 +2,9 @@
   "name": "command-vault",
   "version": "1.3.2",
   "description": "Eine moderne Electron-App zur Verwaltung von Programmierbefehlen",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron src/main/main.js",
     "build": "electron-builder",
     "dist": "electron-builder --publish=never",
     "build-win": "electron-builder --win",
@@ -32,15 +32,8 @@
       "output": "dist"
     },
     "files": [
-      "main.js",
-      "preload.js",
-      "*.html",
-      "*.css",
-      "*.js",
-      "node_modules/bootstrap/**/*",
-      "node_modules/sqlite3/**/*",
-      "node_modules/marked/**/*",
-      "locales/**/*"
+      "src/**/*",
+      "node_modules/**/*"
     ],
     "win": {
       "target": "nsis",

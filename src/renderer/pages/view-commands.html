@@ -5,9 +5,9 @@
     <meta charset="UTF-8" />
     <title>Command-Vault: View Commands</title>
 
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body class="bg-dark text-primary">
@@ -75,14 +75,14 @@
                 <div class="col">
                     <h1 class="h3 mb-0">
                         <i class="bi bi-list-ul me-2"></i>
-                        <span data-i18n="pages.viewCommands.title"></span>
+                        <span data-i18n="pages.viewCommands.banner.title"></span>
                     </h1>
-                    <p class="mb-0 mt-2" data-i18n="pages.viewCommands.subtitle"></p>
+                    <p class="mb-0 mt-2" data-i18n="pages.viewCommands.banner.subtitle"></p>
                 </div>
                 <div class="col-auto">
                     <a href="add-command.html" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle me-2"></i>
-                        <span data-i18n="pages.viewCommands.addNew">Neuen Befehl hinzufügen</span>
+                        <span data-i18n="pages.viewCommands.buttons.addNew">Neuen Befehl hinzufügen</span>
                     </a>
                 </div>
             </div>
@@ -98,12 +98,12 @@
                             <i class="bi bi-search"></i>
                         </span>
                         <input type="text" class="form-control bg-dark border-secondary text-primary"
-                            placeholder="Commands durchsuchen..." data-i18n="pages.viewCommands.searchPlaceholder" id="searchInput">
+                            placeholder="Commands durchsuchen..." data-i18n="pages.viewCommands.filter.searchPlaceholder" id="searchInput">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select bg-dark border-secondary text-primary" id="technologyFilter">
-                        <option value="" data-i18n="pages.viewCommands.allTechnologies">Alle Technologien</option>
+                        <option value="" data-i18n="pages.viewCommands.filter.allTechnologies">Alle Technologien</option>
                     </select>
                 </div>
             </div>
@@ -117,10 +117,10 @@
         </div>
     </div>
 
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="node_modules/marked/lib/marked.umd.js"></script>
-    <script src="i18n.js"></script>
-    <script type="module" src="view-commands.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../node_modules/marked/lib/marked.umd.js"></script>
+    <script src="../js/shared/i18n.js"></script>
+    <script type="module" src="../js/pages/view-commands.js"></script>
 </body>
 
 </html>
