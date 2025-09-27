@@ -124,24 +124,24 @@ command-vault/
 
 ## 🎯 Verwendung
 
-### **1. Erste Technologie erstellen**
+### **1. Erste Kategorie erstellen**
 1. Öffne die Einstellungen (Zahnrad-Icon in der Navbar)
-2. Scrolle zu "Technologien verwalten"
-3. Klicke auf "Neue Technologie"
+2. Scrolle zu "Kategorie verwalten"
+3. Klicke auf "Neue Kategorie"
 4. Gib einen Namen ein (z.B. "Git", "Linux", "Docker")
-5. Wähle eine Farbe für die Technologie
-6. Speichere die Technologie
+5. Wähle eine Farbe für die Kategorie
+6. Speichere die Kategorie
 
 ### **2. Ersten Befehl hinzufügen**
 1. Navigiere zu "Befehl hinzufügen"
-2. Wähle eine der erstellten Technologien aus
-3. Gib Titel, Command und Beschreibung ein
+2. Wähle eine der erstellten Kategorien aus
+3. Gib Titel, Befehl und Beschreibung ein
 4. Optional: Füge einen Quell-Link hinzu
 5. Speichere den Befehl
 
 ### **3. Befehle durchsuchen**
 1. Gehe zu "Befehle anzeigen"
-2. Nutze die Suchfunktion oder Filter nach Technologie
+2. Nutze die Suchfunktion oder Filter nach Kategorie
 3. Klicke auf das Kopier-Icon um Commands zu kopieren
 4. Bearbeite oder lösche Befehle direkt
 
@@ -152,16 +152,16 @@ command-vault/
 4. Erstelle ein custom Theme mit eigenen Farben
 5. Klicke "Übernehmen" - Theme wird sofort aktiv
 
-### **5. Technologien verwalten**
-1. In den Einstellungen findest du "Technologien verwalten"
-2. Wähle eine existierende Technologie zum Bearbeiten
+### **5. Kategorien verwalten**
+1. In den Einstellungen findest du "Kategorie verwalten"
+2. Wähle eine existierende Kategorie zum Bearbeiten
 3. Ändere Name oder Farbe nach Belieben
-4. Lösche Technologien (⚠️ entfernt auch alle zugehörigen Commands)
+4. Lösche Kategorien (⚠️ entfernt auch alle zugehörigen Commands)
 
 ## 💡 Tipps
 
 - **Nutze aussagekräftige Titel** für deine Commands
-- **Organisiere mit Technologien** für bessere Übersicht
+- **Organisiere mit Kategorien** für bessere Übersicht
 - **Verwende Beschreibungen** für komplexere Commands
 - **Teste deine Themes** in verschiedenen Bereichen der App
 - **Erstelle regelmäßig Backups** deiner Datenbank
