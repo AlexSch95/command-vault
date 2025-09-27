@@ -23,8 +23,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.i18n.updatePage();
         });
     });
-    
-    
+
+    document.getElementById("minimize-btn").addEventListener("click", () => {
+        window.electronAPI.minimizeWindow();
+    });
+    document.getElementById("close-btn").addEventListener("click", () => {
+        window.electronAPI.closeWindow();
+    });
+
+
     //desc: initiales laden des contents, theme wird geladen und alle technologien
     loadGlobalTheme();
     loadTechnologies();

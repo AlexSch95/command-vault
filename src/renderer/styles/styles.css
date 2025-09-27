@@ -57,6 +57,89 @@ body.bg-dark {
         2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.custom-titlebar {
+    height: 50px;
+    background: var(--bg-secondary) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    -webkit-app-region: drag;
+    border-bottom: 1px solid #333;
+}
+
+.titlebar-title {
+    font-size: 14px;
+    color: var(--text-primary) !important;
+    font-weight: 500;
+    -webkit-app-region: drag;
+    pointer-events: none;
+}
+
+.titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    -webkit-app-region: no-drag;
+}
+
+.titlebar-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    -webkit-app-region: drag;
+    pointer-events: none;
+}
+
+.titlebar-controls {
+    display: flex;
+    -webkit-app-region: no-drag;
+    align-items: center;
+}
+.titlebar-controls .dropdown {
+    -webkit-app-region: no-drag;
+    align-items: center;
+}
+
+.titlebar-controls.settingspage {
+    top: 50px;
+    right: 50px;
+    z-index: 9999;
+    -webkit-app-region: no-drag;
+    position: fixed;
+}
+
+.titlebar-btn {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--bs-primary);
+    font-size: 20px;
+    transition: background-color 0.2s;
+}
+
+.titlebar-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.titlebar-btn.close:hover {
+    background-color: #e81123;
+    color: white;
+}
+
+
+body.custom-window {
+    padding-top: 32px; 
+}
+
+.navbar.fixed-top {
+    top: 50px; 
+}
+
 .navbar.bg-dark {
     background-color: var(--bg-secondary) !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -104,83 +187,98 @@ body.bg-dark {
     }
 }
 
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 8px var(--accent-color) !important;
+    transition: all 0.3s ease;
+}
+
 .card.bg-secondary {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
 }
 
-.card-header.bg-dark {
+.card-header {
     background-color: var(--bg-secondary) !important;
 }
 
-.form-control.bg-dark {
-    background-color: var(--bg-secondary) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-}
-
-.form-control.bg-dark:focus {
+.form-control {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
-    box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25) !important;
+    transition: all 0.3s ease;
 }
 
-.form-control.bg-dark::placeholder {
+.form-control:focus {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 5px 0.25rem var(--accent-color) !important;
+}
+
+.form-control::placeholder {
     color: var(--text-primary) !important;
     opacity: 0.7 !important;
 }
 
-.form-control.bg-dark:focus::placeholder {
+.form-control:focus::placeholder {
     color: var(--text-primary) !important;
     opacity: 0.4 !important;
 }
 
-.form-select.bg-dark {
+.form-select {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
+    transition: all 0.3s ease;
 }
 
-.form-select.bg-dark:hover {
+.form-select:hover {
     background-color: var(--bg-secondary) !important;
     filter: brightness(1.2) !important;
 }
 
-.form-select.bg-dark:focus {
+.form-select:focus {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
-    box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25) !important;
+    box-shadow: 0 0 5px 0.25rem var(--accent-color) !important;
 }
 
-.form-select.bg-dark option {
+.form-select option {
     background-color: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
 }
 
-.form-select.bg-dark option:hover {
+.form-select option:hover {
     background-color: var(--border-color) !important;
     background: var(--border-color) !important;
     color: var(--text-primary) !important;
 }
 
-.form-select.bg-dark option:focus {
+.form-select option:focus {
     background-color: var(--border-color) !important;
     background: var(--border-color) !important;
     color: var(--text-primary) !important;
 }
 
-.form-select.bg-dark option:checked {
+.form-select option:checked {
     background-color: var(--bg-secondary) !important;
     background: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
 }
 
-.form-select.bg-dark option:selected {
+.form-select option:selected,
+.form-select option[selected] {
     background-color: var(--accent-color) !important;
     background: var(--accent-color) !important;
     color: var(--text-primary) !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 @-moz-document url-prefix() {
@@ -318,7 +416,9 @@ button .bi {
 
 .errorbox {
     z-index: 9999;
-    min-width: 300px;
+    position: fixed;
+    bottom: 5px;
+    right: 20px;
 }
 
 .spin {
@@ -511,10 +611,177 @@ code {
     line-height: 0;
 }
 
+/* Side Navigation */
+.side-nav {
+    position: fixed;
+    top: 30%;
+    left: 20px;
+    z-index: 1000;
+}
+
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-divider {
+    width: 30px;
+    height: 4px;
+    background-color: var(--border-color);
+    border: none;
+    margin: 6px auto;
+    opacity: 0.6;
+}
+
+.nav-button {
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 2px solid var(--border-color);
+}
+
+.nav-button:hover {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+}
+
+.nav-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(110, 110, 110, 0.3);
+}
+
+.nav-button.active {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    transform: scale(1.05);
+}
+
+.nav-button i {
+    transition: transform 0.3s ease;
+}
+
+.nav-button:hover i {
+    transform: rotate(10deg);
+}
+
+.nav-button#settingsButton:hover i {
+    transform: rotate(90deg);
+}
+
+.main-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 6px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 6px;
+    border: 2px solid var(--bg-primary);
+    transition: background 0.3s ease;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+}
+
+.main-content::-webkit-scrollbar-corner {
+    background: var(--bg-primary);
+}
+
+.main-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--bg-primary);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--bg-primary);
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 6px;
+    border: 2px solid var(--bg-primary);
+    transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
-    .settings-button {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+    .main-content { 
+        left: 0;
+        bottom: 90px;
+    }
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .side-nav {
+        top: auto;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .nav-buttons {
+        flex-direction: row;
+        gap: 10px;
+    }
+    
+    .nav-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
     }
 }

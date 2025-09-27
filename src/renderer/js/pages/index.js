@@ -11,6 +11,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadGlobalTheme();
     });
 
+    document.getElementById("minimize-btn").addEventListener("click", () => {
+        window.electronAPI.minimizeWindow();
+    });
+    document.getElementById("close-btn").addEventListener("click", () => {
+        window.electronAPI.closeWindow();
+    });
+
     loadGlobalTheme();
 
     const languageSwitchers = document.querySelectorAll('.language-switcher');

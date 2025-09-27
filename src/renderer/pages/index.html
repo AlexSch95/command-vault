@@ -12,305 +12,326 @@
 </head>
 
 <body class="bg-dark text-primary">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <i class="text-primary bi bi-terminal me-2"></i>
-                <span class="fw-bold text-primary">Command Vault</span>
-            </a>
-            
-            <div class="d-flex align-items-center order-lg-3">
-                <div class="dropdown me-3">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
-                        <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
-                    </ul>
-                </div>
-
-                <a class="settings-button" id="settingsButton" href="#">
-                    <i class="bi bi-gear"></i>
+    <div class="custom-titlebar fixed-top">
+        <div class="titlebar-left">
+            <img src="../assets/safe.ico" alt="Command Vault" class="titlebar-icon">
+            <div class="titlebar-title text-primary">Command Vault</div>
+        </div>
+        <div class="titlebar-controls">
+            <div class="dropdown me-4">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
                 </a>
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            
-            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-primary active" href="index.html">
-                            <i class="bi bi-house me-1"></i>
-                            <span data-i18n="nav.home">Home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>
-                            <span data-i18n="nav.addCommand">Befehl hinzufügen</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>
-                            <span data-i18n="nav.viewCommands">Befehle anzeigen</span>
-                        </a>
-                    </li>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
+                    <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
                 </ul>
             </div>
+            <button class="titlebar-btn text-primary rounded-2" id="minimize-btn" title="Minimieren">
+                <i class="bi bi-dash"></i>
+            </button>
+            <button class="titlebar-btn close rounded-2" id="close-btn" title="Schließen">
+                <i class="bi bi-x text-primary"></i>
+            </button>
+        </div>
+    </div>
+    <nav class="side-nav">
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-button active" title="Home">
+                <i class="bi bi-house"></i>
+            </a>
+            <a href="add-command.html" class="nav-button" title="Befehl hinzufügen">
+                <i class="bi bi-plus"></i>
+            </a>
+            <a href="view-commands.html" class="nav-button" title="Befehle anzeigen">
+                <i class="bi bi-list-ul"></i>
+            </a>
+            <hr class="nav-divider">
+            <a id="settingsButton" href="#" class="nav-button" title="Einstellungen">
+                <i class="bi bi-gear"></i>
+            </a>
         </div>
     </nav>
 
-    <div class="py-5 mt-5">
-        <div class="container">
-            <div class="card bg-secondary border-secondary shadow-lg text-primary p-5 rounded-5">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <p class="lead mb-5 fs-4" data-i18n="pages.index.welcomeText">Verwalte deine wichtigsten Befehle
-                            an einem Ort. Speichere,
-                            organisiere und finde schnell die Befehle, die du brauchst. Vergessen war gestern.</p>
-                        <div class="d-flex gap-3 flex-wrap">
-                            <a href="#intro" class="btn btn-primary btn-lg px-4 py-3">
-                                <i class="bi bi-arrow-right me-2"></i><span
-                                    data-i18n="pages.index.buttons.toGetStarted">Zur Einführung</span>
-                            </a>
+    <!-- Scrollable Content Container -->
+    <div class="main-content">
+        <div class="py-5 mt-5">
+            <div class="container">
+                <div class="card bg-secondary border-secondary shadow-lg text-primary p-5 rounded-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <p class="lead mb-5 fs-4" data-i18n="pages.index.welcomeText">Verwalte deine wichtigsten
+                                Befehle
+                                an einem Ort. Speichere,
+                                organisiere und finde schnell die Befehle, die du brauchst. Vergessen war gestern.</p>
+                            <div class="d-flex gap-3 flex-wrap">
+                                <a href="#intro" class="btn btn-primary btn-lg px-4 py-3">
+                                    <i class="bi bi-arrow-right me-2"></i><span
+                                        data-i18n="pages.index.buttons.toGetStarted">Zur Einführung</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="text-center text-accent">
-                            <i class="bi bi-terminal" style="font-size: 12rem; opacity: 0.4;"></i>
+                        <div class="col-lg-6">
+                            <div class="text-center text-accent">
+                                <i class="bi bi-terminal" style="font-size: 12rem; opacity: 0.4;"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div>
-        <div class="container">
-            <div class="row g-4 align-items-stretch">
-                <div class="col-md-4 d-flex">
-                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
-                        <div class="card-body text-center text-primary p-4 d-flex flex-column">
-                            <i class="bi bi-code-square text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature1.title">Personalisierung
-                            </h5>
-                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature1.desc">Strukturiere deine
-                                Befehle nach Kategorien und Tags für
-                                eine bessere Übersicht die genau für DICH gemacht ist.</p>
+        <div>
+            <div class="container">
+                <div class="row g-4 align-items-stretch">
+                    <div class="col-md-4 d-flex">
+                        <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                            <div class="card-body text-center text-primary p-4 d-flex flex-column">
+                                <i class="bi bi-code-square text-accent mb-4" style="font-size: 4rem;"></i>
+                                <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature1.title">Personalisierung
+                                </h5>
+                                <p class="card-text flex-grow-1" data-i18n="pages.index.feature1.desc">Strukturiere
+                                    deine
+                                    Befehle nach Kategorien und Tags für
+                                    eine bessere Übersicht die genau für DICH gemacht ist.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 d-flex">
-                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
-                        <div class="card-body text-center text-primary p-4 d-flex flex-column">
-                            <i class="bi bi-search text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature2.title">Schnelle Suche</h5>
-                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature2.desc">Finde deine
-                                gespeicherten Befehle schnell und einfach durch
-                                intelligente Such- und Filterfunktionen.</p>
+                    <div class="col-md-4 d-flex">
+                        <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                            <div class="card-body text-center text-primary p-4 d-flex flex-column">
+                                <i class="bi bi-search text-accent mb-4" style="font-size: 4rem;"></i>
+                                <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature2.title">Schnelle Suche
+                                </h5>
+                                <p class="card-text flex-grow-1" data-i18n="pages.index.feature2.desc">Finde deine
+                                    gespeicherten Befehle schnell und einfach durch
+                                    intelligente Such- und Filterfunktionen.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 d-flex">
-                    <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
-                        <div class="card-body text-center text-primary p-4 d-flex flex-column">
-                            <i class="bi bi-shield-check text-accent mb-4" style="font-size: 4rem;"></i>
-                            <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature3.title">Lokale Speicherung
-                            </h5>
-                            <p class="card-text flex-grow-1" data-i18n="pages.index.feature3.desc">Alle deine Befehle
-                                werden sicher lokal in einer
-                                SQLite-Datenbank gespeichert. </p>
+                    <div class="col-md-4 d-flex">
+                        <div class="card bg-secondary border-secondary shadow-lg rounded-5 flex-fill">
+                            <div class="card-body text-center text-primary p-4 d-flex flex-column">
+                                <i class="bi bi-shield-check text-accent mb-4" style="font-size: 4rem;"></i>
+                                <h5 class="card-title fs-5 mb-3" data-i18n="pages.index.feature3.title">Lokale
+                                    Speicherung
+                                </h5>
+                                <p class="card-text flex-grow-1" data-i18n="pages.index.feature3.desc">Alle deine
+                                    Befehle
+                                    werden sicher lokal in einer
+                                    SQLite-Datenbank gespeichert. </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="py-5" id="intro">
-        <div class="container">
-            <div class="card bg-secondary border-secondary shadow-lg rounded-5">
-                <div class="card-body p-5">
-                    <div class="text-center mb-5">
-                        <h2 class="fw-bold text-primary mb-3" data-i18n="pages.index.gettingStarted.title">Erste
-                            Schritte</h2>
-                        <p class="lead text-primary opacity-75" data-i18n="pages.index.gettingStarted.subtitle">Starte
-                            in wenigen Minuten mit der Verwaltung deiner Befehle</p>
-                    </div>
+        <div class="py-5" id="intro">
+            <div class="container">
+                <div class="card bg-secondary border-secondary shadow-lg rounded-5">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-5">
+                            <h2 class="fw-bold text-primary mb-3" data-i18n="pages.index.gettingStarted.title">Erste
+                                Schritte</h2>
+                            <p class="lead text-primary opacity-75" data-i18n="pages.index.gettingStarted.subtitle">
+                                Starte
+                                in wenigen Minuten mit der Verwaltung deiner Befehle</p>
+                        </div>
 
-                    <div class="row g-4 mb-4 justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold">1</span>
+                        <div class="row g-4 mb-4 justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold">1</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2"
+                                            data-i18n="pages.index.gettingStarted.step1.title">
+                                            Erste Technologie erstellen</h5>
+                                        <ul class="list-unstyled text-primary small mb-0">
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step1.point1">Öffne die
+                                                    Einstellungen (Zahnrad-Icon in der Navbar)</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step1.point2">Scrolle zu
+                                                    "Technologien verwalten"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step1.point3">Klicke auf "Neue
+                                                    Technologie"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step1.point4">Gib einen Namen
+                                                    ein
+                                                    (z.B. "Git", "Linux", "Docker")</span></li>
+                                            <li><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step1.point5">Wähle eine Farbe
+                                                    und
+                                                    speichere</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step1.title">
-                                        Erste Technologie erstellen</h5>
-                                    <ul class="list-unstyled text-primary small mb-0">
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step1.point1">Öffne die
-                                                Einstellungen (Zahnrad-Icon in der Navbar)</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step1.point2">Scrolle zu
-                                                "Technologien verwalten"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step1.point3">Klicke auf "Neue
-                                                Technologie"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step1.point4">Gib einen Namen ein
-                                                (z.B. "Git", "Linux", "Docker")</span></li>
-                                        <li><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step1.point5">Wähle eine Farbe und
-                                                speichere</span></li>
-                                    </ul>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold">2</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2"
+                                            data-i18n="pages.index.gettingStarted.step2.title">
+                                            Ersten Befehl hinzufügen</h5>
+                                        <ul class="list-unstyled text-primary small mb-0">
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step2.point1">Navigiere zu
+                                                    "Befehl
+                                                    hinzufügen"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step2.point2">Wähle eine der
+                                                    erstellten Technologien aus</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step2.point3">Gib Titel,
+                                                    Command
+                                                    und Beschreibung ein</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step2.point4">Optional: Füge
+                                                    einen
+                                                    Quell-Link hinzu</span></li>
+                                            <li><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step2.point5">Speichere den
+                                                    Befehl</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold">2</span>
-                                </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step2.title">
-                                        Ersten Befehl hinzufügen</h5>
-                                    <ul class="list-unstyled text-primary small mb-0">
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step2.point1">Navigiere zu "Befehl
-                                                hinzufügen"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step2.point2">Wähle eine der
-                                                erstellten Technologien aus</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step2.point3">Gib Titel, Command
-                                                und Beschreibung ein</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step2.point4">Optional: Füge einen
-                                                Quell-Link hinzu</span></li>
-                                        <li><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step2.point5">Speichere den
-                                                Befehl</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row g-4 mb-4 justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold">3</span>
-                                </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step3.title">
-                                        Befehle durchsuchen</h5>
-                                    <ul class="list-unstyled text-primary small mb-0">
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step3.point1">Gehe zu "Befehle
-                                                anzeigen"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step3.point2">Nutze die
-                                                Suchfunktion oder Filter nach Technologie</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step3.point3">Klicke auf das
-                                                Kopier-Icon um Commands zu kopieren</span></li>
-                                        <li><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step3.point4">Bearbeite oder
-                                                lösche Befehle direkt</span></li>
-                                    </ul>
+                        <div class="row g-4 mb-4 justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold">3</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2"
+                                            data-i18n="pages.index.gettingStarted.step3.title">
+                                            Befehle durchsuchen</h5>
+                                        <ul class="list-unstyled text-primary small mb-0">
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step3.point1">Gehe zu "Befehle
+                                                    anzeigen"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step3.point2">Nutze die
+                                                    Suchfunktion oder Filter nach Technologie</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step3.point3">Klicke auf das
+                                                    Kopier-Icon um Commands zu kopieren</span></li>
+                                            <li><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step3.point4">Bearbeite oder
+                                                    lösche Befehle direkt</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold">4</span>
-                                </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step4.title">
-                                        Theme anpassen</h5>
-                                    <ul class="list-unstyled text-primary small mb-0">
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step4.point1">Öffne die
-                                                Einstellungen (Zahnrad-Icon)</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step4.point2">Scrolle zu
-                                                "Farben"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step4.point3">Wähle Light/Dark
-                                                Mode oder</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step4.point4">Erstelle ein custom
-                                                Theme mit eigenen Farben</span></li>
-                                        <li><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step4.point5">Klicke "Übernehmen"
-                                                - Theme wird sofort aktiv</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row g-4 justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold">5</span>
-                                </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step5.title">
-                                        Technologien verwalten</h5>
-                                    <ul class="list-unstyled text-primary small mb-0">
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step5.point1">In den Einstellungen
-                                                findest du "Technologien verwalten"</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step5.point2">Wähle eine
-                                                existierende Technologie zum Bearbeiten</span></li>
-                                        <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step5.point3">Ändere Name oder
-                                                Farbe nach Belieben</span></li>
-                                        <li><i class="bi bi-arrow-right text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.step5.point4">Lösche Technologien
-                                                (⚠️ entfernt auch alle zugehörigen Commands)</span></li>
-                                    </ul>
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold">4</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2"
+                                            data-i18n="pages.index.gettingStarted.step4.title">
+                                            Theme anpassen</h5>
+                                        <ul class="list-unstyled text-primary small mb-0">
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step4.point1">Öffne die
+                                                    Einstellungen (Zahnrad-Icon)</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step4.point2">Scrolle zu
+                                                    "Farben"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step4.point3">Wähle Light/Dark
+                                                    Mode oder</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step4.point4">Erstelle ein
+                                                    custom
+                                                    Theme mit eigenen Farben</span></li>
+                                            <li><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step4.point5">Klicke
+                                                    "Übernehmen"
+                                                    - Theme wird sofort aktiv</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="d-flex align-items-start h-100">
-                                <div class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                                    <span class="text-primary fw-bold"><i class="bi bi-lightbulb"></i></span>
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold">5</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2"
+                                            data-i18n="pages.index.gettingStarted.step5.title">
+                                            Technologien verwalten</h5>
+                                        <ul class="list-unstyled text-primary small mb-0">
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step5.point1">In den
+                                                    Einstellungen
+                                                    findest du "Technologien verwalten"</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step5.point2">Wähle eine
+                                                    existierende Technologie zum Bearbeiten</span></li>
+                                            <li class="mb-1"><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step5.point3">Ändere Name oder
+                                                    Farbe nach Belieben</span></li>
+                                            <li><i class="bi bi-arrow-right text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.step5.point4">Lösche
+                                                    Technologien
+                                                    (⚠️ entfernt auch alle zugehörigen Commands)</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.tips.title">
-                                        Tipps</h5>
-                                    <ul class="list-unstyled text-primary small">
-                                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.tips.tip1">Nutze aussagekräftige
-                                                Titel für deine Commands</span></li>
-                                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.tips.tip2">Organisiere mit
-                                                Technologien für bessere Übersicht</span></li>
-                                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.tips.tip3">Verwende Beschreibungen
-                                                für komplexere Commands</span></li>
-                                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.tips.tip4">Teste deine Themes in
-                                                verschiedenen Bereichen der App</span></li>
-                                        <li><i class="bi bi-check2 text-primary me-2"></i><span
-                                                data-i18n="pages.index.gettingStarted.tips.tip5">Erstelle regelmäßig
-                                                Backups deiner Datenbank</span></li>
-                                    </ul>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="d-flex align-items-start h-100">
+                                    <div
+                                        class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
+                                        <span class="text-primary fw-bold"><i class="bi bi-lightbulb"></i></span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.tips.title">
+                                            Tipps</h5>
+                                        <ul class="list-unstyled text-primary small">
+                                            <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.tips.tip1">Nutze
+                                                    aussagekräftige
+                                                    Titel für deine Commands</span></li>
+                                            <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.tips.tip2">Organisiere mit
+                                                    Technologien für bessere Übersicht</span></li>
+                                            <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.tips.tip3">Verwende
+                                                    Beschreibungen
+                                                    für komplexere Commands</span></li>
+                                            <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.tips.tip4">Teste deine Themes
+                                                    in
+                                                    verschiedenen Bereichen der App</span></li>
+                                            <li><i class="bi bi-check2 text-primary me-2"></i><span
+                                                    data-i18n="pages.index.gettingStarted.tips.tip5">Erstelle regelmäßig
+                                                    Backups deiner Datenbank</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

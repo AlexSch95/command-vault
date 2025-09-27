@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    document.getElementById("minimize-btn").addEventListener("click", () => {
+        window.electronAPI.minimizeWindow();
+    });
+    document.getElementById("close-btn").addEventListener("click", () => {
+        window.electronAPI.closeWindow();
+    });
+
 
     let commandsArray = [];
     const commandsContainer = document.getElementById('commandsContainer');

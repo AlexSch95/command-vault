@@ -6,11 +6,13 @@ const { autoUpdater } = require('electron-updater');
 
 let db;
 let mainWindow;
+let settingsWindow;
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
         width: 1600,
         height: 900,
+        frame: false,
         resizable: true,
         maximizable: true,
         fullscreenable: false,
@@ -83,11 +85,16 @@ app.whenReady().then(() => {
     });
 
     ipcMain.handle('open-settings', () => {
-    const settingsWindow = new BrowserWindow({
-        width: 1280,
-        height: 720,
-        resizable: true,
-        maximizable: true,
+    const [mainWidth, mainHeight] = mainWindow.getSize();
+    const settingsWidth = Math.floor(mainWidth * 0.8);
+    const settingsHeight = Math.floor(mainHeight * 0.8);
+    settingsWindow = new BrowserWindow({
+        width: settingsWidth,
+        height: settingsHeight,
+        frame: false,
+        resizable: false,
+        maximizable: false,
+        movable: false,
         fullscreenable: false,
         autoHideMenuBar: false,
         icon: path.join(__dirname, '../renderer/assets/safe.ico'),
@@ -100,12 +107,32 @@ app.whenReady().then(() => {
         }
     });
 
+    
+
     settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));
 
     settingsWindow.on('closed', () => {
         mainWindow.webContents.send('settings-closed');
     });
 });
+
+    ipcMain.handle('minimize-window', () => {
+        if (mainWindow) {
+            mainWindow.minimize();
+        };
+    });
+
+    ipcMain.handle('close-window', () => {
+        if (mainWindow) {
+            mainWindow.close();
+        }
+    });
+
+    ipcMain.handle('close-settings', () => {
+        if (settingsWindow) {
+            settingsWindow.close();
+        }
+    });
 
     //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet
     ipcMain.handle('db-query', async (event, sql, params) => {
