@@ -1,4 +1,4 @@
-import { loadGlobalTheme } from "./shared.js";
+import { loadGlobalTheme } from "../shared/shared.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     if (window.i18n) {
