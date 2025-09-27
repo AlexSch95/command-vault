@@ -117,8 +117,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p class="card-text text-light">
                             <div class="command-description markdown-content mb-3">${markdownDescription}</div>
                             </p>
+<<<<<<< HEAD:src/renderer/js/pages/view-commands.js
                             <small class="text-muted position-absolute bottom-0 end-0 p-3">
                                 <i class="bi bi-clock me-1"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.createdAt") : "Hinzugefügt am"} ${new Date(cmd.created_at).toLocaleDateString()}
+=======
+                            
+                            <small class="text-muted position-absolute bottom-0 end-0 p-3 pt-5">
+
+                                <i class="bi bi-clock me-1"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.createdAt") : "Hinzugefügt am"} ${new Date(cmd.created_at).toLocaleDateString()}
+>>>>>>> 3c37c7479b6fe1fa8d27425cf2e6e899d314362b:view-commands.js
                             </small>
                         </div>
                     </div>`;
