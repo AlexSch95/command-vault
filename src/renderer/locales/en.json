@@ -21,8 +21,57 @@
                 "desc": "Your data remains locally on your device. No cloud, no worries."
             },
             "buttons": {
-                "newCmdButton": "Add New Command",
-                "findCmdButton": "Browse Commands"
+                "toGetStarted": "Get Started"
+            },
+            "gettingStarted": {
+                "title": "First Steps",
+                "subtitle": "Get started in just a few minutes with managing your commands",
+                "step1": {
+                    "title": "Create First Category",
+                    "point1": "Open Settings (Gear Icon Bottom Right)",
+                    "point2": "Scroll to \"Manage Categories\"",
+                    "point3": "Click on \"New Category\"",
+                    "point4": "Enter a name (e.g. \"Git\", \"Linux\", \"Docker\")",
+                    "point5": "Choose a color and save"
+                },
+                "step2": {
+                    "title": "Add First Command",
+                    "point1": "Navigate to \"Add Command\"",
+                    "point2": "Select one of the created categories",
+                    "point3": "Enter title, command, and description",
+                    "point4": "Optional: Add a source link",
+                    "point5": "Save the command"
+                },
+                "step3": {
+                    "title": "Browse Commands",
+                    "point1": "Go to \"View Commands\"",
+                    "point2": "Use the search function or filter by category",
+                    "point3": "Click on the copy icon to copy commands",
+                    "point4": "Edit or delete commands directly"
+                },
+                "step4": {
+                    "title": "Customize Theme",
+                    "point1": "Open Settings (Gear Icon)",
+                    "point2": "Scroll to \"Customize Appearance\"",
+                    "point3": "Choose between Light, Dark, Coffee, or Navy Theme",
+                    "point4": "Create a custom theme with your own colors",
+                    "point5": "Click \"Apply\" - Theme will be activated immediately"
+                },
+                "step5": {
+                    "title": "Manage Categories",
+                    "point1": "Open Settings (Gear Icon)",
+                    "point2": "Select an existing category to edit",
+                    "point3": "Change name or color as desired",
+                    "point4": "Delete unused categories"
+                },
+                "tips": {
+                    "title": "Tips",
+                    "tip1": "Use descriptive titles for your commands",
+                    "tip2": "Organize by categories for better overview",
+                    "tip3": "Use Markdown for descriptions",
+                    "tip4": "Test your themes in different areas",
+                    "tip5": "Regularly create backups of your database"
+                }
             }
         },
         "viewCommands": {
@@ -132,6 +181,8 @@
                 },
                 "custom": {
                     "title": "Custom Colors",
+                    "texts": "Texts",
+                    "backgrounds": "Backgrounds",
                     "backgroundColor": "Background Color",
                     "borderColor": "Border Color",
                     "accentColor": "Accent Color (Buttons etc.)",

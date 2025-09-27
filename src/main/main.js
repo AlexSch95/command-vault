@@ -14,7 +14,8 @@ const createWindow = () => {
         resizable: true,
         maximizable: true,
         fullscreenable: false,
-        autoHideMenuBar: false,
+        autoHideMenuBar: true,
+        icon: path.join(__dirname, '../renderer/assets/safe.ico'),
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -80,6 +81,31 @@ app.whenReady().then(() => {
             return { success: false, message: 'Db Backup failed'};
         }
     });
+
+    ipcMain.handle('open-settings', () => {
+    const settingsWindow = new BrowserWindow({
+        width: 1280,
+        height: 720,
+        resizable: true,
+        maximizable: true,
+        fullscreenable: false,
+        autoHideMenuBar: false,
+        icon: path.join(__dirname, '../renderer/assets/safe.ico'),
+        parent: mainWindow,
+        modal: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, '../preload/preload.js')  // Wichtig!
+        }
+    });
+
+    settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));
+
+    settingsWindow.on('closed', () => {
+        mainWindow.webContents.send('settings-closed');
+    });
+});
 
     //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet
     ipcMain.handle('db-query', async (event, sql, params) => {

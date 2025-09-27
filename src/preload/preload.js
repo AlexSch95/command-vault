@@ -12,4 +12,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onUpdateDownloaded: (callback) => ipcRenderer.on('update-downloaded', callback),
     onDownloadProgress: (callback) => ipcRenderer.on('download-progress', callback),
     createDbBackup: () => ipcRenderer.invoke('create-db-backup'),
+    openSettingsWindow: () => ipcRenderer.invoke('open-settings'),
+    onSettingsClosed: (callback) => ipcRenderer.on('settings-closed', callback)
 })

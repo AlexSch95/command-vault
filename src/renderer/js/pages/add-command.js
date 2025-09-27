@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.i18n.ready;
     }
 
+    document.getElementById("settingsButton").addEventListener("click", window.electronAPI.openSettingsWindow);
+
+    window.electronAPI.onSettingsClosed(() => {
+        loadGlobalTheme();
+        loadTechnologies();
+    });
+
     const languageSwitchers = document.querySelectorAll('.language-switcher');
     languageSwitchers.forEach(switcher => {
         switcher.addEventListener('click', async (event) => {
@@ -55,11 +62,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
             const techOptions = document.getElementById('tech-options');
             if (technologies.length < 1) {
-                techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.form.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span><a href="settings.html" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-arrow-right"></i>
-                            </a>`;
+                techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.form.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span>`;
                 return;
             }
+            techOptions.innerHTML = '';
             const techSelect = document.createElement('select');
             techSelect.className = 'form-select-lg form-select bg-dark border-secondary text-primary';
             techSelect.id = 'tech';

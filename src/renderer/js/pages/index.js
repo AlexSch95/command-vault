@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         await window.i18n.ready;
     }
 
+    document.getElementById("settingsButton").addEventListener("click", window.electronAPI.openSettingsWindow);
+
+    window.electronAPI.onSettingsClosed(() => {
+        loadGlobalTheme();
+    });
+
     loadGlobalTheme();
 
     const languageSwitchers = document.querySelectorAll('.language-switcher');

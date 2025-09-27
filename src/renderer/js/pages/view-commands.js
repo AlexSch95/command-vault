@@ -1,10 +1,18 @@
 import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    
+
     if (window.i18n) {
         await window.i18n.ready;
     }
+
+    document.getElementById("settingsButton").addEventListener("click", window.electronAPI.openSettingsWindow);
+
+    window.electronAPI.onSettingsClosed(() => {
+        loadGlobalTheme();
+        loadCommands();
+        technologyFilter();
+    });
 
     const languageSwitchers = document.querySelectorAll('.language-switcher');
     languageSwitchers.forEach(switcher => {
@@ -20,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let commandsArray = [];
     const commandsContainer = document.getElementById('commandsContainer');
-    
+
     loadGlobalTheme();
     loadCommands();
     technologyFilter();
@@ -130,17 +138,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     function applyFilter() {
         const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
         const selectedTechId = document.getElementById('technologyFilter').value;
-        
+
         let filteredCommands = commandsArray;
-        
+
         if (selectedTechId) {
-            filteredCommands = filteredCommands.filter(cmd => 
+            filteredCommands = filteredCommands.filter(cmd =>
                 cmd.tech_id == selectedTechId || cmd.tech_id === parseInt(selectedTechId)
             );
         }
-        
+
         if (searchTerm) {
-            filteredCommands = filteredCommands.filter(cmd => 
+            filteredCommands = filteredCommands.filter(cmd =>
                 cmd.titel.toLowerCase().includes(searchTerm) ||
                 cmd.command.toLowerCase().includes(searchTerm) ||
                 (cmd.beschreibung && cmd.beschreibung.toLowerCase().includes(searchTerm)) ||
@@ -195,14 +203,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cmd = commandsArray.find(c => c.command_id == commandId);
         const editedCommand = document.getElementById(commandId);
         const technologies = await loadTechnologies();
-        
+
         // Dropdown-Optionen generieren
         let techOptions = '';
         technologies.forEach(tech => {
             const selected = tech.tech_name === cmd.tech ? 'selected' : '';
             techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
         });
-        
+
         editedCommand.innerHTML = `<div class="card bg-secondary shadow border-secondary h-100">
                         <div class="card-header bg-dark d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
@@ -272,7 +280,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     //desc: lädt alle technologien aus der db und gibt sie zurück
-    async function loadTechnologies() { 
+    async function loadTechnologies() {
         try {
             const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
             return technologies;

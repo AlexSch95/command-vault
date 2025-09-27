@@ -15,17 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadTechnologies();
     setupCurrentColors();
 
-    //desc: Event Listener für den Sprachwechsel
-    const languageSwitchers = document.querySelectorAll('.language-switcher');
-    languageSwitchers.forEach(switcher => {
-        switcher.addEventListener('click', async (event) => {
-            event.preventDefault();
-            const selectedLang = switcher.getAttribute('data-language');
-            await window.switchLanguage(selectedLang);
-            loadTechnologies();
-        });
-    });
-
     //desc: lädt die user-theme.json und wendet die aktuellen Farben im Color Picker an
     async function setupCurrentColors() {
         try {
@@ -154,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             modal.id = 'deleteModal';
             modal.innerHTML = `
                 <div class="modal-dialog">
-                    <div class="modal-content bg-dark">
+                    <div class="modal-content bg-secondary">
                         <div class="modal-header border-secondary">
                             <h5 class="modal-title text-light">${window.i18n ? window.i18n.translate("pages.settings.categories.modal.title") : "Technologie löschen"}</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>

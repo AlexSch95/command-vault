@@ -21,8 +21,57 @@
                 "desc": "Deine Daten bleiben lokal auf deinem Gerät. Keine Cloud, keine Sorgen."
             },
             "buttons": {
-                "newCmdButton": "Neuen Befehl hinzufügen",
-                "findCmdButton": "Befehle durchsuchen"
+                "toGetStarted": "Zur Einführung"
+            },
+            "gettingStarted": {
+                "title": "Erste Schritte",
+                "subtitle": "Starte in wenigen Minuten mit der Verwaltung deiner Befehle",
+                "step1": {
+                    "title": "Erste Kategorie erstellen",
+                    "point1": "Öffne die Einstellungen (siehe Navigationsleiste)",
+                    "point2": "Scrolle zu \"Kategorien verwalten\"",
+                    "point3": "Klicke auf \"Neue Kategorie\"",
+                    "point4": "Gib einen Namen ein (z.B. \"Git\", \"Linux\", \"Docker\")",
+                    "point5": "Wähle eine Farbe und speichere"
+                },
+                "step2": {
+                    "title": "Ersten Befehl hinzufügen",
+                    "point1": "Navigiere zu \"Befehl hinzufügen\"",
+                    "point2": "Wähle eine der erstellten Kategorien aus",
+                    "point3": "Gib Titel, Befehl und Beschreibung ein",
+                    "point4": "Optional: Füge einen Quell-Link hinzu",
+                    "point5": "Speichere den Befehl"
+                },
+                "step3": {
+                    "title": "Befehle durchsuchen",
+                    "point1": "Gehe zu \"Befehle anzeigen\"",
+                    "point2": "Nutze die Suchfunktion oder Filter nach Kategorie",
+                    "point3": "Klicke auf das Kopier-Icon um Befehle zu kopieren",
+                    "point4": "Bearbeite oder lösche Befehle direkt"
+                },
+                "step4": {
+                    "title": "Theme anpassen",
+                    "point1": "Öffne die Einstellungen (siehe Navigationsleiste)",
+                    "point2": "Scrolle zu \"Darstellung anpassen\"",
+                    "point3": "Wähle zwischen Light, Dark, Coffee oder Navy Theme",
+                    "point4": "Erstelle ein custom Theme mit eigenen Farben",
+                    "point5": "Klicke \"Übernehmen\" - Theme wird sofort aktiv"
+                },
+                "step5": {
+                    "title": "Kategorien verwalten",
+                    "point1": "Öffne die Einstellungen (siehe Navigationsleiste)",
+                    "point2": "Wähle eine existierende Kategorie zum Bearbeiten",
+                    "point3": "Ändere Name oder Farbe nach Belieben",
+                    "point4": "Lösche ungenutze Kategorien"
+                },
+                "tips": {
+                    "title": "Tipps",
+                    "tip1": "Nutze aussagekräftige Titel für deine Commands",
+                    "tip2": "Organisiere mit Kategorien für bessere Übersicht",
+                    "tip3": "Verwende Markdown in Beschreibungen",
+                    "tip4": "Teste deine Themes in verschiedenen Bereichen",
+                    "tip5": "Erstelle regelmäßig Backups deiner Datenbank"
+                }
             }
         },
         "viewCommands": {
@@ -132,6 +181,8 @@
                 },
                 "custom": {
                     "title": "Benutzerdefinierte Farben",
+                    "texts": "Texte",
+                    "backgrounds": "Hintergründe",
                     "backgroundColor": "Hintergrundfarbe",
                     "borderColor": "Rahmenfarbe",
                     "accentColor": "Akzentfarbe (Buttons etc.)",

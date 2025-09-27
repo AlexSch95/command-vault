@@ -1,7 +1,7 @@
 // i18n.js
 class I18n {
     constructor() {
-        this.currentLanguage = this.getStoredLanguage() || 'en';
+        this.currentLanguage = this.getStoredLanguage() || 'de';
         this.translations = {};
         this.ready = this.loadLanguage(this.currentLanguage);
     }
@@ -15,8 +15,8 @@ class I18n {
             return true;
         } catch (error) {
             console.error('Failed to load language:', error);
-            if (lang !== 'en') {
-                return await this.loadLanguage('en');
+            if (lang !== 'de') {
+                return await this.loadLanguage('de');
             }
             return false;
         }

@@ -5,73 +5,20 @@
     <meta charset="UTF-8" />
     <title>Command-Vault: Settings</title>
 
+    <link rel="icon" type="image/x-icon" href="../assets/safe.ico">
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body class="bg-dark text-primary">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <i class="text-primary bi bi-terminal me-2"></i>
-                <span class="fw-bold text-primary">Command Vault</span>
-            </a>
-
-            <div class="d-flex align-items-center order-lg-3">
-                <div class="dropdown me-3">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
-                        <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
-                    </ul>
-                </div>
-
-                <a class="settings-button" href="settings.html">
-                    <i class="bi bi-gear"></i>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-
-            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="index.html">
-                            <i class="bi bi-house me-1"></i>
-                            <span data-i18n="nav.home">Home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="add-command.html">
-                            <i class="bi bi-plus-circle me-1"></i>
-                            <span data-i18n="nav.addCommand">Befehl hinzufügen</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="view-commands.html">
-                            <i class="bi bi-list-ul me-1"></i>
-                            <span data-i18n="nav.viewCommands">Befehle anzeigen</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Error Message -->
     <div id="errorMessage"
         class="errorbox alert position-fixed top-25 text-center start-50 mt-5 translate-middle fade d-none"
         role="alert">
         <span class="text-center" id="errorText"></span>
     </div>
 
-    <!-- Header -->
-    <div class="bg-secondary text-primary py-4 mt-5">
+    <div class="bg-secondary text-primary py-4">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col">
@@ -79,7 +26,8 @@
                         <i class="bi bi-gear-fill me-2"></i>
                         <span data-i18n="pages.settings.banner.title">Einstellungen</span>
                     </h1>
-                    <p class="mb-0 mt-2" data-i18n="pages.settings.banner.subtitle">Passe Command Vault an deine Bedürfnisse an
+                    <p class="mb-0 mt-2" data-i18n="pages.settings.banner.subtitle">Passe Command Vault an deine
+                        Bedürfnisse an
                     </p>
                 </div>
             </div>
@@ -93,14 +41,14 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-palette me-2"></i>
                                     <span data-i18n="pages.settings.categories.title">Technologien verwalten</span>
                                 </h5>
                                 <form id="add-technology-form">
                                     <div class="row g-3">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <label for="tech" class="form-label fw-semibold text-primary">
                                                 <i class="bi bi-gear me-1"></i>
                                                 <span data-i18n="pages.settings.categories.choose">Wähle eine
@@ -109,14 +57,14 @@
                                             <div id="tech-container">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2 ps-3">
                                             <label for="color" class="form-label fw-semibold text-primary">
                                                 <i class="bi bi-palette me-1"></i>
                                                 <span data-i18n="pages.settings.categories.color">Farbe</span>
                                             </label>
                                             <input type="color"
-                                                class="form-control form-control-lg bg-dark border-secondary" id="color"
-                                                value="#007bff">
+                                                class="form-control bg-dark border-secondary color-picker-square"
+                                                id="color" value="#007bff">
                                         </div>
                                     </div>
                                     <div class="row g-3 mt-2">
@@ -134,11 +82,13 @@
                                         </button>
                                         <button id="delete-technology-btn" class="btn btn-danger btn-lg" disabled>
                                             <i class="bi bi-trash me-2"></i>
-                                            <span data-i18n="pages.settings.categories.buttons.delete">Technologie löschen</span>
+                                            <span data-i18n="pages.settings.categories.buttons.delete">Technologie
+                                                löschen</span>
                                         </button>
                                         <button type="reset" id="reset-btn" class="btn btn-outline-primary btn-lg">
                                             <i class="bi bi-arrow-clockwise me-2"></i>
-                                            <span data-i18n="pages.settings.categories.buttons.reset">Zurücksetzen</span>
+                                            <span
+                                                data-i18n="pages.settings.categories.buttons.reset">Zurücksetzen</span>
                                         </button>
                                     </div>
                                 </form>
@@ -156,7 +106,7 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-palette me-2"></i>
                                     <span data-i18n="pages.settings.themes.title">Darstellung anpassen</span>
@@ -170,17 +120,20 @@
                                         <button type="button" class="btn btn-primary px-4" data-theme="light"
                                             id="light-mode-btn">
                                             <i class="bi bi-sun me-2"></i>
-                                            <span data-i18n="pages.settings.themes.preset.lightTheme">Helles Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.lightTheme">Helles
+                                                Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="dark"
                                             id="dark-mode-btn">
                                             <i class="bi bi-moon me-2"></i>
-                                            <span data-i18n="pages.settings.themes.preset.darkTheme">Dunkles Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.darkTheme">Dunkles
+                                                Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="coffee"
                                             id="coffee-mode-btn">
                                             <i class="bi bi-cup me-2"></i>
-                                            <span data-i18n="pages.settings.themes.preset.coffeeTheme">Coffee Design</span>
+                                            <span data-i18n="pages.settings.themes.preset.coffeeTheme">Coffee
+                                                Design</span>
                                         </button>
                                         <button type="button" class="btn btn-primary px-4" data-theme="navy"
                                             id="navy-mode-btn">
@@ -197,61 +150,96 @@
                                             Farben</span>
                                     </h6>
                                 </div>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="bg-primary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.backgroundColor">Hintergrundfarbe</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="bg-primary-color" value="#0f172a">
+
+                                <!-- Hintergründe Section -->
+                                <div class="mb-4">
+                                    <h6 class="text-primary text-muted mb-3">
+                                        <span data-i18n="pages.settings.themes.custom.backgrounds">Hintergründe</span>
+                                    </h6>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="bg-primary-color" value="#0f172a">
+                                                <label for="bg-primary-color" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.backgroundColor">Hintergrundfarbe</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="bg-secondary-color" value="#1e293b">
+                                                <label for="bg-secondary-color" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.cardBackgroundColor">Karten
+                                                        Hintergrundfarbe</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="border-color" value="#334155">
+                                                <label for="border-color" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.borderColor">Rahmenfarbe</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="accent-color" value="#0ea5e9">
+                                                <label for="accent-color" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.accentColor">Akzentfarbe
+                                                        (Buttons etc.)</span>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="bg-secondary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.cardBackgroundColor">Karten
-                                                Hintergrundfarbe</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="bg-secondary-color" value="#1e293b">
+                                </div>
+
+                                <!-- Texte Section -->
+                                <div class="mb-4">
+                                    <h6 class="text-primary text-muted mb-3">
+                                        <span data-i18n="pages.settings.themes.custom.texts">Texte</span>
+                                    </h6>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="text-primary-color" value="#f1f5f9">
+                                                <label for="text-primary-color" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.textColor">Textfarbe</span>
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="border-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.borderColor">Rahmenfarbe</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="border-color" value="#334155">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="text-primary-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.textColor">Textfarbe</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="text-primary-color" value="#f1f5f9">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="text-color-code" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.textColorCode">Textfarbe (Codeblock)</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="text-color-code" value="#f1f5f9">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="accent-color" class="form-label text-primary">
-                                            <span data-i18n="pages.settings.themes.custom.accentColor">Akzentfarbe (Buttons
-                                                etc.)</span>
-                                        </label>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="color" class="form-control bg-dark border-secondary"
-                                                id="accent-color" value="#0ea5e9">
+
+                                        <div class="col-md-6">
+                                            <div class="color-picker-item">
+                                                <input type="color"
+                                                    class="form-control bg-dark border-secondary color-picker-square"
+                                                    id="text-color-code" value="#f1f5f9">
+                                                <label for="text-color-code" class="form-label text-primary">
+                                                    <span
+                                                        data-i18n="pages.settings.themes.custom.textColorCode">Textfarbe
+                                                        (Codeblock)</span>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +263,7 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-arrow-clockwise me-2"></i>
                                     <span data-i18n="pages.settings.update.title">Anwendung aktualisieren</span>
@@ -315,7 +303,7 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-shield-check me-2"></i>
                                     <span data-i18n="pages.settings.backupDb.title">Datenbank sichern</span>
@@ -359,7 +347,7 @@
                 <div class="col-lg-8">
                     <div class="card bg-secondary border-secondary shadow-lg p-3 rounded-5">
                         <div class="card-body">
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h5 class="text-primary mb-4">
                                     <i class="bi bi-database me-2"></i>
                                     <span data-i18n="pages.settings.clearDb.title">Datenbank bereinigen</span>
@@ -372,7 +360,8 @@
                                             style="font-size: 1.2rem;"></i>
                                         <div>
                                             <h5 class="alert-heading text-warning mb-4">
-                                                <strong data-i18n="pages.settings.clearDb.dangerousAction">Achtung: Gefährliche
+                                                <strong data-i18n="pages.settings.clearDb.dangerousAction">Achtung:
+                                                    Gefährliche
                                                     Aktion</strong>
                                                 </h6>
                                                 <p class="mb-2" data-i18n="pages.settings.clearDb.warning">
@@ -391,7 +380,8 @@
                                         <button type="button" class="btn btn-danger btn-lg px-5"
                                             id="reset-database-btn">
                                             <i class="bi bi-trash3 me-2"></i>
-                                            <span data-i18n="pages.settings.clearDb.resetDbButton">Datenbank bereinigen</span>
+                                            <span data-i18n="pages.settings.clearDb.resetDbButton">Datenbank
+                                                bereinigen</span>
                                         </button>
                                     </div>
                                 </div>

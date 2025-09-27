@@ -171,4 +171,4 @@ command-vault/
 **Entwickelt mit ❤️ für Entwickler, die ihre Commands nie wieder vergessen wollen!**
 
 ## Credits
-[Vault icons created by Smashicons - Flaticon](https://www.flaticon.com/free-icons/vault)
+[Vault icons created by Driss Lebbat - Flaticon](https://www.flaticon.com/free-icons/vault)
