@@ -190,7 +190,13 @@ app.whenReady().then(() => {
 
     //desc: updatefunktionen
     ipcMain.handle('restart-app', () => {
-        autoUpdater.quitAndInstall();
+        if (settingsWindow) {
+            settingsWindow.close();
+        }
+        setTimeout(() => {
+
+            autoUpdater.quitAndInstall();
+        }, 100);
     });
 
     ipcMain.handle('check-for-updates', () => {
@@ -209,13 +215,15 @@ autoUpdater.on('checking-for-update', () => {
 
 autoUpdater.on('update-available', (info) => {
     console.log('Update available.');
-    if (mainWindow) {
-        mainWindow.webContents.send('update-available', info);
+    if (settingsWindow) {
+        settingsWindow.webContents.send('update-available', info);
     }
 });
 
 autoUpdater.on('update-not-available', (info) => {
-    console.log('Update not available.');
+    if (settingsWindow) {
+        settingsWindow.webContents.send('update-not-available', info);
+    }
 });
 
 autoUpdater.on('error', (err) => {
@@ -227,14 +235,14 @@ autoUpdater.on('download-progress', (progressObj) => {
     log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
     log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
     console.log(log_message);
-    if (mainWindow) {
-        mainWindow.webContents.send('download-progress', progressObj);
+    if (settingsWindow) {
+        settingsWindow.webContents.send('download-progress', progressObj);
     }
 });
 
 autoUpdater.on('update-downloaded', (info) => {
     console.log('Update downloaded');
-    if (mainWindow) {
-        mainWindow.webContents.send('update-downloaded', info);
+    if (settingsWindow) {
+        settingsWindow.webContents.send('update-downloaded', info);
     }
 });

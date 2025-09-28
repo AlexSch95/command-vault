@@ -385,7 +385,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('check-updates-btn')?.addEventListener('click', async () => {
         const btn = document.getElementById('check-updates-btn');
-        const statusDiv = document.getElementById('update-status');
 
         btn.disabled = true;
         btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.update.checking") : "Suche nach Updates..."}`;
@@ -406,6 +405,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.electronAPI.onUpdateAvailable?.((event, info) => {
         showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.available") : "Update verfügbar: v"}${info.version}`, 'success');
         document.getElementById('update-progress').classList.remove('d-none');
+    });
+
+    window.electronAPI.onUpdateNotAvailable?.((event, info) => {
+        showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.noUpdate") : "Sie sind bereits auf der aktuellsten Version."}`, 'info');
     });
 
     window.electronAPI.onDownloadProgress?.((event, progress) => {

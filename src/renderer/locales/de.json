@@ -201,7 +201,7 @@
                 "checkButton": "Nach Updates suchen",
                 "checking": "Suche nach Updates...",
                 "available": "Update verfügbar: v",
-                "notAvailable": "Keine Updates verfügbar. Du bist auf dem neuesten Stand!",
+                "noUpdate": "Keine Updates verfügbar. Du bist auf dem neuesten Stand!",
                 "error": "Fehler beim Überprüfen auf Updates.",
                 "downloading": "Update wird heruntergeladen...",
                 "restartAndInstall": "Neu starten & installieren",

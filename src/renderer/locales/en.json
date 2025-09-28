@@ -201,7 +201,7 @@
                 "checkButton": "Check for Updates",
                 "checking": "Checking for updates...",
                 "available": "Update available: v",
-                "notAvailable": "No updates available. You are up to date!",
+                "noUpdate": "No updates available. You are up to date!",
                 "error": "Error checking for updates.",
                 "downloading": "Downloading update...",
                 "restartAndInstall": "Restart & Install",
