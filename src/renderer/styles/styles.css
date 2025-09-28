@@ -7,6 +7,25 @@
     --text-color-code: #27e70d;
 }
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/roboto.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+i.bi {
+    font-family: 'bootstrap-icons' !important;
+    line-height: 1 !important;
+    vertical-align: baseline !important;
+}
+
+* {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+
 body.bg-dark {
     background-color: var(--bg-primary) !important;
     color: var(--text-primary) !important;
@@ -14,6 +33,10 @@ body.bg-dark {
 
 .bg-secondary {
     background-color: var(--bg-secondary) !important;
+}
+
+.pe-none {
+    pointer-events: none !important;
 }
 
 .overlay-darken {
@@ -41,6 +64,7 @@ body.bg-dark {
 
 .text-primary {
     color: var(--text-primary) !important;
+    text-shadow: 2px 2px 22px rgba(0,0,0,0.5) !important;
 }
 
 .text-accent {
@@ -82,7 +106,7 @@ body.bg-dark {
 }
 
 .titlebar-title {
-    font-size: 14px;
+    font-size: 20px;
     color: var(--text-primary) !important;
     font-weight: 500;
     -webkit-app-region: drag;
@@ -145,79 +169,22 @@ body.bg-dark {
     color: white;
 }
 
-
 body.custom-window {
     padding-top: 32px;
 }
 
-.navbar.fixed-top {
-    top: 50px;
-}
-
-.navbar.bg-dark {
-    background-color: var(--bg-secondary) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.navbar-tall {
-    min-height: 112px;
-}
-
-.navbar-tall .navbar-nav .nav-link {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.navbar-tall .navbar-brand {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.nav-link.active {
-    position: relative;
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 3px;
-    background-color: var(--accent-color);
-    border-radius: 2px;
-    animation: activeNavSlide 0.3s ease-in-out;
-}
-
-@keyframes activeNavSlide {
-    from {
-        width: 0%;
-        opacity: 0;
-    }
-
-    to {
-        width: 60%;
-        opacity: 1;
-    }
-}
-
 .card {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
     transition: all 0.3s ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
-    box-shadow: 0 0 8px var(--accent-color) !important;
+    border-color: var(--text-primary) !important;
     transition: all 0.3s ease;
-}
-
-.card.bg-secondary {
-    background-color: var(--bg-secondary) !important;
-    border-color: var(--border-color) !important;
-}
-
-.card-header {
-    background-color: var(--bg-secondary) !important;
+    box-shadow: 0 8px 33px rgba(0, 0, 0, 0.3);
 }
 
 .form-control {
@@ -310,6 +277,7 @@ body.custom-window {
 
 .btn {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s ease;
 }
 
 .btn-primary {
@@ -320,12 +288,13 @@ body.custom-window {
 
 .btn-primary:hover {
     filter: brightness(1.2) !important;
+    border-color: var(--text-primary) !important;
 }
 
 .btn-outline-primary {
     color: var(--text-primary) !important;
     background-color: #ffffff00;
-    border-color: var(--accent-color) !important;
+    border-color: var(--text-primary) !important;
 }
 
 .btn-outline-primary:hover {
@@ -598,6 +567,10 @@ code {
     line-height: 1.2;
 }
 
+.delete-command-btn:hover {
+    background-color: rgb(155, 1, 1) !important
+}
+
 .markdown-content a {
     color: var(--primary-color) !important;
     text-decoration: none;
@@ -677,7 +650,7 @@ code {
     height: 50px;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
-    border-radius: 50%;
+    border-radius: 15%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -692,7 +665,8 @@ code {
     background-color: var(--accent-color);
     color: var(--text-primary);
     transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--text-primary);
+    box-shadow: 0 0 12px var(--accent-color);
     text-decoration: none;
 }
 
@@ -725,7 +699,7 @@ code {
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-y: auto;
+    overflow-y: overlay;
     overflow-x: hidden;
     padding: 0;
 }

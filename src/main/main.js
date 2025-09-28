@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
@@ -21,9 +21,20 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
+            contextMenus: true,
             preload: path.join(__dirname, '../preload/preload.js')
         }
     })
+
+    mainWindow.webContents.on('context-menu', (event, params) => {
+        const menu = Menu.buildFromTemplate([
+            { label: 'Kopieren', role: 'copy' },
+            { label: 'Einfügen', role: 'paste' },
+            { label: 'Ausschneiden', role: 'cut' },
+        ]);
+
+        menu.popup({ window: mainWindow });
+    });
 
     mainWindow.loadFile(path.join(__dirname, '../renderer/pages/index.html'))
 
@@ -103,10 +114,20 @@ app.whenReady().then(() => {
             webPreferences: {
                 nodeIntegration: false,
                 contextIsolation: true,
+                contextMenus: true,
                 preload: path.join(__dirname, '../preload/preload.js')  // Wichtig!
             }
         });
 
+        settingsWindow.webContents.on('context-menu', (event, params) => {
+            const menu = Menu.buildFromTemplate([
+                { label: 'Kopieren', role: 'copy' },
+                { label: 'Einfügen', role: 'paste' },
+                { label: 'Ausschneiden', role: 'cut' },
+            ]);
+
+            menu.popup({ window: settingsWindow });
+        });
 
 
         settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));

@@ -1,37 +1,37 @@
 export const themes = {
     light: {
-        bgPrimary: "#f7f7f7",
-        bgSecondary: "#c9c9c9",
+        bgPrimary: "#e3e3e3",
+        bgSecondary: "#b5b5b5",
         borderColor: "#545454",
         textPrimary: "#212529",
-        accentColor: "#21b9ff",
-        textColorCode: "#3ac200"
+        accentColor: "#67bde4",
+        textColorCode: "#00bfe6"
     },
 
     dark: {
-        bgPrimary: "#1c1c1c",
-        bgSecondary: "#4d4d4d",
-        borderColor: "#a3a3a3",
+        bgPrimary: "#2e2e2e",
+        bgSecondary: "#383838",
+        borderColor: "#7a7a7a",
         textPrimary: "#f1f5f9",
-        accentColor: "#6e6e6e",
+        accentColor: "#484a60",
         textColorCode: "#27e70d"
     },
 
     coffee: {
         bgPrimary: "#0b0706",
-        bgSecondary: "#3d302d",
-        borderColor: "#886355",
-        textPrimary: "#d9c096",
-        accentColor: "#886355",
-        textColorCode: "#d9c096"
+        bgSecondary: "#4b413f",
+        borderColor: "#af806e",
+        textPrimary: "#d5c5aa",
+        accentColor: "#7c584b",
+        textColorCode: "#d9ccb5"
     },
 
     navy: {
         bgPrimary: "#13122d",
-        bgSecondary: "#151c40",
-        borderColor: "#3345b4",
-        textPrimary: "#a9b7fe",
-        accentColor: "#242e69",
-        textColorCode: "#a9b7fe"
-    }   
+        bgSecondary: "#1f2541",
+        borderColor: "#353d6e",
+        textPrimary: "#c2ccff",
+        accentColor: "#3d4fb3",
+        textColorCode: "#869afe"
+    }
 };

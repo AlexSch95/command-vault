@@ -104,14 +104,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             commandCard.id = `${cmd.command_id}`;
             const markdownDescription = cmd.beschreibung ? marked.parse(cmd.beschreibung) : '';
             commandCard.innerHTML = `
-                    <div class="card bg-secondary shadow border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
+                    <div class="card h-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <span class="badge" style="background-color: ${cmd.tech_color};"><span class="text-shadow-outline fs-5">${cmd.tech}</span></span>
                             </div>
                             <div class="dropdown">
-                                <button class="btn btn-link text-light p-1" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
+                                <button class="btn btn-link p-1" data-bs-toggle="dropdown">
+                                    <i class="text-primary bi bi-three-dots-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.toSource") : "Zur Quelle"}</a></li>
@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 </ul>
                             </div>
                         </div>
-                        <div class="card-body text-light">
-                            <h5 class="card-title mb-3 text-light">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">
                                 <span>${cmd.titel}</span>
                             </h5>
                             <div class="mb-3">
@@ -222,10 +222,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
         });
 
-        editedCommand.innerHTML = `<div class="card bg-secondary shadow border-secondary h-100">
-                        <div class="card-header bg-dark d-flex align-items-center justify-content-between">
+        editedCommand.innerHTML = `<div class="card h-100">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
-                                <select class="form-select bg-dark border-secondary text-light" id="edit-tech-${cmd.command_id}">
+                                <select class="form-select" id="edit-tech-${cmd.command_id}">
                                     ${techOptions}
                                 </select>
                             </div>
@@ -238,10 +238,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body text-light">
+                        <div class="card-body">
                         <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.titleLabel") : "Titel:"}</label>
-                            <h5 class="card-title mb-3 text-light">
-                                <input type="text" class="form-control bg-dark border-secondary text-light" value="${cmd.titel}" id="edit-titel-${cmd.command_id}">
+                            <h5 class="card-title mb-3">
+                                <input type="text" class="form-control" value="${cmd.titel}" id="edit-titel-${cmd.command_id}">
                             </h5>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel") : "Befehl:"}</label>
