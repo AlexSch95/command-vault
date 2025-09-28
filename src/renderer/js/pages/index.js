@@ -5,9 +5,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         await window.i18n.ready;
     }
 
-    document.getElementById("settingsButton").addEventListener("click", window.electronAPI.openSettingsWindow);
+    document.getElementById("settingsButton").addEventListener("click", () => {
+        document.getElementById("mainContentOverlay").classList.add("overlay-darken");
+        window.electronAPI.openSettingsWindow();
+    });
 
     window.electronAPI.onSettingsClosed(() => {
+        document.getElementById("mainContentOverlay").classList.remove("overlay-darken");
         loadGlobalTheme();
     });
 

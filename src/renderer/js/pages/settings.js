@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.electronAPI.closeSettingsWindow();
     });
 
+    document.getElementById("open-userdata-btn").addEventListener("click", () => {
+        window.electronAPI.openUserDataFolder();
+    });
+
     //desc: lädt die user-theme.json und wendet die aktuellen Farben im Color Picker an
     async function setupCurrentColors() {
         try {

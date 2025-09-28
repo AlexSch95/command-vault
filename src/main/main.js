@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
@@ -80,41 +80,41 @@ app.whenReady().then(() => {
             return { success: true, path: backupFile };
         } catch (error) {
             console.error('Fehler beim Erstellen des Backups:', error);
-            return { success: false, message: 'Db Backup failed'};
+            return { success: false, message: 'Db Backup failed' };
         }
     });
 
     ipcMain.handle('open-settings', () => {
-    const [mainWidth, mainHeight] = mainWindow.getSize();
-    const settingsWidth = Math.floor(mainWidth * 0.8);
-    const settingsHeight = Math.floor(mainHeight * 0.8);
-    settingsWindow = new BrowserWindow({
-        width: settingsWidth,
-        height: settingsHeight,
-        frame: false,
-        resizable: false,
-        maximizable: false,
-        movable: false,
-        fullscreenable: false,
-        autoHideMenuBar: false,
-        icon: path.join(__dirname, '../renderer/assets/safe.ico'),
-        parent: mainWindow,
-        modal: true,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__dirname, '../preload/preload.js')  // Wichtig!
-        }
+        const [mainWidth, mainHeight] = mainWindow.getSize();
+        const settingsWidth = Math.floor(mainWidth * 0.8);
+        const settingsHeight = Math.floor(mainHeight * 0.8);
+        settingsWindow = new BrowserWindow({
+            width: settingsWidth,
+            height: settingsHeight,
+            frame: false,
+            resizable: false,
+            maximizable: false,
+            movable: false,
+            fullscreenable: false,
+            autoHideMenuBar: false,
+            icon: path.join(__dirname, '../renderer/assets/safe.ico'),
+            parent: mainWindow,
+            modal: true,
+            webPreferences: {
+                nodeIntegration: false,
+                contextIsolation: true,
+                preload: path.join(__dirname, '../preload/preload.js')  // Wichtig!
+            }
+        });
+
+
+
+        settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));
+
+        settingsWindow.on('closed', () => {
+            mainWindow.webContents.send('settings-closed');
+        });
     });
-
-    
-
-    settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));
-
-    settingsWindow.on('closed', () => {
-        mainWindow.webContents.send('settings-closed');
-    });
-});
 
     ipcMain.handle('minimize-window', () => {
         if (mainWindow) {
@@ -132,6 +132,11 @@ app.whenReady().then(() => {
         if (settingsWindow) {
             settingsWindow.close();
         }
+    });
+
+    ipcMain.handle('open-user-data', () => {
+        const userDataPath = app.getPath('userData');
+        shell.openPath(userDataPath);
     });
 
     //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet

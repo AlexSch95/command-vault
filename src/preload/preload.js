@@ -16,5 +16,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     closeSettingsWindow: () => ipcRenderer.invoke('close-settings'),
     onSettingsClosed: (callback) => ipcRenderer.on('settings-closed', callback),
     minimizeWindow: () => ipcRenderer.invoke('minimize-window'),
-    closeWindow: () => ipcRenderer.invoke('close-window')
+    closeWindow: () => ipcRenderer.invoke('close-window'),
+    openUserDataFolder: () => ipcRenderer.invoke('open-user-data'),
 })

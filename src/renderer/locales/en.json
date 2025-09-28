@@ -213,6 +213,7 @@
                 "description": "Create a backup of your current database. The backup will be saved with date and time in a separate backup directory.",
                 "location": "Backups are stored under %appdata%/command-vault/backups/.",
                 "startBackupButton": "Create Backup",
+                "gotoBackupDir": "Open Directory",
                 "starting": "Creating backup...",
                 "backupCreatedInfo": "Backup created in directory: ",
                 "messages": {

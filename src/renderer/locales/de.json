@@ -213,6 +213,7 @@
                 "description": "Erstelle eine Sicherungskopie deiner aktuellen Datenbank. Das Backup wird mit Datum und Uhrzeit in einem separaten Backup-Verzeichnis gespeichert.",
                 "location": "Backups werden unter %appdata%/command-vault/backups/ gespeichert.",
                 "startBackupButton": "Backup erstellen",
+                "gotoBackupDir": "Verzeichnis öffnen",
                 "starting": "Backup wird erstellt...",
                 "backupCreatedInfo": "Backup erstellt in Verzeichnis: ",
                 "messages": {
