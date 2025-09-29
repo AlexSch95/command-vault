@@ -10,10 +10,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     //desc: flag für den Modus - entweder aktuelle Technologien (->false) oder neue Technologie (->true)
     let newTechMode = false;
 
+    const deletedCommandsContainer = document.getElementById('restore-commands-container');
+
     //desc: initiale funktionsaufrufe
     loadGlobalTheme();
     loadTechnologies();
     setupCurrentColors();
+    loadDeletedCommands();
 
     document.getElementById("close-btn").addEventListener("click", () => {
         window.electronAPI.closeSettingsWindow();
@@ -217,6 +220,100 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    async function loadDeletedCommands() {
+        try {
+            const deletedCommands = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands ORDER BY deleted_at DESC');
+            console.log("1");
+            deletedCommandsContainer.innerHTML = '';
+            console.log("2");
+            if (deletedCommands.length === 0) {
+                deletedCommandsContainer.innerHTML = `<p class="text-muted">${window.i18n ? window.i18n.translate("pages.settings.restorecommand.noDeletedCommands") : "Keine gelöschten Befehle vorhanden."}</p>`;
+                return;
+            }
+            
+            // Tabelle erstellen
+            const table = document.createElement('table');
+
+            
+            // Tabellenkopf
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.category")}</th>
+                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.command")}</th>
+                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.deletedAt")}</th>
+                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.actions")}</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+            
+            // Tabellenkörper
+            const tbody = document.createElement('tbody');
+            deletedCommands.forEach(cmd => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="badge" style="background-color: ${cmd.tech_color};"><span class="fs-5">${cmd.tech_name}</span></span></td>
+                    <td>${cmd.command.length > 9 ? cmd.command.substring(0, 9) + '...' : cmd.command}</td>
+                    <td>${new Date(cmd.deleted_at).toLocaleDateString()}</td>
+                    <td class="text-center">
+                        <button class="btn btn-success btn-sm restore-command-btn" data-id="${cmd.command_id}">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm fully-delete-cmd-btn" data-id="${cmd.command_id}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            deletedCommandsContainer.appendChild(table);
+        } catch (error) {
+            console.error('Fehler beim Laden der gelöschten Commands:', error);
+            const container = document.getElementById('restore-commands-container');
+            container.innerHTML = `<p class="text-danger">Fehler beim Laden der gelöschten Befehle.</p>`;
+        }
+    }
+
+    deletedCommandsContainer.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('restore-command-btn')) {
+            const commandId = event.target.dataset.id;
+            restoreCommand(commandId);
+        } else if (event.target.classList.contains('fully-delete-cmd-btn')) {
+            const commandId = event.target.dataset.id;
+            fullyDeleteCommand(commandId);
+        }
+    });
+
+    async function restoreCommand(commandId) {
+        try {
+            const result = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands WHERE command_id = ?', [commandId]);
+            const cmd = result[0];
+            await window.electronAPI.dbQuery(`INSERT INTO commands
+                (tech_id, titel, command, beschreibung, source)
+                VALUES (?, ?, ?, ?, ?)`, [cmd.tech_id, cmd.titel, cmd.command, cmd.beschreibung, cmd.source]);
+            await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
+            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreSuccess") : "Befehl erfolgreich wiederhergestellt."}` });
+        } catch (error) {
+            console.log('Fehler beim Wiederherstellen des Commands:', error);
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreError") : "Fehler beim Wiederherstellen des Befehls."}` });
+        } finally {
+            loadDeletedCommands();
+        }
+    }
+
+    async function fullyDeleteCommand(commandId) {
+        try {
+            const result = await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
+            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteSuccess") : "Befehl erfolgreich endgültig gelöscht."}` });
+        } catch (error) {
+            console.log('Fehler beim Löschen des Commands:', error);
+            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteError") : "Fehler beim endgültigen Löschen des Befehls."}` });
+        } finally {
+            loadDeletedCommands();
+        }
+    }
+
     async function loadTechnologies() {
         try {
             newTechMode = false;
@@ -340,6 +437,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 try {
                     await window.electronAPI.dbQuery('DELETE FROM commands');
                     await window.electronAPI.dbQuery('DELETE FROM technologies');
+                    await window.electronAPI.dbQuery('DELETE FROM deleted_commands');
 
                     showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.clearDb.messages.dbResetSuccess") : "Datenbank erfolgreich bereinigt!"}` });
 

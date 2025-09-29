@@ -197,13 +197,52 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    //desc: löscht einen command aus der db
+    //desc: löscht einen command aus der db und verschiebt ihn in die deleted_commands tabelle
     async function deleteCommand(commandId) {
         try {
-            const result = await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
+            const deletedCommandResult = await window.electronAPI.dbQuery(`
+                SELECT 
+                    c.command_id,
+                    c.titel,
+                    c.command,
+                    c.beschreibung,
+                    c.source,
+                    t.tech_name,
+                    t.color as tech_color,
+                    t.tech_id
+                FROM commands c
+                JOIN technologies t ON c.tech_id = t.tech_id
+                WHERE c.command_id = ?
+            `, [commandId]);
+            const deletedCommand = deletedCommandResult[0];
+            await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
+            //desc: gelöschter befehl wird in die deleted_commands tabelle verschoben
+            console.table(deletedCommand);
+            await window.electronAPI.dbQuery(`
+                INSERT INTO deleted_commands 
+                (
+                command_id, 
+                tech_id, 
+                tech_color,
+                tech_name, 
+                titel, 
+                command, 
+                beschreibung, 
+                source
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `, [
+                deletedCommand.command_id, 
+                deletedCommand.tech_id, 
+                deletedCommand.tech_color,
+                deletedCommand.tech_name, 
+                deletedCommand.titel, 
+                deletedCommand.command, 
+                deletedCommand.beschreibung, 
+                deletedCommand.source
+            ]);
             loadCommands();
             showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleted") : "Command erfolgreich gelöscht."}` });
-            console.log(result);
         } catch (error) {
             showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleteError") : "Fehler beim Löschen des Commands."}` });
         }

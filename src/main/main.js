@@ -62,7 +62,7 @@ app.whenReady().then(() => {
         tech_name TEXT NOT NULL UNIQUE,
         color TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`)
+    )`);
     db.run(`CREATE TABLE IF NOT EXISTS commands (
         command_id INTEGER PRIMARY KEY AUTOINCREMENT,
         tech_id INTEGER NOT NULL,
@@ -72,7 +72,18 @@ app.whenReady().then(() => {
         source TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
-    )`)
+    )`);
+        db.run(`CREATE TABLE IF NOT EXISTS deleted_commands (
+        command_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tech_id INTEGER NOT NULL,
+        tech_name TEXT NOT NULL,
+        tech_color TEXT NOT NULL,
+        titel TEXT NOT NULL,
+        command TEXT NOT NULL,
+        beschreibung TEXT,
+        source TEXT,
+        deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
 
     ipcMain.handle('create-db-backup', async () => {
         try {
@@ -103,9 +114,9 @@ app.whenReady().then(() => {
             width: settingsWidth,
             height: settingsHeight,
             frame: false,
-            resizable: false,
+            resizable: true,
             maximizable: false,
-            movable: false,
+            movable: true,
             fullscreenable: false,
             autoHideMenuBar: false,
             icon: path.join(__dirname, '../renderer/assets/safe.ico'),

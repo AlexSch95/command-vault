@@ -137,6 +137,14 @@
             }
         },
         "settings": {
+            "quicknav": {
+                "categories": "Manage Categories",
+                "restoreCommands": "Restore Commands",
+                "themes": "Customize Appearance",
+                "backupDb": "Backup Database",
+                "clearDb": "Clear Database",
+                "updateApp": "Update Application"
+            },
             "banner": {
                 "title": "Settings",
                 "subtitle": "Customize Command Vault to your needs"
@@ -207,6 +215,24 @@
                 "restartAndInstall": "Restart & Install",
                 "downloaded": " downloaded! Restart the application to install.",
                 "checkUpdatesButton": "Check for Updates"
+            },
+            "restorecommand": {
+                "title": "Restore Command",
+                "description": "Here you can find previously deleted commands. Select a command from the list to restore it or permanently delete it.",
+                "noDeletedCommands": "No deleted commands in the trash-bin.",
+                "messages": {
+                    "restoreSuccess": "Command successfully restored!",
+                    "restoreError": "Error restoring command.",
+                    "fullyDeleteSuccess": "Command permanently deleted!",
+                    "fullyDeleteError": "Error deleting command."
+                },
+                "tableHeaders": {
+                    "category": "Category",
+                    "command": "Command",
+                    "description": "Description",
+                    "deletedAt": "Deleted At",
+                    "actions": "Actions"
+                }
             },
             "backupDb": {
                 "title": "Backup Database",

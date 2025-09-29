@@ -103,8 +103,8 @@
             "messages": {
                 "cmdLoadError": "Fehler beim Laden der Befehle.",
                 "categoryLoadError": "Fehler beim Laden der Kategorien.",
-                "cmdDeleted": "Befehl erfolgreich gelöscht.",
-                "cmdDeleteError": "Fehler beim Löschen des Befehls.",
+                "cmdDeleted": "Befehl in den Papierkorb verschoben",
+                "cmdDeleteError": "Fehler beim verschieben in den Papierkorb",
                 "copySuccess": "In Zwischenablage kopiert!",
                 "copyError": "Fehler beim Kopieren in Zwischenablage."
             }
@@ -137,6 +137,14 @@
             }
         },
         "settings": {
+            "quicknav": {
+                "categories": "Kategorien verwalten",
+                "restoreCommands": "Befehle Wiederherstellen",
+                "themes": "Design anpassen",
+                "backupDb": "Datenbank sichern",
+                "clearDb": "Datenbank bereinigen",
+                "updateApp": "Anwendung aktualisieren"
+            },
             "banner": {
                 "title": "Einstellungen",
                 "subtitle": "Passe Command Vault an deine Bedürfnisse an"
@@ -207,6 +215,24 @@
                 "restartAndInstall": "Neu starten & installieren",
                 "downloaded": " heruntergeladen! Starte die Anwendung neu, um zu installieren.",
                 "checkUpdatesButton": "Nach Updates suchen"
+            },
+            "restorecommand": {
+                "title": "Befehle Wiederherstellen",
+                "description": "Hier findest du zuvor gelöschte Befehle.Wähle einen Befehl aus der Liste und stelle Ihn wieder her oder lösche Ihn endgültig.",
+                "noDeletedCommands": "Keine gelöschten Befehle im Papierkorb.",
+                "messages": {
+                    "restoreSuccess": "Befehl erfolgreich wiederhergestellt!",
+                    "restoreError": "Fehler beim Wiederherstellen des Befehls.",
+                    "fullyDeleteSuccess": "Befehl endgültig gelöscht!",
+                    "fullyDeleteError": "Fehler beim Löschen des Befehls."
+                },
+                "tableHeaders": {
+                    "category": "Kategorie",
+                    "command": "Befehl",
+                    "description": "Beschreibung",
+                    "deletedAt": "Gelöscht am",
+                    "actions": "Aktionen"
+                }
             },
             "backupDb": {
                 "title": "Datenbank sichern",
