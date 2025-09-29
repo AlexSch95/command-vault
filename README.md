@@ -10,11 +10,10 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 
 ### 🏠 **Hauptfunktionalitäten**
 - **Befehle speichern**: Speichere Commands mit Titel, Beschreibung und Quell-Links
-- **Technologie-Management**: Organisiere Befehle nach Technologien (Git, Linux, Docker, etc.)
-- **Intelligente Suche**: Finde Befehle schnell über Titel, Command oder Technologie
+- **Kategorie-Management**: Organisiere Befehle nach Kategorien (Git, Linux, Docker, etc.)
+- **Intelligente Suche**: Finde Befehle schnell über ihren Titel, den Befehl oder die Beschreibung
 - **One-Click Copy**: Kopiere Commands direkt in die Zwischenablage
 - **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert
-- **Update-Funktion**: Automatische Updates können über den Einstellungsbereich durchgeführt werden 
 
 ### 🎨 **Theme & Personalisierung**
 - **Vordefinierte Themes**: Light-, Dark-, Coffee- und Navytheme
@@ -23,15 +22,16 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Persistente Einstellungen**: Themes bleiben nach Neustart erhalten
 
 ### ⚙️ **Erweiterte Funktionen**
-- **CRUD-Operationen**: Erstellen, Bearbeiten, Löschen von Commands und Technologien
-- **Inline-Editing**: Bearbeite Commands direkt in der Übersicht
+- **CRUD-Operationen**: Erstellen, Bearbeiten, Löschen von Befehlen und Kategorien
+- **Inline-Editing**: Bearbeite Befehle direkt in der Übersicht
 - **Markdown**: Beschreibungen unterstützen Markdown
 - **Modal-Bestätigungen**: Sichere Lösch-Dialoge mit Bestätigungseingabe
 - **Responsive Design**: Funktioniert auf verschiedenen Bildschirmgrößen
 - **Datenbank-Management**: Datenbank-Backups und Bereinigung über die App möglich
-- **Updates**: Automatische Updatefunktion
+- **Papierkorb**: Gelöschte Befehle verweilen in der Datenbank und können innerhalb der Einstellungen wiederhergestellt oder endgültig gelöscht werden.
+- **Updates**: Die Anwendung kann völlig unkompliziert auf den neuesten Stand gebracht werden (siehe Einstellungen)
 
-## 🛠️ Technologien
+## 🛠️ Tech-Stack
 
 ### **Frontend**
 - **HTML5** - Struktur und Semantik
@@ -51,35 +51,10 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Modular JavaScript** - ES6 Module-System
 
 ### **Datenbank und User-Theme**
-- **Speicherort**: Die Datenbank und das User-Theme wird in folgendem Pfad gespeichert
+- **Speicherort**: Die Datenbank, Datenbank-Backups und das User-Theme wird in folgendem Pfad gespeichert
 ```
 %APPDATA%/command-vault/
 ```
-
-## 🗄️ Datenbankschema
-
-```sql
--- Technologien (Git, Linux, Docker, etc.)
-CREATE TABLE technologies (
-    tech_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tech_name TEXT NOT NULL UNIQUE,
-    color TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- Commands/Befehle
-CREATE TABLE commands (
-    command_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tech_id INTEGER NOT NULL,
-    titel TEXT NOT NULL,
-    command TEXT NOT NULL,
-    beschreibung TEXT,
-    source TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (tech_id) REFERENCES technologies(tech_id) ON DELETE CASCADE
-);
-```
-
 ## 🚀 Installation & Setup (für Developer)
 
 ### **Voraussetzungen**
