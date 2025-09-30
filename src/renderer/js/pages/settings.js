@@ -1,5 +1,10 @@
 import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
-import { themes } from "../shared/presetThemes.js";
+import * as cleardbHandler from "./settings/clearDbHandler.js";
+import * as themesHandler from "./settings/themesHandler.js";
+import * as backupDbHandler from "./settings/backupDbHandler.js";
+import * as categoriesHandler from "./settings/categoriesHandler.js";
+import * as restoreCommandsHandler from "./settings/restoreCommandsHandler.js";
+import * as updatesHandler from "./settings/updatesHandler.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -7,669 +12,96 @@ document.addEventListener('DOMContentLoaded', async () => {
     await window.i18n.ready;
   }
 
-  //desc: flag für den Modus - entweder aktuelle Technologien (->false) oder neue Technologie (->true)
-  let newTechMode = false;
-
-  const deletedCommandsContainer = document.getElementById('restore-commands-container');
-  const backupListContainer = document.getElementById('backup-list');
-
-  //desc: initiale funktionsaufrufe
   loadGlobalTheme();
-  loadTechnologies();
-  setupCurrentColors();
-  loadDeletedCommands();
-  listBackups();
+  await themesHandler.init();
+  await backupDbHandler.init();
+  await categoriesHandler.init();
+  await restoreCommandsHandler.init();
 
+  //desc: Globaler Schließen Button fürs Settings Fenster
   document.getElementById("close-btn").addEventListener("click", () => {
     window.electronAPI.closeSettingsWindow();
   });
 
-  document.getElementById("open-userdata-btn").addEventListener("click", () => {
-    window.electronAPI.openUserDataFolder();
-  });
+  //desc: Elemente
+  const deletedCommandsContainer =
 
-  //desc: lädt die user-theme.json und wendet die aktuellen Farben im Color Picker an
-  async function setupCurrentColors() {
-    try {
-      const savedTheme = await window.electronAPI.loadTheme();
 
-      if (savedTheme) {
-        document.getElementById('bg-primary-color').value = savedTheme.bgPrimary;
-        document.getElementById('bg-secondary-color').value = savedTheme.bgSecondary;
-        document.getElementById('border-color').value = savedTheme.borderColor;
-        document.getElementById('text-primary-color').value = savedTheme.textPrimary;
-        document.getElementById('accent-color').value = savedTheme.accentColor;
-        document.getElementById('text-color-code').value = savedTheme.textColorCode;
-      }
-    } catch (error) {
-      console.error('Fehler beim Laden der aktuellen Farben', error);
-    }
-  }
+    //desc: Themes Eventlistener
+    document.getElementById('save-theme-btn').addEventListener('click', themesHandler.customTheme);
 
-  //desc: generiert ein objekt aus den aktuell ausgewählten farben und ruft damit applyTheme auf
-  function customTheme() {
-    const themeData = {
-      bgPrimary: document.getElementById('bg-primary-color').value,
-      bgSecondary: document.getElementById('bg-secondary-color').value,
-      borderColor: document.getElementById('border-color').value,
-      textPrimary: document.getElementById('text-primary-color').value,
-      accentColor: document.getElementById('accent-color').value,
-      textColorCode: document.getElementById('text-color-code').value
-    };
-    applyTheme(themeData);
-  }
-
-  //desc: wendet ein theme an, wenn string dann aus presetThemes.js, wenn objekt dann custom
-  async function applyTheme(chosenTheme) {
-    let themeData;
-
-    if (typeof chosenTheme === 'string') {
-      themeData = themes[chosenTheme]
-    } else {
-      themeData = chosenTheme;
-    }
-
-    const root = document.documentElement;
-    root.style.setProperty('--bg-primary', themeData.bgPrimary);
-    root.style.setProperty('--bg-secondary', themeData.bgSecondary);
-    root.style.setProperty('--border-color', themeData.borderColor);
-    root.style.setProperty('--text-primary', themeData.textPrimary);
-    root.style.setProperty('--accent-color', themeData.accentColor);
-    root.style.setProperty('--text-color-code', themeData.textColorCode);
-    try {
-      const result = await window.electronAPI.saveTheme(themeData);
-      if (result.success) {
-        showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.themes.messages.themeApplied") : "Design angewendet."}` });
-      } else {
-        showFeedback(result);
-      }
-    } catch (error) {
-      console.error('Fehler beim Speichern des vordefinierten Themes:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.themes.messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
-    } finally {
-      setupCurrentColors();
-    }
-  }
-
-  //desc: Eventlistener für die Buttons
-  document.getElementById('save-theme-btn').addEventListener('click', customTheme);
-  document.getElementById('reset-database-btn').addEventListener('click', handleDatabaseReset);
   document.getElementById('preset-themes').addEventListener('click', (event) => {
     const theme = event.target.dataset.theme;
     if (theme) {
-      applyTheme(theme);
+      themesHandler.applyTheme(theme);
     }
   });
 
-  //desc: schickt die änderungen ab, wenn newtechmode true dann insert into, wenn false dann update
-  document.getElementById('add-technology-btn').addEventListener('click', async (event) => {
+
+  //desc: DB-Reset Eventlistener
+  document.getElementById('reset-database-btn').addEventListener('click', cleardbHandler.handleDatabaseReset);
+
+
+  //desc: DB-Backup Eventlistener
+  document.getElementById('backup-list').addEventListener('click', (event) => {
+    if (event.target.classList.contains('restore-backup-btn')) {
+      const backupFilename = event.target.dataset.filename;
+      backupDbHandler.restoreBackup(backupFilename);
+    } else if (event.target.classList.contains('fully-delete-backup-btn')) {
+      const backupFilename = event.target.dataset.filename;
+      backupDbHandler.fullyDeleteBackup(backupFilename);
+    }
+  });
+
+  document.getElementById('backup-database-btn').addEventListener('click', backupDbHandler.backupCurrentDatabase);
+
+  document.getElementById("open-userdata-btn").addEventListener("click", backupDbHandler.openBackupsFolder);
+
+
+  //desc: Kategorien Eventlistener
+  document.getElementById('add-technology-btn').addEventListener('click', (event) => {
     event.preventDefault();
-    const tech = document.getElementById('tech');
-    const color = document.getElementById('color');
-    if (newTechMode === true) {
-      try {
-        const result = await window.electronAPI.dbQuery('INSERT INTO technologies (tech_name, color) VALUES (?, ?)', [tech.value, color.value]);
-        showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categorySaved") : "Technologie erfolgreich gespeichert."}` });
-        document.getElementById('add-technology-form').reset();
-      } catch (error) {
-        console.error('Datenbank Fehler:', error);
-        showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categorySaveError") : "Fehler beim Hinzufügen der Technologie."}` });
-      }
-    } else if (newTechMode === false) {
-      try {
-        const result = await window.electronAPI.dbQuery('UPDATE technologies SET color = ? WHERE tech_id = ?', [color.value, tech.value]);
-        showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryUpdated") : "Technologie erfolgreich aktualisiert."}` });
-        document.getElementById('add-technology-form').reset();
-      } catch (error) {
-        console.error('Datenbank Fehler:', error);
-        showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryUpdateError") : "Fehler beim Aktualisieren der Technologie."}` });
-      }
-    }
-    loadTechnologies();
+    categoriesHandler.addCategory();
   });
 
-  //desc: formular resetten
-  document.getElementById('reset-btn').addEventListener('click', (event) => {
+  document.getElementById('reset-categories-btn').addEventListener('click', (event) => {
     event.preventDefault();
     document.getElementById('add-technology-form').reset();
-    window.location.reload();
   });
 
-  //desc: updatet die hex-anzeige wenn der colorpicker wert sich ändert
   document.getElementById('color').addEventListener('input', (event) => {
     const hexDisplay = document.getElementById('hex-display');
     hexDisplay.textContent = event.target.value;
   });
 
-  //desc: löschfunktion für vorhandene technologien mit modal
-  //desc: modal verlangt den Technologienamen als bestätigungstext
-  //desc: weist mehrfach darauf hin, dass löschen der Tech dazu führt, dass alle zugeordneten Commands gelöscht werden
-  document.getElementById('delete-technology-btn').addEventListener('click', async (event) => {
+  document.getElementById('delete-technology-btn').addEventListener('click', (event) => {
     event.preventDefault();
-    const tech = document.getElementById('tech');
-    if (tech.value != '') {
-      const techName = tech.options[tech.selectedIndex].text;
-
-      // Modal erstellen und anzeigen
-      const modal = document.createElement('div');
-      modal.className = 'modal fade';
-      modal.id = 'deleteModal';
-      modal.innerHTML = `
-                <div class="modal-dialog">
-                    <div class="modal-content bg-secondary">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title text-light">${window.i18n ? window.i18n.translate("pages.settings.categories.modal.title") : "Technologie löschen"}</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body text-light">
-                            <p>${window.i18n ? window.i18n.translate("pages.settings.categories.modal.warning") : "ACHTUNG: Dadurch werden alle zugehörigen Commands ebenfalls gelöscht!"}</p>
-                            <p>${window.i18n ? window.i18n.translate("pages.settings.categories.modal.confirmThisp1") : "Gib den Namen der Technologie"} 
-                            "<strong>${techName}</strong>" 
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.confirmThisp2") : "ein, um das Löschen zu bestätigen:"}</p>
-                            <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
-                                   id="confirmTechName" placeholder="${techName}" autocomplete="off">
-                        </div>
-                        <div class="modal-footer border-secondary">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.cancelButton") : "Abbrechen"}
-                            </button>
-                            <button type="button" class="btn btn-danger" id="confirmDelete" disabled>
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.deleteButton") : "Löschen"}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-      document.body.appendChild(modal);
-      const bootstrapModal = new bootstrap.Modal(modal);
-      bootstrapModal.show();
-
-      const confirmInput = document.getElementById('confirmTechName');
-      const confirmButton = document.getElementById('confirmDelete');
-
-      // Input-Validierung in Echtzeit
-      confirmInput.addEventListener('input', () => {
-        if (confirmInput.value === techName) {
-          confirmButton.disabled = false;
-          confirmButton.classList.remove('btn-danger');
-          confirmButton.classList.add('btn-danger');
-        } else {
-          confirmButton.disabled = true;
-        }
-      });
-
-      // Bestätigung Event Listener
-      confirmButton.addEventListener('click', async () => {
-        if (confirmInput.value === techName) {
-          try {
-            const result = await window.electronAPI.dbQuery('DELETE FROM technologies WHERE tech_id = ?', [tech.value]);
-            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryDeleted") : "Technologie erfolgreich gelöscht!"}` });
-            document.getElementById('add-technology-form').reset();
-            loadTechnologies();
-            bootstrapModal.hide();
-          } catch (error) {
-            console.error('Datenbank Fehler:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryDeleteError") : "Fehler beim Löschen der Technologie."}` });
-          }
-        }
-      });
-
-      // Modal nach Schließen entfernen
-      modal.addEventListener('hidden.bs.modal', () => {
-        modal.remove();
-      });
-    }
+    categoriesHandler.deleteCategory();
   });
 
-  function parseBackupFilename(filename) {
-    const cleanFilename = filename.replace('database-backup-', '').replace('.db', '');
-    const [datePart, timePart] = cleanFilename.split('T');
-    const [year, month, day] = datePart.split('-');
-    const reorderedDate = `${day}.${month}.${year}`;
 
-    const [hours, minutes, seconds] = timePart.split('-');
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
-    return {
-      date: reorderedDate,
-      time: formattedTime,
-      originalFilename: filename
-    }
-  }
-
-  async function listBackups() {
-    try {
-      const backups = await window.electronAPI.listBackups();
-      backupListContainer.innerHTML = '';
-      console.log(backups);
-      if (backups.length === 0) {
-        backupListContainer.innerHTML = `<p class="text-muted">${window.i18n ? window.i18n.translate("pages.settings.backupDb.backupsList.noBackups") : "Keine Backups gefunden."}</p>`;
-        return;
-      }
-
-      const table = document.createElement('table');
-
-
-      const thead = document.createElement('thead');
-      thead.innerHTML = `
-                <tr>
-                    <th>${window.i18n.translate("pages.settings.backupDb.backupsList.tableHeaders.date")}</th>
-                    <th>${window.i18n.translate("pages.settings.backupDb.backupsList.tableHeaders.time")}</th>
-                    <th>${window.i18n.translate("pages.settings.backupDb.backupsList.tableHeaders.actions")}</th>
-                </tr>
-            `;
-      table.appendChild(thead);
-
-      const tbody = document.createElement('tbody');
-      backups.forEach(backup => {
-        const row = document.createElement('tr');
-        const parsedFilename = parseBackupFilename(backup);
-        row.innerHTML = `
-                    <td>${parsedFilename.date}</td>
-                    <td>${parsedFilename.time}</td>
-                    <td class="text-center">
-                        <button class="btn btn-success btn-sm restore-command-btn" title="${window.i18n.translate("pages.settings.backupDb.backupsList.buttons.restore")}" data-filename="${parsedFilename.originalFilename}">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm fully-delete-cmd-btn" title="${window.i18n.translate("pages.settings.backupDb.backupsList.buttons.delete")}" data-filename="${parsedFilename.originalFilename}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                `;
-        tbody.appendChild(row);
-      });
-      table.appendChild(tbody);
-      backupListContainer.appendChild(table);
-
-    } catch (error) {
-      console.error('Fehler beim Laden der Backups:', error);
-    }
-  }
-
-  async function loadDeletedCommands() {
-    try {
-      const deletedCommands = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands ORDER BY deleted_at DESC');
-      console.log("1");
-      deletedCommandsContainer.innerHTML = '';
-      console.log("2");
-      if (deletedCommands.length === 0) {
-        deletedCommandsContainer.innerHTML = `<p class="text-muted">${window.i18n ? window.i18n.translate("pages.settings.restorecommand.noDeletedCommands") : "Keine gelöschten Befehle vorhanden."}</p>`;
-        return;
-      }
-
-      // Tabelle erstellen
-      const table = document.createElement('table');
-
-
-      // Tabellenkopf
-      const thead = document.createElement('thead');
-      thead.innerHTML = `
-                <tr>
-                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.category")}</th>
-                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.command")}</th>
-                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.deletedAt")}</th>
-                    <th>${window.i18n.translate("pages.settings.restorecommand.tableHeaders.actions")}</th>
-                </tr>
-            `;
-      table.appendChild(thead);
-
-      // Tabellenkörper
-      const tbody = document.createElement('tbody');
-      deletedCommands.forEach(cmd => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-                    <td><span class="badge" style="background-color: ${cmd.tech_color};"><span class="fs-5">${cmd.tech_name}</span></span></td>
-                    <td>${cmd.command.length > 9 ? cmd.command.substring(0, 9) + '...' : cmd.command}</td>
-                    <td>${new Date(cmd.deleted_at).toLocaleDateString()}</td>
-                    <td class="text-center">
-                        <button class="btn btn-success btn-sm restore-command-btn" data-id="${cmd.command_id}">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm fully-delete-cmd-btn" data-id="${cmd.command_id}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                `;
-        tbody.appendChild(row);
-      });
-      table.appendChild(tbody);
-      deletedCommandsContainer.appendChild(table);
-    } catch (error) {
-      console.error('Fehler beim Laden der gelöschten Commands:', error);
-      const container = document.getElementById('restore-commands-container');
-      container.innerHTML = `<p class="text-danger">Fehler beim Laden der gelöschten Befehle.</p>`;
-    }
-  }
-
-  deletedCommandsContainer.addEventListener('click', async (event) => {
+  //desc: Befehl restoren Eventlistener
+  document.getElementById('restore-commands-container').addEventListener('click', async (event) => {
     if (event.target.classList.contains('restore-command-btn')) {
       const commandId = event.target.dataset.id;
-      restoreCommand(commandId);
+      restoreCommandsHandler.restoreCommand(commandId);
     } else if (event.target.classList.contains('fully-delete-cmd-btn')) {
       const commandId = event.target.dataset.id;
-      fullyDeleteCommand(commandId);
+      restoreCommandsHandler.fullyDeleteCommand(commandId);
     }
   });
 
-  backupListContainer.addEventListener('click', async (event) => {
-    if (event.target.classList.contains('restore-command-btn')) {
-      const backupFilename = event.target.dataset.filename;
-      restoreBackup(backupFilename);
-    } else if (event.target.classList.contains('fully-delete-cmd-btn')) {
-      const backupFilename = event.target.dataset.filename;
-      fullyDeleteBackup(backupFilename);
-    }
-  });
 
-  async function restoreBackup(backupFilename) {
-    try {
-      console.log(backupFilename);
-      const result = await window.electronAPI.restoreDbBackup(backupFilename);
-      showFeedback({ success: result, message: `${window.i18n.translate("pages.settings.backupDb.backupsList.messages.restoreSuccess")}` });
-    } catch (error) {
-      console.error('Fehler beim Wiederherstellen des Backups:', error);
-      showFeedback({ success: result, message: `${window.i18n.translate("pages.settings.backupDb.backupsList.messages.restoreError")}` });
-
-    }
-  }
-
-  async function restoreCommand(commandId) {
-    try {
-      const result = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands WHERE command_id = ?', [commandId]);
-      const cmd = result[0];
-      await window.electronAPI.dbQuery(`INSERT INTO commands
-                (tech_id, titel, command, beschreibung, source)
-                VALUES (?, ?, ?, ?, ?)`, [cmd.tech_id, cmd.titel, cmd.command, cmd.beschreibung, cmd.source]);
-      await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreSuccess") : "Befehl erfolgreich wiederhergestellt."}` });
-    } catch (error) {
-      console.log('Fehler beim Wiederherstellen des Commands:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreError") : "Fehler beim Wiederherstellen des Befehls."}` });
-    } finally {
-      loadDeletedCommands();
-    }
-  }
-
-  async function fullyDeleteCommand(commandId) {
-    try {
-      const result = await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteSuccess") : "Befehl erfolgreich endgültig gelöscht."}` });
-    } catch (error) {
-      console.log('Fehler beim Löschen des Commands:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteError") : "Fehler beim endgültigen Löschen des Befehls."}` });
-    } finally {
-      loadDeletedCommands();
-    }
-  }
-
-  async function loadTechnologies() {
-    try {
-      newTechMode = false;
-      const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
-
-      const techContainer = document.getElementById('tech-container');
-      techContainer.innerHTML = '';
-
-      const flexContainer = document.createElement('div');
-      flexContainer.className = 'd-flex align-items-center gap-2';
-
-      const techSelect = document.createElement('select');
-      techSelect.id = 'tech';
-      techSelect.className = 'form-select form-select-lg bg-dark border-secondary text-light flex-grow-1';
-      if (technologies.length === 0) {
-        techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("pages.settings.categories.noCategories") : "Hier ist noch nichts..."}</option>`;
-      } else {
-        techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("pages.settings.categories.categoryPlaceholder") : "Kategorie auswählen..."}</option>`;
-      }
-
-      technologies.forEach(tech => {
-        const option = document.createElement('option');
-        option.value = tech.tech_id;
-        option.textContent = tech.tech_name;
-        option.dataset.color = tech.color;
-        techSelect.appendChild(option);
-      });
-
-      const newButton = document.createElement('button');
-      newButton.type = 'button';
-      newButton.textContent = `${window.i18n ? window.i18n.translate("pages.settings.categories.buttons.addNew") : "Neue Kategorie"}`;
-      newButton.id = 'new-tech-btn';
-      newButton.className = 'btn btn-primary btn-sm';
-
-      flexContainer.appendChild(techSelect);
-      flexContainer.appendChild(newButton);
-      techContainer.appendChild(flexContainer);
-
-      techSelect.addEventListener('change', (event) => {
-        const selectedOption = event.target.options[event.target.selectedIndex];
-        const colorInput = document.getElementById('color');
-        colorInput.value = selectedOption.dataset.color || '#007bff';
-        const hexDisplay = document.getElementById('hex-display');
-        hexDisplay.textContent = colorInput.value;
-        document.getElementById('delete-technology-btn').disabled = false;
-      });
-
-      newButton.addEventListener('click', () => {
-        newTechMode = true;
-        document.getElementById('tech-container').innerHTML = `
-                    <input type="text" id="tech" class="form-control form-control-lg bg-dark border-secondary text-light" placeholder="Linux, JavaScript, Python..." required>
-                `;
-        document.getElementById('color').value = '#007bff';
-        document.getElementById('hex-display').textContent = '#007bff';
-      })
-    } catch (error) {
-      console.error('Fehler beim Laden der Technologien:', error);
-    }
-  }
-
-  async function fullyDeleteBackup(backupFilename) {
-    const modal = document.createElement('div');
-    modal.className = 'modal fade';
-    modal.id = 'deleteBackupModal';
-    modal.innerHTML = `
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header border-secondary">
-                        <h5 class="modal-title text-danger">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            ${window.i18n.translate("pages.settings.backupDb.backupsList.modal.title")}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white btn-outline-primary" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body text-light">
-                        <div class="alert alert-danger bg-secondary border-danger mb-4 text-primary" role="alert">
-                            <p class="mb-2">
-                            <strong>${window.i18n.translate("pages.settings.backupDb.backupsList.modal.warning")}</strong>
-                            </p>
-                        </div>
-                        <p>
-                        ${window.i18n.translate("pages.settings.backupDb.backupsList.modal.confirmThis1")}
-                        "<strong>${window.i18n.translate("pages.settings.backupDb.backupsList.modal.confirmThisWord")}</strong>"
-                        ${window.i18n.translate("pages.settings.backupDb.backupsList.modal.confirmThis2")}
-                        </p>
-                        <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
-                               id="confirmResetText" placeholder="${window.i18n.translate("pages.settings.backupDb.backupsList.modal.confirmThisWord")}" autocomplete="off">
-                    </div>
-                    <div class="modal-footer border-secondary">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                            ${window.i18n.translate("pages.settings.backupDb.backupsList.modal.cancelButton")}
-                        </button>
-                        <button type="button" class="btn btn-danger" id="confirmBackupDelete" data-filename="${backupFilename}" disabled>
-                            <i class="bi bi-trash3 me-2"></i>${window.i18n.translate("pages.settings.backupDb.backupsList.modal.deleteButton")}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-    document.body.appendChild(modal);
-    const deleteBackupModal = new bootstrap.Modal(modal);
-    deleteBackupModal.show();
-
-    const confirmInput = document.getElementById('confirmResetText');
-    const confirmButton = document.getElementById('confirmBackupDelete');
-    const requiredText = `${window.i18n.translate("pages.settings.backupDb.backupsList.modal.confirmThisWord")}`;
-
-    confirmInput.addEventListener('input', () => {
-      if (confirmInput.value === requiredText) {
-        confirmButton.disabled = false;
-      } else {
-        confirmButton.disabled = true;
-      }
-    });
-
-    confirmButton.addEventListener('click', async () => {
-      const backupFilename = confirmButton.dataset.filename;
-      if (confirmInput.value === requiredText) {
-        try {
-          const result = await window.electronAPI.deleteDbBackup(backupFilename);
-          showFeedback({ success: result, message: `${window.i18n.translate("pages.settings.backupDb.messages.deleteSuccess")}` });
-        } catch (error) {
-          console.error('Fehler beim endgültigen Löschen des Backups:', error);
-          showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.backupDb.messages.deleteError")}` });
-        } finally {
-          deleteBackupModal.hide();
-          listBackups();
-        }
-      }
-    });
-
-    modal.addEventListener('hidden.bs.modal', () => {
-      modal.remove();
-    });
-  }
-
-  async function handleDatabaseReset(event) {
-    event.preventDefault();
-
-    const modal = document.createElement('div');
-    modal.className = 'modal fade';
-    modal.id = 'resetDatabaseModal';
-    modal.innerHTML = `
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header border-secondary">
-                        <h5 class="modal-title text-danger">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.title") : "Datenbank bereinigen"}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white btn-outline-primary" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body text-light">
-                        <div class="alert alert-danger bg-secondary border-danger mb-4 text-primary" role="alert">
-                            <p class="mb-2">
-                            <strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.lastWarning") : "LETZTE WARNUNG:"}</strong>
-                            </p>
-                            <p class="mb-2"><strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.warningText1") : "Diese Aktion wird ALLE Befehle und Technologien unwiderruflich löschen!"}</strong></p>
-                            <p class="mb-0 small">${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.warningText2") : "Stelle sicher, dass du ein Backup hast, bevor du fortfährst."}</p>
-                        </div>
-                        <p>
-                        ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThis1") : "Gib "}
-                        "<strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}</strong>"
-                        ${window.i18n.translate("pages.settings.clearDb.modal.confirmThis2")}
-                        </p>
-                        <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
-                               id="confirmResetText" placeholder="${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}" autocomplete="off">
-                    </div>
-                    <div class="modal-footer border-secondary">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                            ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.cancelButton") : "Abbrechen"}
-                        </button>
-                        <button type="button" class="btn btn-danger" id="confirmReset" disabled>
-                            <i class="bi bi-trash3 me-2"></i>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.deleteButton") : "Datenbank bereinigen"}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-    document.body.appendChild(modal);
-    const dbResetModal = new bootstrap.Modal(modal);
-    dbResetModal.show();
-
-    const confirmInput = document.getElementById('confirmResetText');
-    const confirmButton = document.getElementById('confirmReset');
-    const requiredText = `${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}`;
-
-    confirmInput.addEventListener('input', () => {
-      if (confirmInput.value === requiredText) {
-        confirmButton.disabled = false;
-      } else {
-        confirmButton.disabled = true;
-      }
-    });
-
-    confirmButton.addEventListener('click', async () => {
-      if (confirmInput.value === requiredText) {
-        try {
-          await window.electronAPI.dbQuery('DELETE FROM commands');
-          await window.electronAPI.dbQuery('DELETE FROM technologies');
-          await window.electronAPI.dbQuery('DELETE FROM deleted_commands');
-
-          showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.clearDb.messages.dbResetSuccess") : "Datenbank erfolgreich bereinigt!"}` });
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-
-          dbResetModal.hide();
-        } catch (error) {
-          console.error('Datenbank Fehler:', error);
-          showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.clearDb.messages.dbResetError") : "Fehler beim Bereinigen der Datenbank."}` });
-        }
-      }
-    });
-
-    modal.addEventListener('hidden.bs.modal', () => {
-      modal.remove();
-    });
-  }
-
-  document.getElementById('backup-database-btn').addEventListener('click', async () => {
-    const btn = document.getElementById('backup-database-btn');
-    const oldBtn = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.backupDb.starting") : "Backup wird erstellt..."}`;
-
-    try {
-      await window.electronAPI.createDbBackup();
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.backupDb.messages.backupSuccess") : "Backup erfolgreich erstellt!"}` });
-    } catch (error) {
-      console.error('Fehler beim Erstellen des Backups:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.backupDb.messages.dbBackupFailed") : "Fehler beim Erstellen des Backups."}` });
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = oldBtn;
-      listBackups();
-    }
-  });
-
-  document.getElementById('check-updates-btn')?.addEventListener('click', async () => {
-    const btn = document.getElementById('check-updates-btn');
-
-    btn.disabled = true;
-    btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.update.checking") : "Suche nach Updates..."}`;
-
-    try {
-      await window.electronAPI.checkForUpdates();
-      showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.checking") : "Suche nach Updates..."}`, 'info');
-    } catch (error) {
-      showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.error") : "Fehler beim Suchen nach Updates"}`, 'danger');
-    }
-
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.update.checkUpdatesButton") : "Nach Updates suchen"}`;
-    }, 3000);
-  });
+  //desc: Updates Bereich Eventlistener
+  document.getElementById('check-updates-btn').addEventListener('click', updatesHandler.checkUpdates());
 
   window.electronAPI.onUpdateAvailable?.((event, info) => {
-    showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.available") : "Update verfügbar: v"}${info.version}`, 'success');
+    updatesHandler.showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.available") : "Update verfügbar: v"}${info.version}`, 'success');
     document.getElementById('update-progress').classList.remove('d-none');
   });
 
   window.electronAPI.onUpdateNotAvailable?.((event, info) => {
-    showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.noUpdate") : "Sie sind bereits auf der aktuellsten Version."}`, 'info');
+    updatesHandler.showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.noUpdate") : "Sie sind bereits auf der aktuellsten Version."}`, 'info');
   });
 
   window.electronAPI.onDownloadProgress?.((event, progress) => {
@@ -694,14 +126,4 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.electronAPI.restartApp();
     });
   });
-
-  function showUpdateStatus(message, type) {
-    const statusDiv = document.getElementById('update-status');
-    statusDiv.classList.remove('d-none');
-    statusDiv.innerHTML = `
-            <div class="alert alert-${type}">
-                <i class="bi bi-info-circle me-2"></i>${message}
-            </div>
-        `;
-  }
 });

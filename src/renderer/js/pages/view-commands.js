@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <button class="btn btn-link p-1" data-bs-toggle="dropdown">
                                     <i class="text-primary bi bi-three-dots-vertical"></i>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                                     <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.toSource") : "Zur Quelle"}</a></li>
                                     <li><a class="dropdown-item edit-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-pencil me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.edit") : "Bearbeiten"}</a></li>
                                     <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-trash me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.delete") : "Löschen"}</a></li>

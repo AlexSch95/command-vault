@@ -17,11 +17,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden;
-}
-
-table {
-    animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
 }
 
 body.bg-dark {
@@ -419,6 +414,10 @@ tbody tr:hover td {
     animation: fadeOut 0.3s;
 }
 
+.dropdown-menu {
+    z-index: 9999 !important;
+}
+
 @keyframes fadeOut {
     from {
         opacity: 1;
@@ -498,6 +497,7 @@ button .bi {
     border-color: var(--border-color) !important;
     transition: all 0.3s ease;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    overflow: visible;
     animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
 }
 
