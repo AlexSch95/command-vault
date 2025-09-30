@@ -13,9 +13,12 @@ export function showFeedback(result) {
   errorBox.classList.remove("d-none");
   errorBox.classList.add("show");
   setTimeout(() => {
-    errorText.textContent = "";
-    errorBox.classList.add("d-none");
-    errorBox.classList.remove("show", "alert-danger", "alert-success");
+    errorBox.classList.remove("show");
+    setTimeout(() => {
+      errorText.textContent = "";
+      errorBox.classList.add("d-none");
+      errorBox.classList.remove("alert-success", "alert-danger");
+    }, 600);
   }, 3000);
 }
 
