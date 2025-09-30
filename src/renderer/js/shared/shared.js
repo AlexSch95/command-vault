@@ -1,8 +1,6 @@
 //desc: feedback funktion
 export function showFeedback(result) {
-  // responseBody dekonstruieren
   const { success, message } = result;
-  // Error Alert Elemente Laden
   const errorText = document.getElementById("errorText");
   const errorBox = document.getElementById("errorMessage");
   if (success === true) {
@@ -23,19 +21,19 @@ export function showFeedback(result) {
 
 //desc: lädt das gespeicherte theme und wendet es an
 export async function loadGlobalTheme() {
-    try {
-        const savedTheme = await window.electronAPI.loadTheme();
-        
-        if (savedTheme) {
-            const root = document.documentElement;
-            root.style.setProperty('--bg-primary', savedTheme.bgPrimary);
-            root.style.setProperty('--bg-secondary', savedTheme.bgSecondary);
-            root.style.setProperty('--border-color', savedTheme.borderColor);
-            root.style.setProperty('--text-primary', savedTheme.textPrimary);
-            root.style.setProperty('--accent-color', savedTheme.accentColor);
-            root.style.setProperty('--text-color-code', savedTheme.textColorCode);
-        }
-    } catch (error) {
-        console.error('Fehler beim Laden des globalen Themes:', error);
+  try {
+    const savedTheme = await window.electronAPI.loadTheme();
+
+    if (savedTheme) {
+      const root = document.documentElement;
+      root.style.setProperty('--bg-primary', savedTheme.bgPrimary);
+      root.style.setProperty('--bg-secondary', savedTheme.bgSecondary);
+      root.style.setProperty('--border-color', savedTheme.borderColor);
+      root.style.setProperty('--text-primary', savedTheme.textPrimary);
+      root.style.setProperty('--accent-color', savedTheme.accentColor);
+      root.style.setProperty('--text-color-code', savedTheme.textColorCode);
     }
+  } catch (error) {
+    console.error('Fehler beim Laden des globalen Themes:', error);
+  }
 }

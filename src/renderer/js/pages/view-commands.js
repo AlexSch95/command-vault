@@ -2,55 +2,55 @@ import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    if (window.i18n) {
-        await window.i18n.ready;
-    }
+  if (window.i18n) {
+    await window.i18n.ready;
+  }
 
-    document.getElementById("settingsButton").addEventListener("click", () => {
-        document.getElementById("mainContentOverlay").classList.add("overlay-darken");
-        window.electronAPI.openSettingsWindow();
-    });
-    
-    window.electronAPI.onSettingsClosed(() => {
-        document.getElementById("mainContentOverlay").classList.remove("overlay-darken");
-        loadGlobalTheme();
-        loadCommands();
-        technologyFilter();
-    });
+  document.getElementById("settingsButton").addEventListener("click", () => {
+    document.getElementById("mainContentOverlay").classList.add("overlay-darken");
+    window.electronAPI.openSettingsWindow();
+  });
 
-    const languageSwitchers = document.querySelectorAll('.language-switcher');
-    languageSwitchers.forEach(switcher => {
-        switcher.addEventListener('click', async (event) => {
-            event.preventDefault();
-            const selectedLang = switcher.getAttribute('data-language');
-            await window.switchLanguage(selectedLang);
-            window.i18n.updatePage();
-            loadCommands();
-        });
-    });
-
-    document.getElementById("minimize-btn").addEventListener("click", () => {
-        window.electronAPI.minimizeWindow();
-    });
-    document.getElementById("close-btn").addEventListener("click", () => {
-        window.electronAPI.closeWindow();
-    });
-
-
-    let commandsArray = [];
-    const commandsContainer = document.getElementById('commandsContainer');
-
+  window.electronAPI.onSettingsClosed(() => {
+    document.getElementById("mainContentOverlay").classList.remove("overlay-darken");
     loadGlobalTheme();
     loadCommands();
     technologyFilter();
+  });
 
-    document.getElementById('technologyFilter').addEventListener('change', applyFilter);
-    document.getElementById('searchInput').addEventListener('input', applyFilter);
+  const languageSwitchers = document.querySelectorAll('.language-switcher');
+  languageSwitchers.forEach(switcher => {
+    switcher.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const selectedLang = switcher.getAttribute('data-language');
+      await window.switchLanguage(selectedLang);
+      window.i18n.updatePage();
+      loadCommands();
+    });
+  });
 
-    //desc: lädt die commands aus der db
-    async function loadCommands() {
-        try {
-            const rows = await window.electronAPI.dbQuery(`
+  document.getElementById("minimize-btn").addEventListener("click", () => {
+    window.electronAPI.minimizeWindow();
+  });
+  document.getElementById("close-btn").addEventListener("click", () => {
+    window.electronAPI.closeWindow();
+  });
+
+
+  let commandsArray = [];
+  const commandsContainer = document.getElementById('commandsContainer');
+
+  loadGlobalTheme();
+  loadCommands();
+  technologyFilter();
+
+  document.getElementById('technologyFilter').addEventListener('change', applyFilter);
+  document.getElementById('searchInput').addEventListener('input', applyFilter);
+
+  //desc: lädt die commands aus der db
+  async function loadCommands() {
+    try {
+      const rows = await window.electronAPI.dbQuery(`
                 SELECT 
                     c.command_id,
                     c.titel,
@@ -65,45 +65,45 @@ document.addEventListener('DOMContentLoaded', async () => {
                 JOIN technologies t ON c.tech_id = t.tech_id
                 ORDER BY c.created_at DESC
             `, []);
-            commandsArray = rows;
-            renderCommands(commandsArray);
-        } catch (error) {
-            console.error('Datenbank Fehler:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdLoadError") : "Fehler beim Laden der Befehle."}` });
-        }
+      commandsArray = rows;
+      renderCommands(commandsArray);
+    } catch (error) {
+      console.error('Datenbank Fehler:', error);
+      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdLoadError") : "Fehler beim Laden der Befehle."}` });
     }
+  }
 
-    //desc: füllt den tech filter mit den technologien aus der db
-    async function technologyFilter() {
-        try {
-            const technologies = await loadTechnologies();
-            console.log(technologies);
-            const technologyFilter = document.getElementById('technologyFilter');
-            technologies.forEach(tech => {
-                const option = document.createElement('option');
-                option.value = tech.tech_id;
-                option.textContent = tech.tech_name;
-                technologyFilter.appendChild(option);
-            });
-        } catch (error) {
-            console.error('Datenbank Fehler:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.categoryLoadError") : "Fehler beim Laden der Technologien."}` });
-        }
+  //desc: füllt den tech filter mit den technologien aus der db
+  async function technologyFilter() {
+    try {
+      const technologies = await loadTechnologies();
+      console.log(technologies);
+      const technologyFilter = document.getElementById('technologyFilter');
+      technologies.forEach(tech => {
+        const option = document.createElement('option');
+        option.value = tech.tech_id;
+        option.textContent = tech.tech_name;
+        technologyFilter.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Datenbank Fehler:', error);
+      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.categoryLoadError") : "Fehler beim Laden der Technologien."}` });
     }
+  }
 
-    //desc: renderfunktion für die command cards
-    function renderCommands(commands) {
-        commandsContainer.innerHTML = '';
-        if (commands.length === 0) {
-            commandsContainer.innerHTML = `<h2 class="text-center text-muted mt-5">${window.i18n ? window.i18n.translate("pages.viewCommands.contentPlaceholder.noCommands") : "Hier ist noch nichts... Füge einen neuen Command hinzu!"}</h2>`;
-            return;
-        }
-        commands.forEach(cmd => {
-            const commandCard = document.createElement('div');
-            commandCard.classList.add('col-lg-6');
-            commandCard.id = `${cmd.command_id}`;
-            const markdownDescription = cmd.beschreibung ? marked.parse(cmd.beschreibung) : '';
-            commandCard.innerHTML = `
+  //desc: renderfunktion für die command cards
+  function renderCommands(commands) {
+    commandsContainer.innerHTML = '';
+    if (commands.length === 0) {
+      commandsContainer.innerHTML = `<h2 class="text-center text-muted mt-5">${window.i18n ? window.i18n.translate("pages.viewCommands.contentPlaceholder.noCommands") : "Hier ist noch nichts... Füge einen neuen Command hinzu!"}</h2>`;
+      return;
+    }
+    commands.forEach(cmd => {
+      const commandCard = document.createElement('div');
+      commandCard.classList.add('col-lg-6');
+      commandCard.id = `${cmd.command_id}`;
+      const markdownDescription = cmd.beschreibung ? marked.parse(cmd.beschreibung) : '';
+      commandCard.innerHTML = `
                     <div class="card h-100">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
@@ -141,66 +141,66 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </small>
                         </div>
                     </div>`;
-            commandsContainer.appendChild(commandCard);
-        });
-    }
-
-    //desc: filter und suchfunktion, beides gleichzeitig möglich
-    function applyFilter() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-        const selectedTechId = document.getElementById('technologyFilter').value;
-
-        let filteredCommands = commandsArray;
-
-        if (selectedTechId) {
-            filteredCommands = filteredCommands.filter(cmd =>
-                cmd.tech_id == selectedTechId || cmd.tech_id === parseInt(selectedTechId)
-            );
-        }
-
-        if (searchTerm) {
-            filteredCommands = filteredCommands.filter(cmd =>
-                cmd.titel.toLowerCase().includes(searchTerm) ||
-                cmd.command.toLowerCase().includes(searchTerm) ||
-                (cmd.beschreibung && cmd.beschreibung.toLowerCase().includes(searchTerm)) ||
-                cmd.tech.toLowerCase().includes(searchTerm)
-            );
-        }
-        renderCommands(filteredCommands);
-    }
-    //desc: eventlistener für die command cards (löschen, bearbeiten, quelle öffnen, command kopieren)
-    commandsContainer.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target.classList.contains('delete-command-btn')) {
-            const commandId = target.getAttribute('data-id');
-            deleteCommand(commandId);
-        } else if (target.classList.contains('edit-command-btn')) {
-            const commandId = target.getAttribute('data-id');
-            editCommand(commandId);
-        } else if (target.classList.contains('view-source-btn')) {
-            const linkToSource = target.getAttribute('data-linktosource');
-            window.open(linkToSource, '_blank');
-        } else if (target.classList.contains('copy-cmd-btn')) {
-            const command = target.getAttribute('data-command');
-            copyToClipboard(command);
-        }
+      commandsContainer.appendChild(commandCard);
     });
+  }
 
-    //desc: kopierfunktion für den command
-    async function copyToClipboard(text) {
-        try {
-            await navigator.clipboard.writeText(text);
-            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copySuccess") : "Command in Zwischenablage kopiert!"}` });
-        } catch (error) {
-            console.error('Fehler beim Kopieren:', error);
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copyError") : "Fehler beim Kopieren in Zwischenablage."}` });
-        }
+  //desc: filter und suchfunktion, beides gleichzeitig möglich
+  function applyFilter() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    const selectedTechId = document.getElementById('technologyFilter').value;
+
+    let filteredCommands = commandsArray;
+
+    if (selectedTechId) {
+      filteredCommands = filteredCommands.filter(cmd =>
+        cmd.tech_id == selectedTechId || cmd.tech_id === parseInt(selectedTechId)
+      );
     }
 
-    //desc: löscht einen command aus der db und verschiebt ihn in die deleted_commands tabelle
-    async function deleteCommand(commandId) {
-        try {
-            const deletedCommandResult = await window.electronAPI.dbQuery(`
+    if (searchTerm) {
+      filteredCommands = filteredCommands.filter(cmd =>
+        cmd.titel.toLowerCase().includes(searchTerm) ||
+        cmd.command.toLowerCase().includes(searchTerm) ||
+        (cmd.beschreibung && cmd.beschreibung.toLowerCase().includes(searchTerm)) ||
+        cmd.tech.toLowerCase().includes(searchTerm)
+      );
+    }
+    renderCommands(filteredCommands);
+  }
+  //desc: eventlistener für die command cards (löschen, bearbeiten, quelle öffnen, command kopieren)
+  commandsContainer.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.classList.contains('delete-command-btn')) {
+      const commandId = target.getAttribute('data-id');
+      deleteCommand(commandId);
+    } else if (target.classList.contains('edit-command-btn')) {
+      const commandId = target.getAttribute('data-id');
+      editCommand(commandId);
+    } else if (target.classList.contains('view-source-btn')) {
+      const linkToSource = target.getAttribute('data-linktosource');
+      window.open(linkToSource, '_blank');
+    } else if (target.classList.contains('copy-cmd-btn')) {
+      const command = target.getAttribute('data-command');
+      copyToClipboard(command);
+    }
+  });
+
+  //desc: kopierfunktion für den command
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copySuccess") : "Command in Zwischenablage kopiert!"}` });
+    } catch (error) {
+      console.error('Fehler beim Kopieren:', error);
+      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copyError") : "Fehler beim Kopieren in Zwischenablage."}` });
+    }
+  }
+
+  //desc: löscht einen command aus der db und verschiebt ihn in die deleted_commands tabelle
+  async function deleteCommand(commandId) {
+    try {
+      const deletedCommandResult = await window.electronAPI.dbQuery(`
                 SELECT 
                     c.command_id,
                     c.titel,
@@ -214,54 +214,54 @@ document.addEventListener('DOMContentLoaded', async () => {
                 JOIN technologies t ON c.tech_id = t.tech_id
                 WHERE c.command_id = ?
             `, [commandId]);
-            const deletedCommand = deletedCommandResult[0];
-            await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
-            //desc: gelöschter befehl wird in die deleted_commands tabelle verschoben
-            console.table(deletedCommand);
-            await window.electronAPI.dbQuery(`
+      const deletedCommand = deletedCommandResult[0];
+      await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
+      //desc: gelöschter befehl wird in die deleted_commands tabelle verschoben
+      console.table(deletedCommand);
+      await window.electronAPI.dbQuery(`
                 INSERT INTO deleted_commands 
                 (
-                command_id, 
-                tech_id, 
-                tech_color,
-                tech_name, 
-                titel, 
-                command, 
-                beschreibung, 
-                source
+                  command_id, 
+                  tech_id, 
+                  tech_color,
+                  tech_name, 
+                  titel, 
+                  command, 
+                  beschreibung, 
+                  source
                 )
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `, [
-                deletedCommand.command_id, 
-                deletedCommand.tech_id, 
-                deletedCommand.tech_color,
-                deletedCommand.tech_name, 
-                deletedCommand.titel, 
-                deletedCommand.command, 
-                deletedCommand.beschreibung, 
-                deletedCommand.source
-            ]);
-            loadCommands();
-            showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleted") : "Command erfolgreich gelöscht."}` });
-        } catch (error) {
-            showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleteError") : "Fehler beim Löschen des Commands."}` });
-        }
+        deletedCommand.command_id,
+        deletedCommand.tech_id,
+        deletedCommand.tech_color,
+        deletedCommand.tech_name,
+        deletedCommand.titel,
+        deletedCommand.command,
+        deletedCommand.beschreibung,
+        deletedCommand.source
+      ]);
+      loadCommands();
+      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleted") : "Command erfolgreich gelöscht."}` });
+    } catch (error) {
+      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleteError") : "Fehler beim Löschen des Commands."}` });
     }
+  }
 
-    //desc: bearbeitet einen command, verwandelt die card in ein editierbares form
-    async function editCommand(commandId) {
-        const cmd = commandsArray.find(c => c.command_id == commandId);
-        const editedCommand = document.getElementById(commandId);
-        const technologies = await loadTechnologies();
+  //desc: bearbeitet einen command, verwandelt die card in ein editierbares form
+  async function editCommand(commandId) {
+    const cmd = commandsArray.find(c => c.command_id == commandId);
+    const editedCommand = document.getElementById(commandId);
+    const technologies = await loadTechnologies();
 
-        // Dropdown-Optionen generieren
-        let techOptions = '';
-        technologies.forEach(tech => {
-            const selected = tech.tech_name === cmd.tech ? 'selected' : '';
-            techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
-        });
+    // Dropdown-Optionen generieren
+    let techOptions = '';
+    technologies.forEach(tech => {
+      const selected = tech.tech_name === cmd.tech ? 'selected' : '';
+      techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
+    });
 
-        editedCommand.innerHTML = `<div class="card h-100">
+    editedCommand.innerHTML = `<div class="card h-100">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <select class="form-select" id="edit-tech-${cmd.command_id}">
@@ -299,43 +299,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                         </div>
                     </div>`;
-        editedCommand.addEventListener('click', (event) => {
-            const target = event.target;
-            if (target.classList.contains('save-command-btn')) {
-                const commandId = target.getAttribute('data-id');
-                saveCommand(commandId);
-            } else if (target.classList.contains('cancel-edit-btn')) {
-                loadCommands();
-            }
-        });
-    }
+    editedCommand.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target.classList.contains('save-command-btn')) {
+        const commandId = target.getAttribute('data-id');
+        saveCommand(commandId);
+      } else if (target.classList.contains('cancel-edit-btn')) {
+        loadCommands();
+      }
+    });
+  }
 
-    //desc: speichert die änderungen eines bearbeiteten commands
-    async function saveCommand(commandId) {
-        const tech_id = document.getElementById(`edit-tech-${commandId}`).value;
-        const titel = document.getElementById(`edit-titel-${commandId}`).value;
-        const command = document.getElementById(`edit-command-${commandId}`).value;
-        const beschreibung = document.getElementById(`edit-beschreibung-${commandId}`).value;
-        const source = document.getElementById(`edit-source-${commandId}`).value;
-        try {
-            const result = await window.electronAPI.dbQuery(
-                'UPDATE commands SET tech_id = ?, titel = ?, command = ?, beschreibung = ?, source = ? WHERE command_id = ?',
-                [tech_id, titel, command, beschreibung, source, commandId]
-            );
-            loadCommands();
-            showFeedback({ success: true, message: 'Command erfolgreich aktualisiert.' });
-        } catch (error) {
-            showFeedback({ success: false, message: 'Fehler beim Aktualisieren des Commands.' });
-        }
+  //desc: speichert die änderungen eines bearbeiteten commands
+  async function saveCommand(commandId) {
+    const tech_id = document.getElementById(`edit-tech-${commandId}`).value;
+    const titel = document.getElementById(`edit-titel-${commandId}`).value;
+    const command = document.getElementById(`edit-command-${commandId}`).value;
+    const beschreibung = document.getElementById(`edit-beschreibung-${commandId}`).value;
+    const source = document.getElementById(`edit-source-${commandId}`).value;
+    try {
+      const result = await window.electronAPI.dbQuery(
+        'UPDATE commands SET tech_id = ?, titel = ?, command = ?, beschreibung = ?, source = ? WHERE command_id = ?',
+        [tech_id, titel, command, beschreibung, source, commandId]
+      );
+      loadCommands();
+      showFeedback({ success: true, message: 'Command erfolgreich aktualisiert.' });
+    } catch (error) {
+      showFeedback({ success: false, message: 'Fehler beim Aktualisieren des Commands.' });
     }
+  }
 
-    //desc: lädt alle technologien aus der db und gibt sie zurück
-    async function loadTechnologies() {
-        try {
-            const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
-            return technologies;
-        } catch (error) {
-            console.error('Fehler beim Laden der Technologien:', error);
-        }
+  //desc: lädt alle technologien aus der db und gibt sie zurück
+  async function loadTechnologies() {
+    try {
+      const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
+      return technologies;
+    } catch (error) {
+      console.error('Fehler beim Laden der Technologien:', error);
     }
+  }
 });

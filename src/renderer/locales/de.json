@@ -245,6 +245,34 @@
                 "messages": {
                     "backupSuccess": "Backup erfolgreich erstellt!",
                     "dbBackupFailed": "Fehler beim Erstellen des Backups."
+                },
+                "backupsList": {
+                    "title": "Vorhandene Backups",
+                    "noBackups": "Keine Backups vorhanden.",
+                    "tableHeaders": {
+                        "fileName": "Dateiname",
+                        "date": "Datum",
+                        "time": "Uhrzeit",
+                        "actions": "Aktionen"
+                    },
+                    "buttons": {
+                        "restore": "Wiederherstellen",
+                        "delete": "Löschen"
+                    },
+                    "messages": {
+                        "restoreSuccess": "Datenbank erfolgreich wiederhergestellt!",
+                        "restoreError": "Fehler beim Wiederherstellen der Datenbank.",
+                        "deleteSuccess": "Backup erfolgreich gelöscht.",
+                        "deleteError": "Fehler beim Löschen des Backups."
+                    },
+                    "modal": {
+                        "title": "Backup löschen",
+                        "warning": "ACHTUNG: Dadurch wird das Backup dauerhaft gelöscht!",
+                        "confirmThis1": "Gib ",
+                        "confirmThisWord": "LÖSCHEN",
+                        "confirmThis2": " ein, um das Löschen zu bestätigen:",
+                        "cancelButton": "Abbrechen",
+                        "deleteButton": "Backup löschen"}
                 }
             },
             "clearDb": {

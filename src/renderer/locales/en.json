@@ -245,6 +245,35 @@
                 "messages": {
                     "backupSuccess": "Backup successfully created!",
                     "dbBackupFailed": "Error creating backup."
+                },
+                "backupsList": {
+                    "title": "Available Backups",
+                    "noBackups": "No backups available.",
+                    "tableHeaders": {
+                        "fileName": "File Name",
+                        "date": "Date",
+                        "time": "Time",
+                        "actions": "Actions"
+                    },
+                    "buttons": {
+                        "restore": "Restore",
+                        "delete": "Delete"
+                    },
+                    "messages": {
+                        "restoreSuccess": "Database successfully restored!",
+                        "restoreError": "Error restoring database.",
+                        "deleteSuccess": "Backup successfully deleted.",
+                        "deleteError": "Error deleting backup."
+                    },
+                    "modal": {
+                        "title": "Delete Backup",
+                        "warning": "WARNING: This will permanently delete the backup!",
+                        "confirmThis1": "Enter ",
+                        "confirmThisWord": "DELETE",
+                        "confirmThis2": " to confirm deletion:",
+                        "cancelButton": "Cancel",
+                        "deleteButton": "Delete Backup"
+                    }
                 }
             },
             "clearDb": {
