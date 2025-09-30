@@ -27,7 +27,8 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Markdown**: Beschreibungen unterstützen Markdown
 - **Modal-Bestätigungen**: Sichere Lösch-Dialoge mit Bestätigungseingabe
 - **Responsive Design**: Funktioniert auf verschiedenen Bildschirmgrößen
-- **Datenbank-Management**: Datenbank-Backups und Bereinigung über die App möglich
+- **Datenbankwipe**: Die Datenbank kann direkt über die Einstellungen bereinigt werden
+- **In-App Backup Wiederherstellung**: Backups können ohne lästiges verschieben oder umbenennen direkt in den Einstellungen wiederhergestellt oder gelöscht werden
 - **Papierkorb**: Gelöschte Befehle verweilen in der Datenbank und können innerhalb der Einstellungen wiederhergestellt oder endgültig gelöscht werden.
 - **Updates**: Die Anwendung kann völlig unkompliziert auf den neuesten Stand gebracht werden (siehe Einstellungen)
 
