@@ -1,12 +1,6 @@
-# Command Vault
-
-Eine moderne Electron-App zur Verwaltung und Organisation deiner wichtigsten Programmierbefehle.
-
 ## 📖 Übersicht
 
 Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häufig verwendeten Befehle zu speichern, zu organisieren und schnell wiederzufinden. Vergiss nie wieder einen wichtigen Befehl!
-
-## ✨ Features
 
 ### 🏠 **Hauptfunktionalitäten**
 - **Befehle speichern**: Speichere Commands mit Titel, Beschreibung und Quell-Links
@@ -32,7 +26,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Papierkorb**: Gelöschte Befehle verweilen in der Datenbank und können innerhalb der Einstellungen wiederhergestellt oder endgültig gelöscht werden.
 - **Updates**: Die Anwendung kann völlig unkompliziert auf den neuesten Stand gebracht werden (siehe Einstellungen)
 
-## 🛠️ Tech-Stack
+# 🛠️ Tech-Stack
 
 ### **Frontend**
 - **HTML5** - Struktur und Semantik
