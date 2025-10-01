@@ -28,9 +28,12 @@ const createWindow = () => {
 
   mainWindow.webContents.on('context-menu', (event, params) => {
     const menu = Menu.buildFromTemplate([
-      { label: 'Kopieren', role: 'copy' },
-      { label: 'Einfügen', role: 'paste' },
-      { label: 'Ausschneiden', role: 'cut' },
+      { label: 'Copy', role: 'copy' },
+      { label: 'Paste', role: 'paste' },
+      { label: 'Cut', role: 'cut' },
+      { type: 'separator' },
+      { label: 'Open DevTools', role: 'toggleDevTools' },
+      { label: 'Made by Machinezr.de', click: () => shell.openExternal('https://machinezr.de') }
     ]);
 
     menu.popup({ window: mainWindow });
@@ -200,12 +203,13 @@ app.whenReady().then(() => {
 
     settingsWindow.webContents.on('context-menu', (event, params) => {
       const menu = Menu.buildFromTemplate([
-        { label: 'Kopieren', role: 'copy' },
-        { label: 'Einfügen', role: 'paste' },
-        { label: 'Ausschneiden', role: 'cut' },
+        { label: 'Copy', role: 'copy' },
+        { label: 'Paste', role: 'paste' },
+        { label: 'Cut', role: 'cut' },
+        { type: 'separator' },
+        { label: 'Open DevTools', role: 'toggleDevTools' },
+        { label: 'Made by Machinezr.de', click: () => shell.openExternal('https://machinezr.de') }
       ]);
-
-      settingsWindow.webContents.openDevTools();
 
       menu.popup({ window: settingsWindow });
     });
