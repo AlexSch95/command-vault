@@ -101,14 +101,14 @@ export async function backupCurrentDatabase() {
   const btn = document.getElementById('backup-database-btn');
   const oldBtn = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.backupDb.starting") : "Backup wird erstellt..."}`;
+  btn.innerHTML = `<i class="bi bi-arrow-repeat spin me-2"></i> ${window.i18n.translate("pages.settings.backupDb.starting")}`;
 
   try {
     await window.electronAPI.createDbBackup();
-    showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.backupDb.messages.backupSuccess") : "Backup erfolgreich erstellt!"}` });
+    showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.backupDb.messages.backupSuccess")}` });
   } catch (error) {
     console.error('Fehler beim Erstellen des Backups:', error);
-    showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.backupDb.messages.dbBackupFailed") : "Fehler beim Erstellen des Backups."}` });
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.backupDb.messages.dbBackupFailed")}` });
   } finally {
     btn.disabled = false;
     btn.innerHTML = oldBtn;
@@ -123,7 +123,7 @@ async function listBackups() {
     backupListContainer.innerHTML = '';
     console.log(backups);
     if (backups.length === 0) {
-      backupListContainer.innerHTML = `<p class="text-muted">${window.i18n ? window.i18n.translate("pages.settings.backupDb.backupsList.noBackups") : "Keine Backups gefunden."}</p>`;
+      backupListContainer.innerHTML = `<p class="text-muted">${window.i18n.translate("pages.settings.backupDb.backupsList.noBackups")}</p>`;
       return;
     }
 

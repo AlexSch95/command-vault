@@ -25,22 +25,23 @@ export async function loadCategories() {
     techSelect.id = 'tech';
     techSelect.className = 'form-select form-select-lg bg-dark border-secondary text-light flex-grow-1';
     if (technologies.length === 0) {
-      techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("pages.settings.categories.noCategories") : "Hier ist noch nichts..."}</option>`;
+      document.getElementById('delete-technology-btn').disabled = true;
+      techSelect.innerHTML = `<option value="">${window.i18n.translate("pages.settings.categories.noCategories")}</option>`;
     } else {
-      techSelect.innerHTML = `<option value="">${window.i18n ? window.i18n.translate("pages.settings.categories.categoryPlaceholder") : "Kategorie auswählen..."}</option>`;
+      techSelect.innerHTML = `<option value="">${window.i18n.translate("pages.settings.categories.categoryPlaceholder")}</option>`;
+      technologies.forEach(tech => {
+        const option = document.createElement('option');
+        option.value = tech.tech_id;
+        option.textContent = tech.tech_name;
+        option.dataset.color = tech.color;
+        techSelect.appendChild(option);
+      });
     }
 
-    technologies.forEach(tech => {
-      const option = document.createElement('option');
-      option.value = tech.tech_id;
-      option.textContent = tech.tech_name;
-      option.dataset.color = tech.color;
-      techSelect.appendChild(option);
-    });
 
     const newButton = document.createElement('button');
     newButton.type = 'button';
-    newButton.textContent = `${window.i18n ? window.i18n.translate("pages.settings.categories.buttons.addNew") : "Neue Kategorie"}`;
+    newButton.textContent = `${window.i18n.translate("pages.settings.categories.buttons.addNew")}`;
     newButton.id = 'new-tech-btn';
     newButton.className = 'btn btn-primary btn-sm';
 
@@ -59,6 +60,7 @@ export async function loadCategories() {
 
     newButton.addEventListener('click', () => {
       newTechMode = true;
+      document.getElementById('delete-technology-btn').disabled = true;
       document.getElementById('tech-container').innerHTML = `
                     <input type="text" id="tech" class="form-control form-control-lg bg-dark border-secondary text-light" placeholder="Linux, JavaScript, Python..." required>
                 `;
@@ -76,20 +78,20 @@ export async function addCategory() {
   if (newTechMode === true) {
     try {
       const result = await window.electronAPI.dbQuery('INSERT INTO technologies (tech_name, color) VALUES (?, ?)', [tech.value, color.value]);
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categorySaved") : "Technologie erfolgreich gespeichert."}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.categories.messages.categorySaved")}` });
       document.getElementById('add-technology-form').reset();
     } catch (error) {
       console.error('Datenbank Fehler:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categorySaveError") : "Fehler beim Hinzufügen der Technologie."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.categorySaveError")}` });
     }
   } else if (newTechMode === false) {
     try {
       const result = await window.electronAPI.dbQuery('UPDATE technologies SET color = ? WHERE tech_id = ?', [color.value, tech.value]);
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryUpdated") : "Technologie erfolgreich aktualisiert."}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.categories.messages.categoryUpdated")}` });
       document.getElementById('add-technology-form').reset();
     } catch (error) {
       console.error('Datenbank Fehler:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryUpdateError") : "Fehler beim Aktualisieren der Technologie."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.categoryUpdateError")}` });
     }
   }
   loadCategories();
@@ -108,23 +110,23 @@ export async function deleteCategory() {
                 <div class="modal-dialog">
                     <div class="modal-content bg-secondary">
                         <div class="modal-header border-secondary">
-                            <h5 class="modal-title text-light">${window.i18n ? window.i18n.translate("pages.settings.categories.modal.title") : "Technologie löschen"}</h5>
+                            <h5 class="modal-title text-light">${window.i18n.translate("pages.settings.categories.modal.title")}</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body text-light">
-                            <p>${window.i18n ? window.i18n.translate("pages.settings.categories.modal.warning") : "ACHTUNG: Dadurch werden alle zugehörigen Commands ebenfalls gelöscht!"}</p>
-                            <p>${window.i18n ? window.i18n.translate("pages.settings.categories.modal.confirmThisp1") : "Gib den Namen der Technologie"} 
+                            <p>${window.i18n.translate("pages.settings.categories.modal.warning")}</p>
+                            <p>${window.i18n.translate("pages.settings.categories.modal.confirmThisp1")}
                             "<strong>${techName}</strong>" 
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.confirmThisp2") : "ein, um das Löschen zu bestätigen:"}</p>
+                            ${window.i18n.translate("pages.settings.categories.modal.confirmThisp2")}</p>
                             <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
                                    id="confirmTechName" placeholder="${techName}" autocomplete="off">
                         </div>
                         <div class="modal-footer border-secondary">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.cancelButton") : "Abbrechen"}
+                            ${window.i18n.translate("pages.settings.categories.modal.cancelButton")}
                             </button>
                             <button type="button" class="btn btn-danger" id="confirmDelete" disabled>
-                            ${window.i18n ? window.i18n.translate("pages.settings.categories.modal.deleteButton") : "Löschen"}
+                            ${window.i18n.translate("pages.settings.categories.modal.deleteButton")}
                             </button>
                         </div>
                     </div>
@@ -154,13 +156,13 @@ export async function deleteCategory() {
       if (confirmInput.value === techName) {
         try {
           const result = await window.electronAPI.dbQuery('DELETE FROM technologies WHERE tech_id = ?', [tech.value]);
-          showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryDeleted") : "Technologie erfolgreich gelöscht!"}` });
+          showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.categories.messages.categoryDeleted")}` });
           document.getElementById('add-technology-form').reset();
           loadCategories();
           bootstrapModal.hide();
         } catch (error) {
           console.error('Datenbank Fehler:', error);
-          showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.categories.messages.categoryDeleteError") : "Fehler beim Löschen der Technologie."}` });
+          showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.categoryDeleteError")}` });
         }
       }
     });

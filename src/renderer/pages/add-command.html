@@ -8,6 +8,8 @@
   <link rel="icon" type="image/x-icon" href="../assets/safe.ico">
   <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../../../node_modules/easymde/dist/easymde.min.css">
+  <link rel="stylesheet" href="../../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
   <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
@@ -22,9 +24,13 @@
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-globe"></i> <span id="currentLang">DE</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-dark">
-          <li><a class="dropdown-item language-switcher" href="#" data-language="de">🇩🇪 Deutsch</a></li>
-          <li><a class="dropdown-item language-switcher" href="#" data-language="en">🇺🇸 English</a></li>
+        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+          <li>
+            <a class="dropdown-item language-switcher" href="#" data-language="de"><img src="../assets/countries/de.svg" alt="Deutsch" id="currentLang" style="height: 1em; vertical-align: middle;"> Deutsch</a>
+          </li>
+          <li>
+            <a class="dropdown-item language-switcher" href="#" data-language="en"><img src="../assets/countries/gb.svg" alt="English" id="currentLang" style="height: 1em; vertical-align: middle;"> English</a>
+          </li>
         </ul>
       </div>
       <button class="titlebar-btn text-primary rounded-2" id="minimize-btn" title="Minimieren">
@@ -155,6 +161,7 @@
   </div>
   <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/shared/i18n.js"></script>
+  <script src="../../../node_modules/easymde/dist/easymde.min.js"></script>
   <script type="module" src="../js/pages/add-command.js"></script>
 </body>
 

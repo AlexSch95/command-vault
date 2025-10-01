@@ -23,12 +23,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.electronAPI.closeSettingsWindow();
   });
 
-  //desc: Elemente
-  const deletedCommandsContainer =
 
-
-    //desc: Themes Eventlistener
-    document.getElementById('save-theme-btn').addEventListener('click', themesHandler.customTheme);
+  //desc: Themes Eventlistener
+  document.getElementById('save-theme-btn').addEventListener('click', themesHandler.customTheme);
 
   document.getElementById('preset-themes').addEventListener('click', (event) => {
     const theme = event.target.dataset.theme;
@@ -66,7 +63,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('reset-categories-btn').addEventListener('click', (event) => {
     event.preventDefault();
+    categoriesHandler.loadCategories();
     document.getElementById('add-technology-form').reset();
+    document.getElementById('delete-technology-btn').disabled = true;
   });
 
   document.getElementById('color').addEventListener('input', (event) => {
@@ -96,12 +95,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('check-updates-btn').addEventListener('click', updatesHandler.checkUpdates());
 
   window.electronAPI.onUpdateAvailable?.((event, info) => {
-    updatesHandler.showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.available") : "Update verfügbar: v"}${info.version}`, 'success');
+    updatesHandler.showUpdateStatus(`${window.i18n.translate("pages.settings.update.available")}${info.version}`, 'success');
     document.getElementById('update-progress').classList.remove('d-none');
   });
 
   window.electronAPI.onUpdateNotAvailable?.((event, info) => {
-    updatesHandler.showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.noUpdate") : "Sie sind bereits auf der aktuellsten Version."}`, 'info');
+    updatesHandler.showUpdateStatus(`${window.i18n.translate("pages.settings.update.noUpdate")}`, 'info');
   });
 
   window.electronAPI.onDownloadProgress?.((event, progress) => {
@@ -115,9 +114,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     statusDiv.innerHTML = `
             <div class="alert alert-success">
                 <i class="bi bi-check-circle me-2"></i>
-                Update v${info.version}${window.i18n ? window.i18n.translate("pages.settings.update.downloaded") : " heruntergeladen."}
+                Update v${info.version}${window.i18n.translate("pages.settings.update.downloaded")}
                 <button class="btn btn-sm btn-primary ms-2" id="restart-update-btn">
-                    ${window.i18n ? window.i18n.translate("pages.settings.update.restartAndInstall") : "Neu starten & installieren"}
+                    ${window.i18n.translate("pages.settings.update.restartAndInstall")}
                 </button>
             </div>
         `;

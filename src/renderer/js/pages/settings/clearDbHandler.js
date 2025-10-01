@@ -16,32 +16,32 @@ export async function handleDatabaseReset(event) {
                     <div class="modal-header border-secondary">
                         <h5 class="modal-title text-danger">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.title") : "Datenbank bereinigen"}
+                            ${window.i18n.translate("pages.settings.clearDb.modal.title")}
                         </h5>
                         <button type="button" class="btn-close btn-close-white btn-outline-primary" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body text-light">
                         <div class="alert alert-danger bg-secondary border-danger mb-4 text-primary" role="alert">
                             <p class="mb-2">
-                            <strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.lastWarning") : "LETZTE WARNUNG:"}</strong>
+                            <strong>${window.i18n.translate("pages.settings.clearDb.modal.lastWarning")}</strong>
                             </p>
-                            <p class="mb-2"><strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.warningText1") : "Diese Aktion wird ALLE Befehle und Technologien unwiderruflich löschen!"}</strong></p>
-                            <p class="mb-0 small">${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.warningText2") : "Stelle sicher, dass du ein Backup hast, bevor du fortfährst."}</p>
+                            <p class="mb-2"><strong>${window.i18n.translate("pages.settings.clearDb.modal.warningText1")}</strong></p>
+                            <p class="mb-0 small">${window.i18n.translate("pages.settings.clearDb.modal.warningText2")}</p>
                         </div>
                         <p>
-                        ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThis1") : "Gib "}
-                        "<strong>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}</strong>"
+                        ${window.i18n.translate("pages.settings.clearDb.modal.confirmThis1")}
+                        "<strong>${window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord")}</strong>"
                         ${window.i18n.translate("pages.settings.clearDb.modal.confirmThis2")}
                         </p>
                         <input type="text" class="form-control bg-dark border-secondary text-light mt-3" 
-                               id="confirmResetText" placeholder="${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}" autocomplete="off">
+                               id="confirmResetText" placeholder="${window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord")}" autocomplete="off">
                     </div>
                     <div class="modal-footer border-secondary">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                            ${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.cancelButton") : "Abbrechen"}
+                            ${window.i18n.translate("pages.settings.clearDb.modal.cancelButton")}
                         </button>
                         <button type="button" class="btn btn-danger" id="confirmReset" disabled>
-                            <i class="bi bi-trash3 me-2"></i>${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.deleteButton") : "Datenbank bereinigen"}
+                            <i class="bi bi-trash3 me-2"></i>${window.i18n.translate("pages.settings.clearDb.modal.deleteButton")}
                         </button>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ export async function handleDatabaseReset(event) {
 
   const confirmInput = document.getElementById('confirmResetText');
   const confirmButton = document.getElementById('confirmReset');
-  const requiredText = `${window.i18n ? window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord") : "DATENBANK BEREINIGEN"}`;
+  const requiredText = `${window.i18n.translate("pages.settings.clearDb.modal.confirmThisWord")}`;
 
   confirmInput.addEventListener('input', () => {
     if (confirmInput.value === requiredText) {
@@ -71,7 +71,7 @@ export async function handleDatabaseReset(event) {
         await window.electronAPI.dbQuery('DELETE FROM technologies');
         await window.electronAPI.dbQuery('DELETE FROM deleted_commands');
 
-        showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.clearDb.messages.dbResetSuccess") : "Datenbank erfolgreich bereinigt!"}` });
+        showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.clearDb.messages.dbResetSuccess")}` });
 
         setTimeout(() => {
           window.location.reload();
@@ -80,7 +80,7 @@ export async function handleDatabaseReset(event) {
         dbResetModal.hide();
       } catch (error) {
         console.error('Datenbank Fehler:', error);
-        showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.clearDb.messages.dbResetError") : "Fehler beim Bereinigen der Datenbank."}` });
+        showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.clearDb.messages.dbResetError")}` });
       }
     }
   });

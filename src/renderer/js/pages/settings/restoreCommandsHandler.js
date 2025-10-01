@@ -14,7 +14,7 @@ async function loadDeletedCommands() {
     const deletedCommands = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands ORDER BY deleted_at DESC');
     deletedCommandsContainer.innerHTML = '';
     if (deletedCommands.length === 0) {
-      deletedCommandsContainer.innerHTML = `<p class="text-muted">${window.i18n ? window.i18n.translate("pages.settings.restorecommand.noDeletedCommands") : "Keine gelöschten Befehle vorhanden."}</p>`;
+      deletedCommandsContainer.innerHTML = `<p class="text-muted">${window.i18n.translate("pages.settings.restorecommand.noDeletedCommands")}</p>`;
       return;
     }
 
@@ -65,10 +65,10 @@ export async function restoreCommand(commandId) {
                 (tech_id, titel, command, beschreibung, source)
                 VALUES (?, ?, ?, ?, ?)`, [cmd.tech_id, cmd.titel, cmd.command, cmd.beschreibung, cmd.source]);
     await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
-    showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreSuccess") : "Befehl erfolgreich wiederhergestellt."}` });
+    showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.restorecommand.messages.restoreSuccess")}` });
   } catch (error) {
     console.log('Fehler beim Wiederherstellen des Commands:', error);
-    showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.restoreError") : "Fehler beim Wiederherstellen des Befehls."}` });
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.restorecommand.messages.restoreError")}` });
   } finally {
     loadDeletedCommands();
   }
@@ -77,10 +77,10 @@ export async function restoreCommand(commandId) {
 export async function fullyDeleteCommand(commandId) {
   try {
     const result = await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
-    showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteSuccess") : "Befehl erfolgreich endgültig gelöscht."}` });
+    showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteSuccess")}` });
   } catch (error) {
     console.log('Fehler beim Löschen des Commands:', error);
-    showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteError") : "Fehler beim endgültigen Löschen des Befehls."}` });
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteError")}` });
   } finally {
     loadDeletedCommands();
   }

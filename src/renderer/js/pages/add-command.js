@@ -7,6 +7,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     await window.i18n.ready;
   }
 
+  //desc: initiales laden des contents, theme wird geladen und alle technologien
+  let markdownDescription;
+
+  loadGlobalTheme();
+  loadTechnologies();
+  loadMarkdownEditor();
+
+  function loadMarkdownEditor() {
+    markdownDescription = new EasyMDE({
+      element: document.getElementById('description'),
+      spellChecker: false,
+      status: false,
+      toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "guide"]
+    });
+  }
+
+
   document.getElementById("settingsButton").addEventListener("click", () => {
     document.getElementById("mainContentOverlay").classList.add("overlay-darken");
     window.electronAPI.openSettingsWindow();
@@ -36,14 +53,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 
-  //desc: initiales laden des contents, theme wird geladen und alle technologien
-  loadGlobalTheme();
-  loadTechnologies();
-
   //desc: eventlistener auf den form button zum eintragen eines neuen commands
   document.getElementById('add-command-btn').addEventListener('click', async (event) => {
     event.preventDefault();
-
+    markdownDescription.toTextArea();
     const tech = document.getElementById('tech');
     const title = document.getElementById('title');
     const command = document.getElementById('command');
@@ -53,11 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const result = await window.electronAPI.dbQuery('INSERT INTO commands (tech_id, titel, command, beschreibung, source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
       console.log('Datenbank Ergebnis:', result)
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.cmdSaved") : "Befehl erfolgreich hinzugefügt!"}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.addCommand.messages.cmdSaved")}` });
       document.getElementById('add-command-form').reset();
+      loadMarkdownEditor()
     } catch (error) {
       console.error('Datenbank Fehler:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.cmdSaveError") : "Fehler beim Hinzufügen des Befehls."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.addCommand.messages.cmdSaveError")}` });
     }
   });
 
@@ -65,6 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('reset-btn').addEventListener('click', (event) => {
     event.preventDefault();
     document.getElementById('add-command-form').reset();
+    markdownDescription.value('');
   });
 
   //desc: lädt alle technologien aus der db und füllt den select tag mit den technologien
@@ -73,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
       const techOptions = document.getElementById('tech-options');
       if (technologies.length < 1) {
-        techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n ? window.i18n.translate("pages.addCommand.form.noTechPlaceholder") : "Keine Kategorien vorhanden. Gehe zu den Einstellungen, um eine hinzuzufügen."}</span>`;
+        techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n.translate("pages.addCommand.form.noTechPlaceholder")}</span>`;
         return;
       }
       techOptions.innerHTML = '';
@@ -92,6 +107,4 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error('Fehler beim Laden der Technologien:', error);
     }
   }
-
 });
-

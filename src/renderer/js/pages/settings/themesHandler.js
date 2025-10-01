@@ -58,13 +58,13 @@ export async function applyTheme(chosenTheme) {
   try {
     const result = await window.electronAPI.saveTheme(themeData);
     if (result.success) {
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.settings.themes.messages.themeApplied") : "Design angewendet."}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.themes.messages.themeApplied")}` });
     } else {
       showFeedback(result);
     }
   } catch (error) {
     console.error('Fehler beim Speichern des vordefinierten Themes:', error);
-    showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.settings.themes.messages.themeSaveError") : "Fehler beim Speichern des Themes."}` });
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.themes.messages.themeSaveError")}` });
   } finally {
     setupCurrentColors();
   }

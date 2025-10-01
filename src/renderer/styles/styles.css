@@ -148,8 +148,8 @@ i.bi {
 }
 
 .nav-button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border-radius: 7px;
@@ -182,8 +182,8 @@ i.bi {
 .nav-button i {
     position: absolute;
     left: -1px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -377,6 +377,59 @@ tbody tr:hover td {
     flex: 1;
 }
 
+/* desc: EasyMDE */
+
+.EasyMDEContainer {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 5px !important;
+}
+
+.CodeMirror {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    font-size: 1.2em;
+    border: none !important;
+}
+
+.CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color) !important;
+}
+
+.editor-toolbar {
+    background: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+}
+
+.editor-toolbar button {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-accent) !important;
+}
+
+.editor-toolbar button:hover {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    filter: brightness(1.2) !important;
+}
+
+.editor-toolbar i.fa,
+.fa {
+    font-family: 'FontAwesome' !important;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+
+.editor-preview,
+.editor-preview-active {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
 /* desc: Buttons und Badges */
 .btn {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -522,6 +575,7 @@ button .bi {
 
 @keyframes fadeIn {
     0% {
+        transform: translateY(30px);
         opacity: 0;
     }
 
@@ -641,183 +695,49 @@ code {
 }
 
 /* desc: Markdown-Content */
-.markdown-content {
-    line-height: 1.2;
-    font-size: 0.9rem;
-    padding-bottom: 1rem;
+.markdown-content,
+.markdown-content * {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  line-height: 1 !important;
 }
 
-.markdown-content>*:first-child {
-    margin-top: 0 !important;
+.markdown-content p,
+.markdown-content ul,
+.markdown-content ol,
+.markdown-content li {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.markdown-content>*:last-child {
-    margin-bottom: 0 !important;
+.markdown-content p + p,
+.markdown-content p + ul,
+.markdown-content p + ol,
+.markdown-content ul + p,
+.markdown-content ol + p {
+  margin-top: 0.3em !important;
 }
 
-.markdown-content h1,
-.markdown-content h2,
-.markdown-content h3,
-.markdown-content h4,
-.markdown-content h5,
-.markdown-content h6 {
-    color: var(--text-primary) !important;
-    margin: 0.4rem 0 0.2rem 0;
-    line-height: 1.1;
-    font-weight: 600;
+.markdown-content li {
+  list-style-position: inside;
 }
 
-.markdown-content h1 {
-    font-size: 1.1rem;
-}
-
-.markdown-content h2 {
-    font-size: 1.05rem;
-}
-
-.markdown-content h3 {
-    font-size: 1rem;
-}
-
-.markdown-content h4 {
-    font-size: 0.95rem;
-}
-
-.markdown-content h5 {
-    font-size: 0.9rem;
-}
-
-.markdown-content h6 {
-    font-size: 0.85rem;
-}
-
-.markdown-content p {
-    margin: 0.2rem 0;
-    white-space: pre-wrap;
-    line-height: 1.3;
-}
-
-.markdown-content p+p {
-    margin-top: 0.1rem;
-}
-
+.markdown-content div,
+.markdown-content pre,
+.markdown-content code,
 .markdown-content br {
-    line-height: 0.8;
-    margin: 0;
-    padding: 0;
-    line-height: 0.5;
-}
-
-.markdown-content br+br {
-    display: none;
-}
-
-.markdown-content code {
-    background-color: var(--bg-dark) !important;
-    color: var(--text-primary) !important;
-    padding: 0.1rem 0.25rem;
-    border-radius: 0.15rem;
-    font-size: 0.8rem;
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    line-height: 1;
-    display: inline-block;
-    vertical-align: baseline;
-}
-
-.markdown-content pre {
-    background-color: var(--bg-dark) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 0.2rem;
-    padding: 0.4rem;
-    margin: 0.3rem 0;
-    overflow-x: auto;
-    font-size: 0.8rem;
-    line-height: 1.2;
-}
-
-.markdown-content pre code {
-    background: none !important;
-    padding: 0;
-    font-size: inherit;
-    display: block;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .markdown-content ul,
 .markdown-content ol {
-    padding-left: 1rem;
-    margin: 0.2rem 0;
-    line-height: 1.2;
+  margin-left: 1.2em !important;
 }
 
-.markdown-content li {
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-}
-
-.markdown-content li ul,
-.markdown-content li ol {
-    margin: 0.1rem 0;
-}
-
-.markdown-content blockquote {
-    border-left: 2px solid var(--primary-color);
-    padding-left: 0.5rem;
-    margin: 0.3rem 0;
-    font-style: italic;
-    color: var(--text-muted);
-    line-height: 1.2;
-}
-
-.markdown-content a {
-    color: var(--primary-color) !important;
-    text-decoration: none;
-    line-height: inherit;
-}
-
-.markdown-content a:hover {
-    color: var(--text-primary) !important;
-    text-decoration: underline;
-}
-
-.markdown-content strong {
-    color: var(--text-primary) !important;
-    font-weight: 600;
-    line-height: inherit;
-}
-
-.markdown-content em {
-    font-style: italic;
-    line-height: inherit;
-}
-
-.markdown-content table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 0.3rem 0;
-    font-size: 0.85rem;
-    line-height: 1.1;
-}
-
-.markdown-content th,
-.markdown-content td {
-    border: 1px solid var(--border-color);
-    padding: 0.2rem 0.4rem;
-    text-align: left;
-    line-height: 1.1;
-}
-
-.markdown-content th {
-    background-color: var(--bg-dark);
-    font-weight: 600;
-}
-
-.markdown-content hr {
-    border: none;
-    border-top: 1px solid var(--border-color);
-    margin: 0.4rem 0;
-    height: 0;
-    line-height: 0;
+.markdown-content li + li {
+  margin-top: 0.1em !important;
 }
 
 /* desc: Overlays und Modals */

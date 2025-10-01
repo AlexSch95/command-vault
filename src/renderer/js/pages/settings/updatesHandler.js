@@ -14,14 +14,14 @@ export async function checkUpdates() {
 
     try {
         await window.electronAPI.checkForUpdates();
-        showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.checking") : "Suche nach Updates..."}`, 'info');
+        showUpdateStatus(`${window.i18n.translate("pages.settings.update.checking")}`, 'info');
     } catch (error) {
-        showUpdateStatus(`${window.i18n ? window.i18n.translate("pages.settings.update.error") : "Fehler beim Suchen nach Updates"}`, 'danger');
+        showUpdateStatus(`${window.i18n.translate("pages.settings.update.error")}`, 'danger');
     }
 
     setTimeout(() => {
         btn.disabled = false;
-        btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n ? window.i18n.translate("pages.settings.update.checkUpdatesButton") : "Nach Updates suchen"}`;
+        btn.innerHTML = `<i class="bi bi-search me-2"></i> ${window.i18n.translate("pages.settings.update.checkUpdatesButton")}`;
     }, 3000);
 }
 

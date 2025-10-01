@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 
+
+
+
   let commandsArray = [];
   const commandsContainer = document.getElementById('commandsContainer');
 
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       renderCommands(commandsArray);
     } catch (error) {
       console.error('Datenbank Fehler:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdLoadError") : "Fehler beim Laden der Befehle."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.viewCommands.messages.cmdLoadError")}` });
     }
   }
 
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     } catch (error) {
       console.error('Datenbank Fehler:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.addCommand.messages.categoryLoadError") : "Fehler beim Laden der Technologien."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.addCommand.messages.categoryLoadError")}` });
     }
   }
 
@@ -95,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderCommands(commands) {
     commandsContainer.innerHTML = '';
     if (commands.length === 0) {
-      commandsContainer.innerHTML = `<h2 class="text-center text-muted mt-5">${window.i18n ? window.i18n.translate("pages.viewCommands.contentPlaceholder.noCommands") : "Hier ist noch nichts... Füge einen neuen Command hinzu!"}</h2>`;
+      commandsContainer.innerHTML = `<h2 class="text-center text-muted mt-5">${window.i18n.translate("pages.viewCommands.contentPlaceholder.noCommands")}</h2>`;
       return;
     }
     commands.forEach(cmd => {
@@ -114,9 +117,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     <i class="text-primary bi bi-three-dots-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                                    <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.toSource") : "Zur Quelle"}</a></li>
-                                    <li><a class="dropdown-item edit-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-pencil me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.edit") : "Bearbeiten"}</a></li>
-                                    <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-trash me-2"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.buttons.delete") : "Löschen"}</a></li>
+                                    <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.toSource")}</a></li>
+                                    <li><a class="dropdown-item edit-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-pencil me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.edit")}</a></li>
+                                    <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-trash me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.delete")}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -125,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <span>${cmd.titel}</span>
                             </h5>
                             <div class="mb-3">
-                                <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel") : "Befehl"}</label>
+                                <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel")}</label>
                                 <div class="bg-dark text-white p-3 mb-2 rounded font-monospace position-relative">
                                     <code class="viewcmd-block">${cmd.command}</code>
                                     <button class="btn btn-outline-light copy-cmd-btn btn-sm position-absolute top-0 end-0 m-2" data-command='${cmd.command}'>
@@ -136,8 +139,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p class="card-text text-light">
                             <div class="command-description markdown-content mb-3">${markdownDescription}</div>
                             </p>
-                            <small class="text-muted position-absolute bottom-0 end-0 p-3">
-                                <i class="bi bi-clock me-1"></i>${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.createdAt") : "Hinzugefügt am"} ${new Date(cmd.created_at).toLocaleDateString()}
+                            <small class="text-muted position-absolute bottom-0 end-0 p-3 mt-5">
+                                <i class="bi bi-clock me-1"></i>${window.i18n.translate("pages.viewCommands.cmdCard.createdAt")} ${new Date(cmd.created_at).toLocaleDateString()}
                             </small>
                         </div>
                     </div>`;
@@ -190,10 +193,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function copyToClipboard(text) {
     try {
       await navigator.clipboard.writeText(text);
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copySuccess") : "Command in Zwischenablage kopiert!"}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.viewCommands.messages.copySuccess")}` });
     } catch (error) {
       console.error('Fehler beim Kopieren:', error);
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.copyError") : "Fehler beim Kopieren in Zwischenablage."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.viewCommands.messages.copyError")}` });
     }
   }
 
@@ -242,9 +245,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         deletedCommand.source
       ]);
       loadCommands();
-      showFeedback({ success: true, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleted") : "Command erfolgreich gelöscht."}` });
+      showFeedback({ success: true, message: `${window.i18n.translate("pages.viewCommands.messages.cmdDeleted")}` });
     } catch (error) {
-      showFeedback({ success: false, message: `${window.i18n ? window.i18n.translate("pages.viewCommands.messages.cmdDeleteError") : "Fehler beim Löschen des Commands."}` });
+      showFeedback({ success: false, message: `${window.i18n.translate("pages.viewCommands.messages.cmdDeleteError")}` });
     }
   }
 
@@ -278,27 +281,38 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                         </div>
                         <div class="card-body">
-                        <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.titleLabel") : "Titel:"}</label>
+                        <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.titleLabel")}</label>
                             <h5 class="card-title mb-3">
                                 <input type="text" class="form-control" value="${cmd.titel}" id="edit-titel-${cmd.command_id}">
                             </h5>
                             <div class="mb-3">
-                                <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel") : "Befehl:"}</label>
+                                <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel")}</label>
                                 <div class="bg-dark text-white p-3 rounded position-relative">
                                     <textarea class="form-control bg-dark border-0 text-light font-monospace" id="edit-command-${cmd.command_id}" rows="2">${cmd.command}</textarea>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.descLabel") : "Beschreibung:"}</label>
+                                <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.descLabel")}</label>
                                 <textarea class="form-control bg-dark border-secondary text-light" id="edit-beschreibung-${cmd.command_id}" rows="5">${cmd.beschreibung || ''}</textarea>
-                                <small class="text-muted text-end d-block">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.markdownSupported") : "Markdown wird unterstützt."}</small>
+                                <small class="text-muted text-end d-block">${window.i18n.translate("pages.viewCommands.cmdCard.markdownSupported")}</small>
                                 </div>
                             <div class="mb-3">
-                                <label class="form-label text-muted mb-1">${window.i18n ? window.i18n.translate("pages.viewCommands.cmdCard.sourceLabel") : "Quelle (optional):"}</label>
+                                <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.sourceLabel")}</label>
                                 <input type="url" class="form-control bg-dark border-secondary text-light" value="${cmd.source || ''}" id="edit-source-${cmd.command_id}">
                             </div>
                         </div>
                     </div>`;
+
+    const markdownDescription = new EasyMDE({
+      element: document.getElementById(`edit-beschreibung-${cmd.command_id}`),
+      spellChecker: false,
+      status: false,
+      toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "guide"]
+    });
+    markdownDescription.codemirror.on('change', function() {
+      markdownDescription.element.value = markdownDescription.value();
+    });
+
     editedCommand.addEventListener('click', (event) => {
       const target = event.target;
       if (target.classList.contains('save-command-btn')) {
@@ -339,3 +353,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 });
+
