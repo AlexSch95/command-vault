@@ -366,7 +366,7 @@ app.whenReady().then(() => {
           textPrimary: "#f1f5f9",
           accentColor: "#484a60",
           textColorCode: "#27e70d",
-          backgroundImage: "dark-background.png"
+          backgroundImage: "default-dark.png"
         };
         fs.writeFileSync(themePath, JSON.stringify(defaultTheme, null, 2));
         return defaultTheme;
