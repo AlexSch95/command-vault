@@ -75,7 +75,7 @@ export async function loadCategories() {
 export async function addCategory() {
   const tech = document.getElementById('tech');
   const color = document.getElementById('color');
-  if (newTechMode === true) {
+  if (newTechMode === true && tech.value != '') {
     try {
       const result = await window.electronAPI.dbQuery('INSERT INTO technologies (tech_name, color) VALUES (?, ?)', [tech.value, color.value]);
       showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.categories.messages.categorySaved")}` });
@@ -84,7 +84,7 @@ export async function addCategory() {
       console.error('Datenbank Fehler:', error);
       showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.categorySaveError")}` });
     }
-  } else if (newTechMode === false) {
+  } else if (newTechMode === false && tech.value != '') {
     try {
       const result = await window.electronAPI.dbQuery('UPDATE technologies SET color = ? WHERE tech_id = ?', [color.value, tech.value]);
       showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.categories.messages.categoryUpdated")}` });
@@ -93,6 +93,8 @@ export async function addCategory() {
       console.error('Datenbank Fehler:', error);
       showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.categoryUpdateError")}` });
     }
+  } else if (tech.value == '') {
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.categories.messages.noCategorySelected")}` });
   }
   loadCategories();
 }

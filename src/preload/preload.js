@@ -24,6 +24,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   restoreDbBackup: (backupFileName) => ipcRenderer.invoke('restore-db-backup', backupFileName),
   deleteDbBackup: (backupFileName) => ipcRenderer.invoke('delete-backup', backupFileName),
   listBackgroundImages: () => ipcRenderer.invoke('list-background-images'),
+  deleteBackgroundImage: (fileName) => ipcRenderer.invoke('delete-background-image', fileName),
   saveBackgroundImage: async (file) => {
     try {
       const arrayBuffer = await file.arrayBuffer();

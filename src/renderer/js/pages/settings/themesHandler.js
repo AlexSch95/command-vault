@@ -35,40 +35,55 @@ export async function loadBackgroundImages() {
     bgListContainer.innerHTML = '';
     console.log(files);
     if (files.length === 0) {
-      bgListContainer.innerHTML = `<p class="text-muted">${window.i18n.translate("pages.settings.themes.custom.noAvailableBgImages")}</p>`;
+      bgListContainer.innerHTML = `
+                      <div class="col-12">
+                        <div class="text-center py-5 text-muted">
+                          <i class="bi bi-images fs-1 mb-3 d-block"></i>
+                          <p class="mb-0">${window.i18n.translate("pages.settings.themes.custom.noAvailableBgImages")}</p>
+                        </div>
+                      </div>
+        `;
       return;
     }
+    const noBackgroundCol = document.createElement('div');
+    noBackgroundCol.className = 'col-lg-3 col-md-4 col-sm-6 col-12';
+    noBackgroundCol.innerHTML = `
+            <div class="d-flex justify-content-center align-items-center bg-image-preview border rounded" data-image="none">
+              <div class="text-center">
+                <i class="bi bi-slash-circle fs-1 mb-2 pe-none"></i>
+                <div class="small pe-none">${window.i18n.translate("pages.settings.themes.custom.noBackground")}</div>
+              </div>
+            </div>
+          `;
+    bgListContainer.appendChild(noBackgroundCol);
+    const sortedFiles = files.sort((a, b) => b.includes('default-') - a.includes('default-'));
+    sortedFiles.forEach(file => {
+      const col = document.createElement('div');
+      col.className = 'col-lg-3 col-md-4 col-sm-6 col-12';
+      col.innerHTML = `
+                  <div class="bg-image-container">
+                    <img src="file:///${folderPath.replace(/\\/g, '/')}/${file}" alt="${file}" class="img-fluid bg-image-preview mb-2" data-image="${file}">
+                    ${file.includes('default-') ? '' :
+                    `<button class="bg-image-delete-btn" data-deletefile="${file}" title="Bild löschen">
+                      <i class="bi bi-trash"></i>
+                    </button>`}
 
-    const table = document.createElement('table');
-    const thead = document.createElement('thead');
-    thead.innerHTML = `
-                <tr>
-                    <th>${window.i18n.translate("pages.settings.themes.custom.preview")}</th>
-                    <th>${window.i18n.translate("pages.settings.themes.custom.availableImageName")}</th>
-                    <th>${window.i18n.translate("pages.settings.themes.custom.actions")}</th>
-                </tr>
-            `;
-
-    table.appendChild(thead);
-    const tbody = document.createElement('tbody');
-    files.forEach(file => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-                    <td><img src="file://${folderPath}/${file}" alt="${file}" class="bg-image-preview"/></td>
-                    <td>${file}</td>
-                    <td class="text-center">
-                        <button class="btn btn-success btn-sm use-background-btn" data-id="${file}">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm delete-background-btn" data-id="${file}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                    `;
-      tbody.appendChild(row);
+                  </div>
+              `;
+      bgListContainer.appendChild(col);
     });
-    table.appendChild(tbody);
-    bgListContainer.appendChild(table);
+
+    const addBackgroundCol = document.createElement('div');
+    addBackgroundCol.className = 'col-lg-3 col-md-4 col-sm-6 col-12';
+    addBackgroundCol.innerHTML = `
+            <div class="d-flex justify-content-center align-items-center bg-image-add border rounded" id="add-bg">
+              <div class="text-center">
+                <i class="bi bi-plus-circle fs-1 mb-2 pe-none"></i>
+                <div class="small pe-none">${window.i18n.translate("pages.settings.themes.custom.addBackground")}</div>
+              </div>
+            </div>
+          `;
+    bgListContainer.appendChild(addBackgroundCol);
 
   } catch (error) {
     console.error('Fehler beim Laden der Hintergrundbilder:', error);
@@ -82,27 +97,32 @@ export async function applyBackgroundImage(fileName) {
     if (savedTheme) {
       savedTheme.backgroundImage = fileName;
       await window.electronAPI.saveTheme(savedTheme);
-      loadBackgroundImages();
     }
     loadGlobalTheme();
+    showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.themes.messages.backgroundImageApplied")}` });
   } catch (error) {
     console.error('Fehler beim Anwenden des Hintergrundbilds:', error);
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.themes.messages.backgroundImageError")}` });
   }
 }
 
-export async function saveNewBackgroundImage() { 
+export async function deleteBackgroundImage(fileName) {
+  try {
+    const result = await window.electronAPI.deleteBackgroundImage(fileName);
+    showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.themes.messages.backgroundImageDeleted")}` });
+    loadBackgroundImages();
+  } catch (error) {
+    console.error('Fehler beim Löschen des Hintergrundbilds:', error);
+    showFeedback({ success: false, message: `${window.i18n.translate("pages.settings.themes.messages.backgroundImageDeleteError")}` });
+  }
+}
+
+export async function saveNewBackgroundImage() {
   try {
     const uploadedBg = document.getElementById("import-background").files[0];
-    let backgroundImageName;
-    if (uploadedBg) {
-      const result = await window.electronAPI.saveBackgroundImage(uploadedBg);
-      backgroundImageName = result.fileName;
-      loadBackgroundImages();
-      applyBackgroundImage(backgroundImageName);
-      document.getElementById('save-new-bg-btn').disabled = true;
-      document.getElementById('file-name').textContent = `${window.i18n.translate("pages.settings.themes.custom.noBgSelected")}`;
-    }
-    
+    await window.electronAPI.saveBackgroundImage(uploadedBg);
+    loadBackgroundImages();
+
   } catch (error) {
     console.error('Fehler beim Speichern des neuen Hintergrundbilds:', error);
   }

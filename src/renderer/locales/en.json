@@ -167,7 +167,8 @@
                     "categoryUpdated": "Category successfully updated.",
                     "categoryUpdateError": "Error updating category.",
                     "categoryDeleted": "Category successfully deleted.",
-                    "categoryDeleteError": "Error deleting category."
+                    "categoryDeleteError": "Error deleting category.",
+                    "noCategorySelected": "Please select a category or enter a name."
                 },
                 "modal": {
                     "title": "Delete Category",
@@ -191,9 +192,8 @@
                     "title": "Custom Colors",
                     "texts": "Texts",
                     "backgrounds": "Backgrounds",
-                    "selectBg": "Add",
-                    "saveBackground": "Save Background",
-                    "backgroundImages": "Background Images",
+                    "addBackground": "Add",
+                    "noBackground": "No Background",
                     "noBgSelected": "No file selected",
                     "availableBgImages": "Background Images",
                     "availableImageName": "Filename",
@@ -210,7 +210,11 @@
                 },
                 "messages": {
                     "themeApplied": "Theme applied",
-                    "themeSaveError": "Error saving theme"
+                    "themeSaveError": "Error saving theme",
+                    "backgroundImageApplied": "Background image applied",
+                    "backgroundImageError": "Error applying background image",
+                    "backgroundImageDeleted": "Background image deleted",
+                    "backgroundImageDeleteError": "Error deleting background image"
                 }
             },
             "update": {

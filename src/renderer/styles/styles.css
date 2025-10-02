@@ -17,7 +17,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: var(--bg-primary);
 }
 
 body.custom-window {
@@ -42,7 +41,7 @@ i.bi {
 /* desc: Layout - Titlebar */
 .custom-titlebar {
     height: 50px;
-    background: var(--bg-secondary) !important;
+    background: linear-gradient(135deg, var(--accent-color), var(--bg-primary)) !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -248,24 +247,18 @@ table {
 
 thead {
     background-color: var(--bg-accent);
+    border: 1px solid var(--border-color);
+
 }
 
 thead th {
-    background-color: var(--bg-accent);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    color: var(--text-primary) !important;
     padding: 12px;
-}
-
-tbody tr {
-    background-color: var(--bg-secondary);
 }
 
 tbody td {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    padding: 12px;
+    color: var(--text-primary) !important;
+    padding: 8px;
 }
 
 tbody tr:hover {
@@ -276,10 +269,74 @@ tbody tr:hover td {
     filter: brightness(1.1);
 }
 
-.bg-image-preview {
-    width: 200px;
-    height: auto;
+.bg-image-preview,
+.bg-image-add {
+    width: 150px;
+    height: 150px;
     border-radius: 5px;
+    object-fit: cover;
+    transition: ease 0.3s all;
+}
+
+.bg-image-preview *,
+.bg-image-add * {
+    pointer-events: none;
+}
+
+.bg-image-preview:hover,
+.bg-image-add:hover {
+    transform: translateY(-2px);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: ease 0.3s all;
+    filter: brightness(1.1);
+    cursor: pointer;
+}
+
+.bg-image-preview:active,
+.bg-image-add:active {
+    transform: scale(0.95);
+    transition: ease 0.1s all;
+}   
+
+.bg-image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.bg-image-delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.bg-image-delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.bg-image-delete-btn:active {
+    transform: scale(0.95);
+}
+
+.bg-image-container .bg-image-preview {
+    display: block;
+    width: 100%;
 }
 
 /* desc: Formulare und Eingabefelder */
@@ -452,6 +509,11 @@ tbody tr:hover td {
     transition: all 0.5s ease;
 }
 
+.btn:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+}
+
 .btn-primary {
     color: var(--text-primary) !important;
     background-color: var(--accent-color) !important;
@@ -562,14 +624,19 @@ button .bi {
 /* desc: Cards und Dropdowns */
 .card {
     color: var(--text-primary) !important;
-    background-color: var(--bg-secondary) !important;
+    background-color: color-mix(in srgb, var(--bg-secondary) 15%, transparent) !important;
     border-color: var(--border-color) !important;
     transition: all 0.3s ease;
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     overflow: visible;
     animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
-    background-color: #e5e5f7;
-    opacity: 0.8;
+    opacity: 0.85;
+
+    /* Glasmorphism */
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
 }
 
 .pulse {
@@ -613,9 +680,11 @@ button .bi {
 }
 
 .card:hover {
-    border-color: var(--text-primary) !important;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 33px rgba(0, 0, 0, 0.3);
+    background-color: color-mix(in srgb, var(--bg-secondary) 25%, transparent) !important;
+    border-color: color-mix(in srgb, var(--text-primary) 30%, transparent) !important;
+    backdrop-filter: blur(16px) saturate(200%);
+    -webkit-backdrop-filter: blur(16px) saturate(200%);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
 
 .dropdown-menu-dark {

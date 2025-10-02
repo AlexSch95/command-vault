@@ -167,7 +167,8 @@
                     "categoryUpdated": "Kategorie erfolgreich aktualisiert.",
                     "categoryUpdateError": "Fehler beim Aktualisieren der Kategorie.",
                     "categoryDeleted": "Kategorie erfolgreich gelöscht.",
-                    "categoryDeleteError": "Fehler beim Löschen der Kategorie."
+                    "categoryDeleteError": "Fehler beim Löschen der Kategorie.",
+                    "noCategorySelected": "Bitte wähle eine Kategorie aus oder gib einen Namen ein."
                 },
                 "modal": {
                     "title": "Kategorie löschen",
@@ -191,8 +192,8 @@
                     "title": "Benutzerdefinierte Farben",
                     "texts": "Texte",
                     "backgrounds": "Hintergründe",
-                    "selectBg": "Hinzufügen",
-                    "saveBackground": "Hintergrund speichern",
+                    "addBackground": "Hinzufügen",
+                    "noBackground": "Keinen Hintergrund",
                     "noBgSelected": "Keine Datei ausgewählt",
                     "availableBgImages": "Hintergrundbilder",
                     "availableImageName": "Dateiname",
@@ -209,7 +210,11 @@
                 },
                 "messages": {
                     "themeApplied": "Design wurde angewendet",
-                    "themeSaveError": "Fehler beim Speichern des Designs"
+                    "themeSaveError": "Fehler beim Speichern des Designs",
+                    "backgroundImageApplied": "Hintergrundbild wurde angewendet",
+                    "backgroundImageError": "Fehler beim Anwenden des Hintergrundbilds",
+                    "backgroundImageDeleted": "Hintergrundbild wurde gelöscht",
+                    "backgroundImageDeleteError": "Fehler beim Löschen des Hintergrundbilds"
                 }
             },
             "update": {

@@ -6,7 +6,7 @@ export const themes = {
     textPrimary: "#212529",
     accentColor: "#67bde4",
     textColorCode: "#00bfe6",
-    backgroundImage: "light-background.jpg"
+    backgroundImage: "default-light.jpg"
   },
 
   dark: {
@@ -16,7 +16,7 @@ export const themes = {
     textPrimary: "#f1f5f9",
     accentColor: "#484a60",
     textColorCode: "#27e70d",
-    backgroundImage: "dark-background.png"
+    backgroundImage: "default-dark.png"
   },
 
   coffee: {
@@ -26,7 +26,7 @@ export const themes = {
     textPrimary: "#d5c5aa",
     accentColor: "#7c584b",
     textColorCode: "#d9ccb5",
-    backgroundImage: "coffee-background.jpg"
+    backgroundImage: "default-coffee.jpg"
   },
 
   navy: {
@@ -36,6 +36,6 @@ export const themes = {
     textPrimary: "#c2ccff",
     accentColor: "#3d4fb3",
     textColorCode: "#869afe",
-    backgroundImage: "navy-background.jpg"
+    backgroundImage: "default-navy.jpg"
   }
 };

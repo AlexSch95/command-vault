@@ -37,9 +37,14 @@ export async function loadGlobalTheme() {
       root.style.setProperty('--text-primary', savedTheme.textPrimary);
       root.style.setProperty('--accent-color', savedTheme.accentColor);
       root.style.setProperty('--text-color-code', savedTheme.textColorCode);
-      document.body.style.backgroundImage = `url('file:///${backgroundImagePath}')`;
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundPosition = 'center';
+      if (savedTheme.backgroundImage === "none") {
+        document.body.style.backgroundColor = savedTheme.bgPrimary;
+        document.body.style.backgroundImage = 'none';
+      } else {
+        document.body.style.backgroundImage = `url('file:///${backgroundImagePath}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+      }
     }
 
   } catch (error) {

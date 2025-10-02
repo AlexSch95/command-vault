@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../styles/styles.css" />
 </head>
 
-<body class="bg-dark text-primary">
+<body class="text-primary">
   <div class="custom-titlebar fixed-top">
     <div class="titlebar-left">
       <img src="../assets/safe.ico" alt="Command Vault" class="titlebar-icon" />
@@ -263,22 +263,12 @@
                       <span data-i18n="pages.settings.themes.custom.availableBgImages">Vorhandene
                         Hintergrundbilder</span>
                     </h5>
-                    <div id="backgroundimages-list" class="mt-4"></div>
-                    <hr>
-                    <div class="d-flex align-items-center gap-3 mt-4 justify-content-center">
-                      <input type="file" id="import-background" accept="image/*" style="display: none;">
-                      <button type="button" class="btn btn-outline-primary" id="custom-file-btn">
-                        <i class="bi bi-upload me-2"></i><span data-i18n="pages.settings.themes.custom.selectBg">Bild
-                          auswählen</span>
-                      </button>
-                      <span id="file-name" class="text-muted"><span
-                          data-i18n="pages.settings.themes.custom.noBgSelected">Keine Datei ausgewählt</span></span>
+                    <div class="container-fluid mt-4">
+                      <div class="row g-3" id="backgroundimages-list">
+                      </div>
                     </div>
-                    <div class="text-center mt-4">
-                      <button type="button" class="btn btn-primary btn-lg px-5" id="save-new-bg-btn" disabled>
-                        <i class="bi bi-check-circle me-2"></i>
-                        <span data-i18n="pages.settings.themes.custom.saveBackground">Hintergrund speichern</span>
-                      </button>
+                    <div class="d-flex align-items-center gap-3 mt-4 justify-content-center">
+                      <input type="file" id="import-background" class="d-none" accept="image/*">
                     </div>
                   </div>
                 </div>

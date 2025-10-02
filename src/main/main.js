@@ -157,10 +157,10 @@ app.whenReady().then(() => {
       }
 
       const files = fs.readdirSync(backgroundsPath);
-      return {folderPath: backgroundsPath, files: files};
+      return { folderPath: backgroundsPath, files: files };
     } catch (error) {
       console.error('Fehler beim Auflisten der Hintergrundbilder:', error);
-      return {folderPath: '', files: []};
+      return { folderPath: '', files: [] };
     }
   });
 
@@ -181,6 +181,23 @@ app.whenReady().then(() => {
     } catch (error) {
       console.error('Fehler beim Speichern des Hintergrundbildes:', error);
       return { success: false, message: 'Failed to save background image' };
+    }
+  });
+
+  ipcMain.handle('delete-background-image', async (event, fileName) => {
+    try {
+      const userDataPath = app.getPath('userData');
+      const backgroundsPath = path.join(userDataPath, 'background-images');
+      const filePath = path.join(backgroundsPath, fileName);
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        return { success: true };
+      }
+      return { success: false, message: 'Background image not found' };
+    } catch (error) {
+      console.error('Fehler beim Löschen des Hintergrundbildes:', error);
+      return { success: false, message: 'Failed to delete background image' };
     }
   });
 
@@ -341,13 +358,25 @@ app.whenReady().then(() => {
       if (fs.existsSync(themePath)) {
         const themeData = fs.readFileSync(themePath, 'utf8');
         return JSON.parse(themeData);
+      } else {
+        const defaultTheme = {
+          bgPrimary: "#2e2e2e",
+          bgSecondary: "#383838",
+          borderColor: "#7a7a7a",
+          textPrimary: "#f1f5f9",
+          accentColor: "#484a60",
+          textColorCode: "#27e70d",
+          backgroundImage: "dark-background.png"
+        };
+        fs.writeFileSync(themePath, JSON.stringify(defaultTheme, null, 2));
+        return defaultTheme;
       }
-      return null;
     } catch (error) {
       console.error('Fehler beim Laden des Themes:', error);
       return null;
     }
   });
+
 
   //desc: theme speichern
   ipcMain.handle('save-theme', async (event, themeData) => {
