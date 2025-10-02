@@ -191,13 +191,21 @@
                     "title": "Benutzerdefinierte Farben",
                     "texts": "Texte",
                     "backgrounds": "Hintergründe",
+                    "selectBg": "Hinzufügen",
+                    "saveBackground": "Hintergrund speichern",
+                    "noBgSelected": "Keine Datei ausgewählt",
+                    "availableBgImages": "Hintergrundbilder",
+                    "availableImageName": "Dateiname",
+                    "noAvailableBgImages": "Keine Hintergrundbilder verfügbar",
                     "backgroundColor": "Hintergrundfarbe",
                     "borderColor": "Rahmenfarbe",
                     "accentColor": "Akzentfarbe (Buttons etc.)",
                     "cardBackgroundColor": "Karten-Hintergrundfarbe",
                     "textColor": "Textfarbe",
                     "textColorCode": "Textfarbe (Codeblock)",
-                    "saveTheme": "Design speichern"
+                    "saveTheme": "Design speichern",
+                    "preview": "Vorschau",
+                    "actions": "Aktionen"
                 },
                 "messages": {
                     "themeApplied": "Design wurde angewendet",
@@ -272,7 +280,8 @@
                         "confirmThisWord": "LÖSCHEN",
                         "confirmThis2": " ein, um das Löschen zu bestätigen:",
                         "cancelButton": "Abbrechen",
-                        "deleteButton": "Backup löschen"}
+                        "deleteButton": "Backup löschen"
+                    }
                 }
             },
             "clearDb": {

@@ -19,7 +19,23 @@ contextBridge.exposeInMainWorld('electronAPI', {
   minimizeWindow: () => ipcRenderer.invoke('minimize-window'),
   closeWindow: () => ipcRenderer.invoke('close-window'),
   openUserDataFolder: () => ipcRenderer.invoke('open-user-data'),
+  getUserDataPath: () => ipcRenderer.invoke('get-user-data-path'),
   listBackups: () => ipcRenderer.invoke('list-backups'),
   restoreDbBackup: (backupFileName) => ipcRenderer.invoke('restore-db-backup', backupFileName),
   deleteDbBackup: (backupFileName) => ipcRenderer.invoke('delete-backup', backupFileName),
+  listBackgroundImages: () => ipcRenderer.invoke('list-background-images'),
+  saveBackgroundImage: async (file) => {
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const fileData = {
+        name: file.name,
+        type: file.type,
+        buffer: arrayBuffer
+      };
+      return await ipcRenderer.invoke('save-background-image', fileData);
+    } catch (error) {
+      console.error('Fehler beim Speichern des Hintergrundbildes:', error);
+      return { success: false, message: 'Failed to save background image' };
+    }
+  }
 })

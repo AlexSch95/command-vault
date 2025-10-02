@@ -17,10 +17,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-}
-
-body.bg-dark {
-    background: linear-gradient(-45deg, var(--bg-primary), var(--bg-secondary));
+    background-color: var(--bg-primary);
 }
 
 body.custom-window {
@@ -170,6 +167,7 @@ i.bi {
     border: 2px solid var(--border-color);
     overflow: hidden;
     white-space: nowrap;
+    transition-delay: 0.1s;
 }
 
 .nav-button:hover {
@@ -179,6 +177,7 @@ i.bi {
     border: 2px solid var(--text-primary);
     box-shadow: 0 0 12px var(--accent-color);
     text-decoration: none;
+    transition-delay: 0.3s;
 }
 
 .nav-button:focus {
@@ -196,11 +195,13 @@ i.bi {
     align-items: center;
     transition: transform 0.3s ease;
     flex-shrink: 0;
+    transition-delay: 0.1s;
 }
 
 .nav-button:hover i {
     opacity: 0;
     transition: opacity 0.3s ease 0.05s;
+    transition-delay: 0.3s;
 }
 
 .nav-button.active {
@@ -216,10 +217,12 @@ i.bi {
     transition: opacity 0.15s ease 0.05s;
     pointer-events: none;
     white-space: nowrap;
+    transition-delay: 0.05s;
 }
 
 .nav-button:hover .nav-text {
     opacity: 1;
+    transition-delay: 0.4s;
 }
 
 /* desc: Layout - Hauptinhalt */
@@ -271,6 +274,12 @@ tbody tr:hover {
 
 tbody tr:hover td {
     filter: brightness(1.1);
+}
+
+.bg-image-preview {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
 }
 
 /* desc: Formulare und Eingabefelder */
@@ -433,8 +442,8 @@ tbody tr:hover td {
 
 .editor-preview,
 .editor-preview-active {
-  background: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
 }
 
 /* desc: Buttons und Badges */
@@ -559,6 +568,8 @@ button .bi {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
     overflow: visible;
     animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
+    background-color: #e5e5f7;
+    opacity: 0.8;
 }
 
 .pulse {
@@ -704,47 +715,49 @@ code {
 /* desc: Markdown-Content */
 .markdown-content,
 .markdown-content * {
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box;
-  line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    line-height: 1 !important;
 }
+
+
 
 .markdown-content p,
 .markdown-content ul,
 .markdown-content ol,
 .markdown-content li {
-  margin: 0 !important;
-  padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.markdown-content p + p,
-.markdown-content p + ul,
-.markdown-content p + ol,
-.markdown-content ul + p,
-.markdown-content ol + p {
-  margin-top: 0.3em !important;
+.markdown-content p+p,
+.markdown-content p+ul,
+.markdown-content p+ol,
+.markdown-content ul+p,
+.markdown-content ol+p {
+    margin-top: 0.3em !important;
 }
 
 .markdown-content li {
-  list-style-position: inside;
+    list-style-position: inside;
 }
 
 .markdown-content div,
 .markdown-content pre,
 .markdown-content code,
 .markdown-content br {
-  margin: 0 !important;
-  padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .markdown-content ul,
 .markdown-content ol {
-  margin-left: 1.2em !important;
+    margin-left: 1.2em !important;
 }
 
-.markdown-content li + li {
-  margin-top: 0.1em !important;
+.markdown-content li+li {
+    margin-top: 0.1em !important;
 }
 
 /* desc: Overlays und Modals */
@@ -773,14 +786,14 @@ code {
 }
 
 .main-content::-webkit-scrollbar-track {
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     border-radius: 6px;
 }
 
 .main-content::-webkit-scrollbar-thumb {
     background: var(--accent-color);
     border-radius: 6px;
-    border: 2px solid var(--bg-primary);
+    border: 2px solid var(--bg-secondary);
     transition: background 0.3s ease;
 }
 
@@ -789,17 +802,17 @@ code {
 }
 
 .main-content::-webkit-scrollbar-corner {
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
 }
 
 .main-content {
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) var(--bg-primary);
+    scrollbar-color: var(--accent-color) var(--bg-secondary);
 }
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) var(--bg-primary);
+    scrollbar-color: var(--accent-color) var(--bg-secondary);
 }
 
 *::-webkit-scrollbar {

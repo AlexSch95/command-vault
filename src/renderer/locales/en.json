@@ -191,13 +191,22 @@
                     "title": "Custom Colors",
                     "texts": "Texts",
                     "backgrounds": "Backgrounds",
+                    "selectBg": "Add",
+                    "saveBackground": "Save Background",
+                    "backgroundImages": "Background Images",
+                    "noBgSelected": "No file selected",
+                    "availableBgImages": "Background Images",
+                    "availableImageName": "Filename",
+                    "noAvailableBgImages": "No Background Images Available",
                     "backgroundColor": "Background Color",
                     "borderColor": "Border Color",
                     "accentColor": "Accent Color (Buttons etc.)",
                     "cardBackgroundColor": "Card Background Color",
                     "textColor": "Text Color",
                     "textColorCode": "Text Color (Code Block)",
-                    "saveTheme": "Save Theme"
+                    "saveTheme": "Save Theme",
+                    "preview": "Preview",
+                    "actions": "Actions"
                 },
                 "messages": {
                     "themeApplied": "Theme applied",

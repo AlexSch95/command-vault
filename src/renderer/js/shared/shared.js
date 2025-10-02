@@ -26,6 +26,8 @@ export function showFeedback(result) {
 export async function loadGlobalTheme() {
   try {
     const savedTheme = await window.electronAPI.loadTheme();
+    const userDataPath = await window.electronAPI.getUserDataPath();
+    const backgroundImagePath = `${userDataPath}/background-images/${savedTheme.backgroundImage}`.replace(/\\/g, '/');
 
     if (savedTheme) {
       const root = document.documentElement;
@@ -35,7 +37,11 @@ export async function loadGlobalTheme() {
       root.style.setProperty('--text-primary', savedTheme.textPrimary);
       root.style.setProperty('--accent-color', savedTheme.accentColor);
       root.style.setProperty('--text-color-code', savedTheme.textColorCode);
+      document.body.style.backgroundImage = `url('file:///${backgroundImagePath}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
     }
+
   } catch (error) {
     console.error('Fehler beim Laden des globalen Themes:', error);
   }

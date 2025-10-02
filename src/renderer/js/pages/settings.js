@@ -34,6 +34,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  document.getElementById('custom-file-btn').addEventListener('click', () => {
+    document.getElementById('import-background').click();
+  });
+
+  document.getElementById('import-background').addEventListener('change', (e) => {
+    const fileName = e.target.files[0]?.name;
+    document.getElementById('file-name').textContent = fileName;
+    document.getElementById('save-new-bg-btn').disabled = e.target.files.length > 0 ? false : true;
+  });
+
+  document.getElementById('backgroundimages-list').addEventListener('click', async (event) => {
+    if (event.target.classList.contains('use-background-btn')) {
+      const fileName = event.target.dataset.id;
+      themesHandler.applyBackgroundImage(fileName);
+    }
+  });
+
+  document.getElementById('save-new-bg-btn').addEventListener('click', async () => {
+    themesHandler.saveNewBackgroundImage();
+  });
+
 
   //desc: DB-Reset Eventlistener
   document.getElementById('reset-database-btn').addEventListener('click', cleardbHandler.handleDatabaseReset);

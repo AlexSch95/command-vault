@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     await window.i18n.ready;
   }
 
+  let getUserData = await window.electronAPI.getUserDataPath();
+  console.log("User Data Path:", getUserData);
+
   document.getElementById("settingsButton").addEventListener("click", () => {
     document.getElementById("mainContentOverlay").classList.add("overlay-darken");
     window.electronAPI.openSettingsWindow();

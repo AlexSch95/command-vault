@@ -258,6 +258,28 @@
                         <span data-i18n="pages.settings.themes.custom.saveTheme">Design speichern</span>
                       </button>
                     </div>
+                    <h5 class="text-primary mb-3 mt-5">
+                      <i class="bi bi-card-image me-2"></i>
+                      <span data-i18n="pages.settings.themes.custom.availableBgImages">Vorhandene
+                        Hintergrundbilder</span>
+                    </h5>
+                    <div id="backgroundimages-list" class="mt-4"></div>
+                    <hr>
+                    <div class="d-flex align-items-center gap-3 mt-4 justify-content-center">
+                      <input type="file" id="import-background" accept="image/*" style="display: none;">
+                      <button type="button" class="btn btn-outline-primary" id="custom-file-btn">
+                        <i class="bi bi-upload me-2"></i><span data-i18n="pages.settings.themes.custom.selectBg">Bild
+                          auswählen</span>
+                      </button>
+                      <span id="file-name" class="text-muted"><span
+                          data-i18n="pages.settings.themes.custom.noBgSelected">Keine Datei ausgewählt</span></span>
+                    </div>
+                    <div class="text-center mt-4">
+                      <button type="button" class="btn btn-primary btn-lg px-5" id="save-new-bg-btn" disabled>
+                        <i class="bi bi-check-circle me-2"></i>
+                        <span data-i18n="pages.settings.themes.custom.saveBackground">Hintergrund speichern</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

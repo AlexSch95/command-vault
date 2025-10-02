@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, Menu, dialog } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
@@ -53,6 +53,8 @@ const createWindow = () => {
 
 //desc: App initialisierung und DB und Tabellen erstellen wenn noch keine vorhanden
 app.whenReady().then(() => {
+  //desc: kopiert aus src/renderer/assets/default-backgrounds die bilder in das user data verzeichnis im ordner background-images
+  setupDefaultBackgrounds();
   //desc: Datenbank im User Data Directory öffnen damit bei autoupdate keine Probleme auftreten (db gelöscht)
   const dbPath = path.join(app.getPath('userData'), 'database.db');
   db = new sqlite3.Database(dbPath);
@@ -114,6 +116,71 @@ app.whenReady().then(() => {
     } catch (error) {
       console.error('Fehler beim Erstellen des Backups:', error);
       return { success: false, message: 'Db Backup failed' };
+    }
+  });
+
+  ipcMain.handle('get-user-data-path', () => {
+    return app.getPath('userData');
+  });
+
+  function setupDefaultBackgrounds() {
+    try {
+      const userDataPath = app.getPath('userData');
+      const backgroundsPath = path.join(userDataPath, 'background-images');
+
+      if (!fs.existsSync(backgroundsPath)) {
+        fs.mkdirSync(backgroundsPath, { recursive: true });
+      }
+
+      const defaultBackgroundsPath = path.join(__dirname, '../renderer/assets/default-backgrounds');
+      const defaultBackgroundFiles = fs.readdirSync(defaultBackgroundsPath);
+
+      defaultBackgroundFiles.forEach(file => {
+        const srcPath = path.join(defaultBackgroundsPath, file);
+        const destPath = path.join(backgroundsPath, file);
+        if (!fs.existsSync(destPath)) {
+          fs.copyFileSync(srcPath, destPath);
+        }
+      });
+    } catch (error) {
+      console.error('Fehler beim Einrichten der Standard-Hintergrundbilder:', error);
+    }
+  }
+
+  ipcMain.handle('list-background-images', async () => {
+    try {
+      const userDataPath = app.getPath('userData');
+      const backgroundsPath = path.join(userDataPath, 'background-images');
+
+      if (!fs.existsSync(backgroundsPath)) {
+        fs.mkdirSync(backgroundsPath, { recursive: true });
+      }
+
+      const files = fs.readdirSync(backgroundsPath);
+      return {folderPath: backgroundsPath, files: files};
+    } catch (error) {
+      console.error('Fehler beim Auflisten der Hintergrundbilder:', error);
+      return {folderPath: '', files: []};
+    }
+  });
+
+  ipcMain.handle('save-background-image', async (event, fileData) => {
+    try {
+      const userDataPath = app.getPath('userData');
+      const backgroundsPath = path.join(userDataPath, 'background-images');
+
+      if (!fs.existsSync(backgroundsPath)) {
+        fs.mkdirSync(backgroundsPath, { recursive: true });
+      }
+
+      const filePath = path.join(backgroundsPath, fileData.name);
+      const buffer = Buffer.from(fileData.buffer);
+      fs.writeFileSync(filePath, buffer);
+      return { success: true, filePath: filePath, fileName: fileData.name };
+
+    } catch (error) {
+      console.error('Fehler beim Speichern des Hintergrundbildes:', error);
+      return { success: false, message: 'Failed to save background image' };
     }
   });
 
