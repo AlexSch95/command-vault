@@ -1,4 +1,4 @@
-import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
+import { showFeedback, loadGlobalTheme, getAppVersion } from "../shared/shared.js";
 
 //desc: lädt alles erst, wenn das DOM vollständig geladen ist
 document.addEventListener('DOMContentLoaded', async () => {
@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     await window.i18n.ready;
   }
 
+  
   //desc: initiales laden des contents, theme wird geladen und alle technologien
   let markdownDescription;
-
+  
+  await getAppVersion();
   loadGlobalTheme();
   loadTechnologies();
   loadMarkdownEditor();

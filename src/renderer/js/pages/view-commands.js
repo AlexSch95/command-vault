@@ -1,10 +1,12 @@
-import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
+import { showFeedback, loadGlobalTheme, getAppVersion } from "../shared/shared.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
   if (window.i18n) {
     await window.i18n.ready;
   }
+
+  await getAppVersion();
 
   document.getElementById("settingsButton").addEventListener("click", () => {
     document.getElementById("mainContentOverlay").classList.add("overlay-darken");

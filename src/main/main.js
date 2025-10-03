@@ -184,6 +184,10 @@ app.whenReady().then(() => {
     }
   });
 
+  ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
+  });
+
   ipcMain.handle('delete-background-image', async (event, fileName) => {
     try {
       const userDataPath = app.getPath('userData');

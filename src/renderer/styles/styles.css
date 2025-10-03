@@ -17,6 +17,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    transition: none !important;
 }
 
 body.custom-window {
@@ -163,9 +164,9 @@ i.bi {
     font-size: 1.3rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    border: 2px solid var(--border-color);
     overflow: hidden;
     white-space: nowrap;
+    transition: all 0.1s ease;
     transition-delay: 0.1s;
 }
 
@@ -173,9 +174,9 @@ i.bi {
     width: 200px;
     background-color: var(--accent-color);
     color: var(--text-primary);
-    border: 2px solid var(--text-primary);
     box-shadow: 0 0 12px var(--accent-color);
     text-decoration: none;
+    transition: all 0.3s ease;
     transition-delay: 0.3s;
 }
 
@@ -206,6 +207,7 @@ i.bi {
 .nav-button.active {
     background-color: var(--accent-color);
     color: var(--text-primary);
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .nav-text {
@@ -577,44 +579,8 @@ button .bi {
     background-color: var(--accent-color) !important;
 }
 
-.settings-button {
-    width: 40px;
-    height: 40px;
-    background-color: var(--accent-color) !important;
-    color: var(--text-primary) !important;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 1.5rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    border: 2px solid var(--border-color);
-}
 
-.settings-button:hover {
-    background-color: var(--accent-color) !important;
-    color: var(--text-primary) !important;
-    transform: scale(1.1);
-    box-shadow: 0 8px 10px var(--bg-secondary) !important;
-    text-decoration: none;
-}
 
-.settings-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
-}
-
-.settings-button i {
-    transition: transform 0.3s ease;
-}
-
-.settings-button:hover i {
-    transform: rotate(90deg);
-    transition: transform 0.3s ease;
-}
 
 .intro-labels {
     width: 40px;
@@ -639,8 +605,19 @@ button .bi {
     border-radius: 16px;
 }
 
+.modal-card {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+    animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
+}
+
+
 .pulse {
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 4s ease-in-out infinite;
 }
 
 

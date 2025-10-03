@@ -1,12 +1,16 @@
-import { loadGlobalTheme } from "../shared/shared.js";
+import { loadGlobalTheme, getAppVersion } from "../shared/shared.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (window.i18n) {
     await window.i18n.ready;
   }
 
-  let getUserData = await window.electronAPI.getUserDataPath();
-  console.log("User Data Path:", getUserData);
+  await getAppVersion();
+
+  const modal = new bootstrap.Modal(document.getElementById('gettingStartedModal'), {
+    backdrop: false,
+    keyboard: true
+  });
 
   document.getElementById("settingsButton").addEventListener("click", () => {
     document.getElementById("mainContentOverlay").classList.add("overlay-darken");
@@ -37,4 +41,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
+  document.getElementById('getStarted').addEventListener('click', () => {
+    modal.show();
+  });
+
+  document.getElementById('gettingStartedCloseBtn').addEventListener('click', () => {
+    modal.hide();
+  });
 });

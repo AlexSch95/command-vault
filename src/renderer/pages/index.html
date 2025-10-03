@@ -16,6 +16,7 @@
     <div class="titlebar-left">
       <img src="../assets/safe.ico" alt="Command Vault" class="titlebar-icon" />
       <div class="titlebar-title text-primary">Command Vault</div>
+      <div class="titlebar-title text-muted version-text" id="appVersion"></div>
     </div>
     <div class="titlebar-controls">
       <div class="dropdown me-4">
@@ -25,17 +26,19 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
           <li>
-            <a class="dropdown-item language-switcher" href="#" data-language="de"><img src="../assets/countries/de.svg" alt="Deutsch" id="currentLang" style="height: 1em; vertical-align: middle;"> Deutsch</a>
+            <a class="dropdown-item language-switcher" href="#" data-language="de"><img src="../assets/countries/de.svg"
+                alt="Deutsch" id="currentLang" style="height: 1em; vertical-align: middle;"> Deutsch</a>
           </li>
           <li>
-            <a class="dropdown-item language-switcher" href="#" data-language="en"><img src="../assets/countries/gb.svg" alt="English" id="currentLang" style="height: 1em; vertical-align: middle;"> English</a>
+            <a class="dropdown-item language-switcher" href="#" data-language="en"><img src="../assets/countries/gb.svg"
+                alt="English" id="currentLang" style="height: 1em; vertical-align: middle;"> English</a>
           </li>
         </ul>
       </div>
-      <button class="titlebar-btn text-primary rounded-2" id="minimize-btn" title="Minimieren">
+      <button class="titlebar-btn text-primary rounded-2" id="minimize-btn" title="Minimize">
         <i class="bi bi-dash"></i>
       </button>
-      <button class="titlebar-btn close rounded-2" id="close-btn" title="Schließen">
+      <button class="titlebar-btn close rounded-2" id="close-btn" title="Close">
         <i class="bi bi-x text-primary"></i>
       </button>
     </div>
@@ -82,10 +85,10 @@
                 Vergessen war gestern.
               </p>
               <div class="d-flex gap-3 flex-wrap">
-                <a href="#intro" class="btn btn-primary btn-lg px-4 py-3 pulse">
+                <button type="button" id="getStarted" class="btn btn-primary btn-lg px-4 py-3 pulse">
                   <i class="bi bi-rocket me-2"></i><span data-i18n="pages.index.buttons.toGetStarted">Zur
                     Einführung</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -145,287 +148,286 @@
       </div>
     </div>
 
-    <div class="py-5" id="intro">
-      <div class="container">
-        <div class="card">
-          <div class="card-body p-5">
-            <div class="text-center mb-5">
-              <h2 class="fw-bold text-primary mb-3" data-i18n="pages.index.gettingStarted.title">
-                Erste Schritte
-              </h2>
-              <p class="lead text-primary opacity-75" data-i18n="pages.index.gettingStarted.subtitle">
-                Starte in wenigen Minuten mit der Verwaltung
-                deiner Befehle
-              </p>
-            </div>
+    <div class="modal fade" id="gettingStartedModal" tabindex="-1" aria-labelledby="gettingStartedModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content modal-card">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-primary" id="gettingStartedModalLabel"
+              data-i18n="pages.index.gettingStarted.title">
+              Erste Schritte
+            </h5>
+            <button type="button" class="btn border-0 bg-transparent text-primary p-2 ms-auto"
+              id="gettingStartedCloseBtn" data-bs-dismiss="modal" aria-label="Close">
+              <i class="bi bi-x-lg fs-5"></i>
+            </button>
+          </div>
+          <div class="modal-body p-0">
+            <div id="gettingStartedCarousel" class="carousel slide" data-bs-ride="false">
 
-            <div class="row g-4 mb-4 justify-content-center">
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold">1</span>
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="1"
+                  aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="2"
+                  aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="3"
+                  aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="4"
+                  aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#gettingStartedCarousel" data-bs-slide-to="5"
+                  aria-label="Slide 6"></button>
+              </div>
+              <!-- Carousel Items -->
+              <div class="carousel-inner" style="height: 400px;">
+                <!-- Slide 1: Erste Technologie erstellen -->
+                <div class="carousel-item active">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.step1.title">
+                          Erste Technologie erstellen
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step1.point1">Öffne die Einstellungen
+                              (Zahnrad-Icon in der Navbar)</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step1.point2">Scrolle zu "Technologien
+                              verwalten"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step1.point3">Klicke auf "Neue
+                              Technologie"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step1.point4">Gib einen Namen ein (z.B. "Git",
+                              "Linux", "Docker")</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step1.point5">Wähle eine Farbe und
+                              speichere</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step1.title">
-                      Erste Technologie erstellen
-                    </h5>
-                    <ul class="list-unstyled text-primary small mb-0">
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step1.point1">Öffne die Einstellungen
-                          (Zahnrad-Icon in der
-                          Navbar)</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step1.point2">Scrolle zu
-                          "Technologien
-                          verwalten"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step1.point3">Klicke auf "Neue
-                          Technologie"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step1.point4">Gib einen Namen ein
-                          (z.B. "Git", "Linux",
-                          "Docker")</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step1.point5">Wähle eine Farbe und
-                          speichere</span>
-                      </li>
-                    </ul>
+                </div>
+
+                <!-- Slide 2: Ersten Befehl hinzufügen -->
+                <div class="carousel-item">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.step2.title">
+                          Ersten Befehl hinzufügen
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step2.point1">Navigiere zu "Befehl
+                              hinzufügen"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step2.point2">Wähle eine der erstellten
+                              Technologien aus</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step2.point3">Gib Titel, Command und
+                              Beschreibung ein</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step2.point4">Optional: Füge einen Quell-Link
+                              hinzu</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step2.point5">Speichere den Befehl</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3: Befehle durchsuchen -->
+                <div class="carousel-item">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.step3.title">
+                          Befehle durchsuchen
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step3.point1">Gehe zu "Befehle anzeigen"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step3.point2">Nutze die Suchfunktion oder Filter
+                              nach Technologie</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step3.point3">Klicke auf das Kopier-Icon um
+                              Commands zu kopieren</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step3.point4">Bearbeite oder lösche Befehle
+                              direkt</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 4: Theme anpassen -->
+                <div class="carousel-item">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.step4.title">
+                          Theme anpassen
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step4.point1">Öffne die Einstellungen
+                              (Zahnrad-Icon)</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step4.point2">Scrolle zu "Farben"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step4.point3">Wähle Light/Dark Mode oder</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step4.point4">Erstelle ein custom Theme mit
+                              eigenen Farben</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step4.point5">Klicke "Übernehmen" - Theme wird
+                              sofort aktiv</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 5: Technologien verwalten -->
+                <div class="carousel-item">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.step5.title">
+                          Technologien verwalten
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step5.point1">In den Einstellungen findest du
+                              "Technologien verwalten"</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step5.point2">Wähle eine existierende
+                              Technologie zum Bearbeiten</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step5.point3">Ändere Name oder Farbe nach
+                              Belieben</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-arrow-right text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.step5.point4">Lösche Technologien (⚠️ entfernt
+                              auch alle zugehörigen Commands)</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 6: Tipps -->
+                <div class="carousel-item">
+                  <div class="p-5 d-flex justify-content-center">
+                    <div class="d-flex align-items-start">
+                      <div>
+                        <h4 class="text-primary mb-3" data-i18n="pages.index.gettingStarted.tips.title">
+                          Tipps
+                        </h4>
+                        <ul class="list-unstyled text-primary">
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-check2 text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.tips.tip1">Nutze aussagekräftige Titel für deine
+                              Commands</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-check2 text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.tips.tip2">Organisiere mit Technologien für
+                              bessere Übersicht</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-check2 text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.tips.tip3">Verwende Beschreibungen für
+                              komplexere Commands</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-check2 text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.tips.tip4">Teste deine Themes in verschiedenen
+                              Bereichen der App</span>
+                          </li>
+                          <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-check2 text-primary me-3 mt-1 flex-shrink-0"></i>
+                            <span data-i18n="pages.index.gettingStarted.tips.tip5">Erstelle regelmäßig Backups deiner
+                              Datenbank</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold">2</span>
-                  </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step2.title">
-                      Ersten Befehl hinzufügen
-                    </h5>
-                    <ul class="list-unstyled text-primary small mb-0">
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step2.point1">Navigiere zu "Befehl
-                          hinzufügen"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step2.point2">Wähle eine der
-                          erstellten Technologien
-                          aus</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step2.point3">Gib Titel, Command und
-                          Beschreibung ein</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step2.point4">Optional: Füge einen
-                          Quell-Link hinzu</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step2.point5">Speichere den
-                          Befehl</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row g-4 mb-4 justify-content-center">
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold">3</span>
-                  </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step3.title">
-                      Befehle durchsuchen
-                    </h5>
-                    <ul class="list-unstyled text-primary small mb-0">
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step3.point1">Gehe zu "Befehle
-                          anzeigen"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step3.point2">Nutze die Suchfunktion
-                          oder Filter nach
-                          Technologie</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step3.point3">Klicke auf das
-                          Kopier-Icon um Commands
-                          zu kopieren</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step3.point4">Bearbeite oder lösche
-                          Befehle direkt</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold">4</span>
-                  </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step4.title">
-                      Theme anpassen
-                    </h5>
-                    <ul class="list-unstyled text-primary small mb-0">
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step4.point1">Öffne die Einstellungen
-                          (Zahnrad-Icon)</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step4.point2">Scrolle zu
-                          "Farben"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step4.point3">Wähle Light/Dark Mode
-                          oder</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step4.point4">Erstelle ein custom
-                          Theme mit eigenen
-                          Farben</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step4.point5">Klicke "Übernehmen" -
-                          Theme wird sofort
-                          aktiv</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row g-4 justify-content-center">
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold">5</span>
-                  </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.step5.title">
-                      Technologien verwalten
-                    </h5>
-                    <ul class="list-unstyled text-primary small mb-0">
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step5.point1">In den Einstellungen
-                          findest du "Technologien
-                          verwalten"</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step5.point2">Wähle eine existierende
-                          Technologie zum
-                          Bearbeiten</span>
-                      </li>
-                      <li class="mb-1">
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step5.point3">Ändere Name oder Farbe
-                          nach Belieben</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-arrow-right text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.step5.point4">Lösche Technologien (⚠️
-                          entfernt auch alle
-                          zugehörigen
-                          Commands)</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="d-flex align-items-start h-100">
-                  <div
-                    class="bg-accent rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0 intro-labels">
-                    <span class="text-primary fw-bold"><i class="bi bi-lightbulb"></i></span>
-                  </div>
-                  <div>
-                    <h5 class="text-primary mb-2" data-i18n="pages.index.gettingStarted.tips.title">
-                      Tipps
-                    </h5>
-                    <ul class="list-unstyled text-primary small">
-                      <li class="mb-2">
-                        <i class="bi bi-check2 text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.tips.tip1">Nutze aussagekräftige
-                          Titel für deine
-                          Commands</span>
-                      </li>
-                      <li class="mb-2">
-                        <i class="bi bi-check2 text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.tips.tip2">Organisiere mit
-                          Technologien für bessere
-                          Übersicht</span>
-                      </li>
-                      <li class="mb-2">
-                        <i class="bi bi-check2 text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.tips.tip3">Verwende Beschreibungen
-                          für komplexere
-                          Commands</span>
-                      </li>
-                      <li class="mb-2">
-                        <i class="bi bi-check2 text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.tips.tip4">Teste deine Themes in
-                          verschiedenen Bereichen
-                          der App</span>
-                      </li>
-                      <li>
-                        <i class="bi bi-check2 text-primary me-2"></i><span
-                          data-i18n="pages.index.gettingStarted.tips.tip5">Erstelle regelmäßig
-                          Backups deiner
-                          Datenbank</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <!-- Carousel Controls -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#gettingStartedCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#gettingStartedCarousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/shared/i18n.js"></script>
-  <script type="module" src="../js/pages/index.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/shared/i18n.js"></script>
+    <script type="module" src="../js/pages/index.js"></script>
 </body>
 
 </html>

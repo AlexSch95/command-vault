@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   loadTheme: () => ipcRenderer.invoke('load-theme'),
   saveTheme: (themeData) => ipcRenderer.invoke('save-theme', themeData),
   restartApp: () => ipcRenderer.invoke('restart-app'),
+  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
   checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
   onUpdateAvailable: (callback) => ipcRenderer.on('update-available', callback),
   onUpdateNotAvailable: (callback) => ipcRenderer.on('update-not-available', callback),

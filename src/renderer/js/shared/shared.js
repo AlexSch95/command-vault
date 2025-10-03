@@ -51,3 +51,7 @@ export async function loadGlobalTheme() {
     console.error('Fehler beim Laden des globalen Themes:', error);
   }
 }
+
+export async function getAppVersion() {
+  document.getElementById("appVersion").textContent = `v${await window.electronAPI.getAppVersion()}`;
+}

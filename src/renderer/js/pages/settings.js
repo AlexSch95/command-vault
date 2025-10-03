@@ -1,4 +1,4 @@
-import { showFeedback, loadGlobalTheme } from "../shared/shared.js";
+import { loadGlobalTheme, getAppVersion } from "../shared/shared.js";
 import * as cleardbHandler from "./settings/clearDbHandler.js";
 import * as themesHandler from "./settings/themesHandler.js";
 import * as backupDbHandler from "./settings/backupDbHandler.js";
@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await window.i18n.ready;
   }
 
+  await getAppVersion();
+
   loadGlobalTheme();
   await themesHandler.init();
   await backupDbHandler.init();
@@ -22,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById("close-btn").addEventListener("click", () => {
     window.electronAPI.closeSettingsWindow();
   });
+
 
 
   //desc: Themes Eventlistener
