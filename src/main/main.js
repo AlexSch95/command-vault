@@ -1,47 +1,19 @@
-const { app, BrowserWindow, ipcMain, shell, Menu, dialog } = require('electron');
+const { app } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const fs = require('fs');
 const { autoUpdater } = require('electron-updater');
+
+// Services importieren
+const { createMainWindow, getSettingsWindow } = require('./services/windowService');
+const { setupDefaultBackgrounds } = require('./services/fileService');
+const { registerIpcHandlers } = require('./services/ipcHandlers');
 
 let db;
 let mainWindow;
-let settingsWindow;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    frame: false,
-    resizable: true,
-    maximizable: true,
-    fullscreenable: false,
-    autoHideMenuBar: true,
-    icon: path.join(__dirname, '../renderer/assets/safe.ico'),
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      contextMenus: true,
-      preload: path.join(__dirname, '../preload/preload.js')
-    }
-  })
+  mainWindow = createMainWindow();
 
-  mainWindow.webContents.on('context-menu', (event, params) => {
-    const menu = Menu.buildFromTemplate([
-      { label: 'Copy', role: 'copy' },
-      { label: 'Paste', role: 'paste' },
-      { label: 'Cut', role: 'cut' },
-      { type: 'separator' },
-      { label: 'Open DevTools', role: 'toggleDevTools' },
-      { label: 'Made by Machinezr.de', click: () => shell.openExternal('https://machinezr.de') }
-    ]);
-
-    menu.popup({ window: mainWindow });
-  });
-
-  mainWindow.loadFile(path.join(__dirname, '../renderer/pages/index.html'))
-
-  // desc: devtools werden automatisch geöffnet wenn in der entwicklungsumgebung
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
   } else {
@@ -49,370 +21,50 @@ const createWindow = () => {
       autoUpdater.checkForUpdatesAndNotify();
     }, 3000);
   }
-}
+};
 
-//desc: App initialisierung und DB und Tabellen erstellen wenn noch keine vorhanden
 app.whenReady().then(() => {
-  //desc: kopiert aus src/renderer/assets/default-backgrounds die bilder in das user data verzeichnis im ordner background-images
   setupDefaultBackgrounds();
-  //desc: Datenbank im User Data Directory öffnen damit bei autoupdate keine Probleme auftreten (db gelöscht)
+  
+  // Datenbank initialisieren
   const dbPath = path.join(app.getPath('userData'), 'database.db');
   db = new sqlite3.Database(dbPath);
 
-  //desc: Foreign Keys aktivieren (damit ON DELETE CASCADE funktioniert)
-  db.run('PRAGMA foreign_keys = ON;')
+  db.run('PRAGMA foreign_keys = ON;');
 
   db.run(`CREATE TABLE IF NOT EXISTS technologies (
-        tech_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        tech_name TEXT NOT NULL UNIQUE,
-        color TEXT NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+    tech_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tech_name TEXT NOT NULL UNIQUE,
+    color TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+  
   db.run(`CREATE TABLE IF NOT EXISTS commands (
-        command_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        tech_id INTEGER NOT NULL,
-        titel TEXT NOT NULL,
-        command TEXT NOT NULL,
-        beschreibung TEXT,
-        source TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
-    )`);
+    command_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tech_id INTEGER NOT NULL,
+    titel TEXT NOT NULL,
+    command TEXT NOT NULL,
+    beschreibung TEXT,
+    source TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
+  )`);
+  
   db.run(`CREATE TABLE IF NOT EXISTS deleted_commands (
-        command_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        tech_id INTEGER NOT NULL,
-        tech_name TEXT NOT NULL,
-        tech_color TEXT NOT NULL,
-        titel TEXT NOT NULL,
-        command TEXT NOT NULL,
-        beschreibung TEXT,
-        source TEXT,
-        deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+    command_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tech_id INTEGER NOT NULL,
+    tech_name TEXT NOT NULL,
+    tech_color TEXT NOT NULL,
+    titel TEXT NOT NULL,
+    command TEXT NOT NULL,
+    beschreibung TEXT,
+    source TEXT,
+    deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
 
-  ipcMain.handle('create-db-backup', async () => {
-    try {
-      const dbPath = path.join(app.getPath('userData'), 'database.db');
-      const backupPath = path.join(app.getPath('userData'), 'backups');
-
-      if (!fs.existsSync(backupPath)) {
-        fs.mkdirSync(backupPath, { recursive: true });
-      }
-
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const timestamp = `${year}-${month}-${day}T${hours}-${minutes}-${seconds}`;
-
-      const backupFile = path.join(backupPath, `database-backup-${timestamp}.db`);
-
-      fs.copyFileSync(dbPath, backupFile);
-
-      return { success: true, path: backupFile };
-    } catch (error) {
-      console.error('Fehler beim Erstellen des Backups:', error);
-      return { success: false, message: 'Db Backup failed' };
-    }
-  });
-
-  ipcMain.handle('get-user-data-path', () => {
-    return app.getPath('userData');
-  });
-
-  function setupDefaultBackgrounds() {
-    try {
-      const userDataPath = app.getPath('userData');
-      const backgroundsPath = path.join(userDataPath, 'background-images');
-
-      if (!fs.existsSync(backgroundsPath)) {
-        fs.mkdirSync(backgroundsPath, { recursive: true });
-      }
-
-      const defaultBackgroundsPath = path.join(__dirname, '../renderer/assets/default-backgrounds');
-      const defaultBackgroundFiles = fs.readdirSync(defaultBackgroundsPath);
-
-      defaultBackgroundFiles.forEach(file => {
-        const srcPath = path.join(defaultBackgroundsPath, file);
-        const destPath = path.join(backgroundsPath, file);
-        if (!fs.existsSync(destPath)) {
-          fs.copyFileSync(srcPath, destPath);
-        }
-      });
-    } catch (error) {
-      console.error('Fehler beim Einrichten der Standard-Hintergrundbilder:', error);
-    }
-  }
-
-  ipcMain.handle('list-background-images', async () => {
-    try {
-      const userDataPath = app.getPath('userData');
-      const backgroundsPath = path.join(userDataPath, 'background-images');
-
-      if (!fs.existsSync(backgroundsPath)) {
-        fs.mkdirSync(backgroundsPath, { recursive: true });
-      }
-
-      const files = fs.readdirSync(backgroundsPath);
-      return { folderPath: backgroundsPath, files: files };
-    } catch (error) {
-      console.error('Fehler beim Auflisten der Hintergrundbilder:', error);
-      return { folderPath: '', files: [] };
-    }
-  });
-
-  ipcMain.handle('save-background-image', async (event, fileData) => {
-    try {
-      const userDataPath = app.getPath('userData');
-      const backgroundsPath = path.join(userDataPath, 'background-images');
-
-      if (!fs.existsSync(backgroundsPath)) {
-        fs.mkdirSync(backgroundsPath, { recursive: true });
-      }
-
-      const filePath = path.join(backgroundsPath, fileData.name);
-      const buffer = Buffer.from(fileData.buffer);
-      fs.writeFileSync(filePath, buffer);
-      return { success: true, filePath: filePath, fileName: fileData.name };
-
-    } catch (error) {
-      console.error('Fehler beim Speichern des Hintergrundbildes:', error);
-      return { success: false, message: 'Failed to save background image' };
-    }
-  });
-
-  ipcMain.handle('get-app-version', () => {
-    return app.getVersion();
-  });
-
-  ipcMain.handle('delete-background-image', async (event, fileName) => {
-    try {
-      const userDataPath = app.getPath('userData');
-      const backgroundsPath = path.join(userDataPath, 'background-images');
-      const filePath = path.join(backgroundsPath, fileName);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        return { success: true };
-      }
-      return { success: false, message: 'Background image not found' };
-    } catch (error) {
-      console.error('Fehler beim Löschen des Hintergrundbildes:', error);
-      return { success: false, message: 'Failed to delete background image' };
-    }
-  });
-
-  ipcMain.handle('list-backups', async () => {
-    try {
-      const backupPath = path.join(app.getPath('userData'), 'backups');
-      const files = fs.readdirSync(backupPath)
-        .filter(file => file.endsWith('.db'))
-        .map(file => {
-          const filePath = path.join(backupPath, file);
-          const stats = fs.statSync(filePath);
-          return { file, birthtime: stats.birthtime };
-        })
-        .sort((a, b) => b.birthtime - a.birthtime)
-        .map(entry => entry.file);
-
-      return files;
-    } catch (error) {
-      console.error('Fehler beim Auflisten der Backups:', error);
-      return [];
-    }
-  });
-
-  ipcMain.handle('restore-db-backup', async (event, backupFileName) => {
-    try {
-      const dbPath = path.join(app.getPath('userData'), 'database.db');
-      const backupPath = path.join(app.getPath('userData'), 'backups', backupFileName);
-
-      await new Promise((resolve, reject) => {
-        db.close((err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      });
-
-      if (fs.existsSync(dbPath)) {
-        fs.unlinkSync(dbPath);
-      }
-
-      fs.copyFileSync(backupPath, dbPath);
-      db = new sqlite3.Database(dbPath);
-      return true;
-
-    } catch (error) {
-      console.error('Fehler beim Wiederherstellen des Backups:', error);
-      return false;
-    }
-  });
-
-  ipcMain.handle('delete-backup', async (event, backupFileName) => {
-    try {
-      const backupPath = path.join(app.getPath('userData'), 'backups', backupFileName);
-      if (fs.existsSync(backupPath)) {
-        fs.unlinkSync(backupPath);
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Fehler beim Löschen des Backups:', error);
-      return false;
-    }
-  });
-
-  ipcMain.handle('open-settings', () => {
-    const [mainWidth, mainHeight] = mainWindow.getSize();
-    const settingsWidth = Math.floor(mainWidth * 0.8);
-    const settingsHeight = Math.floor(mainHeight * 0.8);
-    settingsWindow = new BrowserWindow({
-      width: settingsWidth,
-      height: settingsHeight,
-      frame: false,
-      resizable: true,
-      maximizable: false,
-      movable: true,
-      fullscreenable: false,
-      autoHideMenuBar: false,
-      icon: path.join(__dirname, '../renderer/assets/safe.ico'),
-      parent: mainWindow,
-      modal: true,
-      webPreferences: {
-        nodeIntegration: false,
-        contextIsolation: true,
-        contextMenus: true,
-        preload: path.join(__dirname, '../preload/preload.js')  // Wichtig!
-      }
-    });
-
-    settingsWindow.webContents.on('context-menu', (event, params) => {
-      const menu = Menu.buildFromTemplate([
-        { label: 'Copy', role: 'copy' },
-        { label: 'Paste', role: 'paste' },
-        { label: 'Cut', role: 'cut' },
-        { type: 'separator' },
-        { label: 'Open DevTools', role: 'toggleDevTools' },
-        { label: 'Made by Machinezr.de', click: () => shell.openExternal('https://machinezr.de') }
-      ]);
-
-      menu.popup({ window: settingsWindow });
-    });
-
-
-    settingsWindow.loadFile(path.join(__dirname, '../renderer/pages/settings.html'));
-
-    settingsWindow.on('closed', () => {
-      mainWindow.webContents.send('settings-closed');
-    });
-  });
-
-  ipcMain.handle('minimize-window', () => {
-    if (mainWindow) {
-      mainWindow.minimize();
-    };
-  });
-
-  ipcMain.handle('close-window', () => {
-    if (mainWindow) {
-      mainWindow.close();
-    }
-  });
-
-  ipcMain.handle('close-settings', () => {
-    if (settingsWindow) {
-      settingsWindow.close();
-    }
-  });
-
-  ipcMain.handle('open-user-data', () => {
-    const userDataPath = app.getPath('userData');
-    shell.openPath(userDataPath);
-  });
-
-  //desc: SQL Query Handler der zwischen SELECT und allem anderen unterscheidet
-  ipcMain.handle('db-query', async (event, sql, params) => {
-    return new Promise((resolve, reject) => {
-      if (sql.trim().startsWith('SELECT')) {
-        //desc: Für SELECT-Queries
-        db.all(sql, params, (err, rows) => {
-          if (err) reject(err)
-          else resolve(rows)
-        })
-      } else {
-        //desc: Für INSERT, UPDATE, DELETE-Queries
-        db.run(sql, params, function (err) {
-          if (err) reject(err)
-          else resolve({
-            changes: this.changes,
-            lastID: this.lastID
-          })
-        })
-      }
-    })
-  })
-
-  //desc: Theme laden
-  ipcMain.handle('load-theme', async () => {
-    try {
-      const themePath = path.join(app.getPath('userData'), 'user-theme.json');
-      if (fs.existsSync(themePath)) {
-        const themeData = fs.readFileSync(themePath, 'utf8');
-        return JSON.parse(themeData);
-      } else {
-        const defaultTheme = {
-          bgPrimary: "#2e2e2e",
-          bgSecondary: "#383838",
-          borderColor: "#7a7a7a",
-          textPrimary: "#f1f5f9",
-          accentColor: "#484a60",
-          textColorCode: "#27e70d",
-          backgroundImage: "default-dark.png"
-        };
-        fs.writeFileSync(themePath, JSON.stringify(defaultTheme, null, 2));
-        return defaultTheme;
-      }
-    } catch (error) {
-      console.error('Fehler beim Laden des Themes:', error);
-      return null;
-    }
-  });
-
-
-  //desc: theme speichern
-  ipcMain.handle('save-theme', async (event, themeData) => {
-    try {
-      const themePath = path.join(app.getPath('userData'), 'user-theme.json');
-      fs.writeFileSync(themePath, JSON.stringify(themeData, null, 2));
-      return { success: true, message: 'Theme erfolgreich gespeichert!' };
-    } catch (error) {
-      console.error('Fehler beim Speichern des Themes:', error);
-      return { success: false, message: 'Fehler beim Speichern des Themes.' };
-    }
-  });
-
-  //desc: updatefunktionen
-  ipcMain.handle('restart-app', () => {
-    if (settingsWindow) {
-      settingsWindow.close();
-    }
-    setTimeout(() => {
-
-      autoUpdater.quitAndInstall();
-    }, 100);
-  });
-
-  ipcMain.handle('check-for-updates', () => {
-    if (app.isPackaged) {
-      autoUpdater.checkForUpdatesAndNotify();
-    }
-  });
-
-  createWindow()
-})
+  registerIpcHandlers(db);
+  createWindow();
+});
 
 // Auto-Updater Events
 autoUpdater.on('checking-for-update', () => {
@@ -421,12 +73,14 @@ autoUpdater.on('checking-for-update', () => {
 
 autoUpdater.on('update-available', (info) => {
   console.log('Update available.');
+  const settingsWindow = getSettingsWindow();
   if (settingsWindow) {
     settingsWindow.webContents.send('update-available', info);
   }
 });
 
 autoUpdater.on('update-not-available', (info) => {
+  const settingsWindow = getSettingsWindow();
   if (settingsWindow) {
     settingsWindow.webContents.send('update-not-available', info);
   }
@@ -441,6 +95,7 @@ autoUpdater.on('download-progress', (progressObj) => {
   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
   console.log(log_message);
+  const settingsWindow = getSettingsWindow();
   if (settingsWindow) {
     settingsWindow.webContents.send('download-progress', progressObj);
   }
@@ -448,6 +103,7 @@ autoUpdater.on('download-progress', (progressObj) => {
 
 autoUpdater.on('update-downloaded', (info) => {
   console.log('Update downloaded');
+  const settingsWindow = getSettingsWindow();
   if (settingsWindow) {
     settingsWindow.webContents.send('update-downloaded', info);
   }
