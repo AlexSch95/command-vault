@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const source = document.getElementById('source');
 
     try {
-      const result = await window.electronAPI.dbQuery('INSERT INTO commands (tech_id, titel, command, beschreibung, source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
+      const result = await window.electronAPI.dbQuery('INSERT INTO commands (category_id, cmd_title, cmd, cmd_description, cmd_source) VALUES (?, ?, ?, ?, ?)', [tech.value, title.value, command.value, description.value, source.value]);
       console.log('Datenbank Ergebnis:', result)
       showFeedback({ success: true, message: `${window.i18n.translate("pages.addCommand.messages.cmdSaved")}` });
       document.getElementById('add-command-form').reset();
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   //desc: lädt alle technologien aus der db und füllt den select tag mit den technologien
   async function loadTechnologies() {
     try {
-      const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
+      const technologies = await window.electronAPI.dbQuery('SELECT * FROM categories ORDER BY category_name ASC');
       const techOptions = document.getElementById('tech-options');
       if (technologies.length < 1) {
         techOptions.innerHTML = `<span class="me-4 text-primary">${window.i18n.translate("pages.addCommand.form.noTechPlaceholder")}</span>`;
@@ -101,12 +101,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       techOptions.appendChild(techSelect);
       technologies.forEach(tech => {
         const option = document.createElement('option');
-        option.value = tech.tech_id;
-        option.textContent = tech.tech_name;
+        option.value = tech.category_id;
+        option.textContent = tech.category_name;
         techSelect.appendChild(option);
       });
     } catch (error) {
-      console.error('Fehler beim Laden der Technologien:', error);
+      console.error('Fehler beim Laden der Kategorien:', error);
     }
   }
 });

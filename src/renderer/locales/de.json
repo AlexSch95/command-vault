@@ -98,6 +98,7 @@
                 "descLabel": "Beschreibung",
                 "sourceLabel": "Quelle",
                 "createdAt": "Hinzugefügt am",
+                "lastEdited": "Zuletzt bearbeitet am",
                 "markdownSupported": "Markdown wird unterstützt"
             },
             "messages": {

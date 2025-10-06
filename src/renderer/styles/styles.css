@@ -590,15 +590,15 @@ button .bi {
 /* desc: Cards und Dropdowns */
 .card {
     color: var(--text-primary) !important;
-    background-color: color-mix(in srgb, var(--bg-secondary) 15%, transparent) !important;
     border-color: var(--border-color) !important;
     transition: all 0.3s ease;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     overflow: visible;
     animation: fadeIn 0.7s cubic-bezier(.77, 0, .18, 1) both;
     opacity: 0.85;
-
+    
     /* Glasmorphism */
+    background-color: color-mix(in srgb, var(--bg-secondary) 50%, transparent) !important;
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -657,7 +657,7 @@ button .bi {
 }
 
 .card:hover {
-    background-color: color-mix(in srgb, var(--bg-secondary) 25%, transparent) !important;
+    background-color: color-mix(in srgb, var(--bg-secondary) 75%, transparent) !important;
     border-color: color-mix(in srgb, var(--text-primary) 30%, transparent) !important;
     backdrop-filter: blur(16px) saturate(200%);
     -webkit-backdrop-filter: blur(16px) saturate(200%);

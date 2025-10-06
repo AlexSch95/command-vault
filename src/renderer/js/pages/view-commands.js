@@ -57,18 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const rows = await window.electronAPI.dbQuery(`
                 SELECT 
-                    c.command_id,
-                    c.titel,
-                    c.command,
-                    c.beschreibung,
-                    c.source,
+                    c.cmd_id,
+                    c.cmd_title,
+                    c.cmd,
+                    c.cmd_description,
+                    c.cmd_source,
                     c.created_at,
-                    t.tech_name as tech,
-                    t.color as tech_color,
-                    t.tech_id as tech_id
+                    t.category_name,
+                    t.category_color,
+                    t.category_id,
+                    c.modified,
+                    c.last_modified
                 FROM commands c
-                JOIN technologies t ON c.tech_id = t.tech_id
-                ORDER BY c.created_at DESC
+                JOIN categories t ON c.category_id = t.category_id
+                ORDER BY t.category_name DESC
             `, []);
       commandsArray = rows;
       renderCommands(commandsArray);
@@ -86,8 +88,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const technologyFilter = document.getElementById('technologyFilter');
       technologies.forEach(tech => {
         const option = document.createElement('option');
-        option.value = tech.tech_id;
-        option.textContent = tech.tech_name;
+        option.value = tech.category_id;
+        option.textContent = tech.category_name;
         technologyFilter.appendChild(option);
       });
     } catch (error) {
@@ -106,33 +108,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     commands.forEach(cmd => {
       const commandCard = document.createElement('div');
       commandCard.classList.add('col-lg-6');
-      commandCard.id = `${cmd.command_id}`;
-      const markdownDescription = cmd.beschreibung ? marked.parse(cmd.beschreibung) : '';
+      commandCard.id = `${cmd.cmd_id}`;
+      const markdownDescription = cmd.cmd_description ? marked.parse(cmd.cmd_description) : '';
       commandCard.innerHTML = `
                     <div class="card h-100">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
-                                <span class="badge" style="background-color: ${cmd.tech_color};"><span class="text-shadow-outline fs-5">${cmd.tech}</span></span>
+                                <span class="badge" style="background-color: ${cmd.category_color};"><span class="text-shadow-outline fs-5">${cmd.category_name}</span></span>
                             </div>
                             <div class="dropdown">
                                 <button class="btn btn-link p-1" data-bs-toggle="dropdown">
                                     <i class="text-primary bi bi-three-dots-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                                    <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.toSource")}</a></li>
-                                    <li><a class="dropdown-item edit-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-pencil me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.edit")}</a></li>
-                                    <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.command_id}" href="#"><i class="bi bi-trash me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.delete")}</a></li>
+                                    <li><a class="dropdown-item view-source-btn" data-linktosource="${cmd.cmd_source}" href="#"><i class="bi bi-box-arrow-up-right me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.toSource")}</a></li>
+                                    <li><a class="dropdown-item edit-command-btn" data-id="${cmd.cmd_id}" href="#"><i class="bi bi-pencil me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.edit")}</a></li>
+                                    <li><a class="dropdown-item text-danger delete-command-btn" data-id="${cmd.cmd_id}" href="#"><i class="bi bi-trash me-2"></i>${window.i18n.translate("pages.viewCommands.buttons.delete")}</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title mb-3">
-                                <span>${cmd.titel}</span>
+                                <span>${cmd.cmd_title}</span>
                             </h5>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel")}</label>
                                 <div class="bg-dark text-white p-3 mb-2 rounded font-monospace position-relative">
-                                    <code class="viewcmd-block">${cmd.command}</code>
+                                    <code class="viewcmd-block">${cmd.cmd}</code>
                                     <button class="btn btn-outline-light copy-cmd-btn btn-sm position-absolute top-0 end-0 m-2" data-command='${cmd.command}'>
                                         <i class="bi bi-copy"></i>
                                     </button>
@@ -142,7 +144,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <div class="command-description markdown-content mb-3">${markdownDescription}</div>
                             </p>
                             <small class="text-muted position-absolute bottom-0 end-0 p-3 mt-5">
-                                <i class="bi bi-clock me-1"></i>${window.i18n.translate("pages.viewCommands.cmdCard.createdAt")} ${new Date(cmd.created_at).toLocaleDateString()}
+                                ${cmd.modified === 1 ? `<i class="bi bi-pencil-square me-1"></i>${window.i18n.translate("pages.viewCommands.cmdCard.lastEdited")} ${new Date(cmd.last_modified).toLocaleDateString()}` : 
+                                `<i class="bi bi-clock me-1"></i>${window.i18n.translate("pages.viewCommands.cmdCard.createdAt")} ${new Date(cmd.created_at).toLocaleDateString()}`}
                             </small>
                         </div>
                     </div>`;
@@ -165,10 +168,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (searchTerm) {
       filteredCommands = filteredCommands.filter(cmd =>
-        cmd.titel.toLowerCase().includes(searchTerm) ||
-        cmd.command.toLowerCase().includes(searchTerm) ||
-        (cmd.beschreibung && cmd.beschreibung.toLowerCase().includes(searchTerm)) ||
-        cmd.tech.toLowerCase().includes(searchTerm)
+        cmd.cmd_title.toLowerCase().includes(searchTerm) ||
+        cmd.cmd.toLowerCase().includes(searchTerm) ||
+        cmd.cmd_description.toLowerCase().includes(searchTerm) ||
+        cmd.category_name.toLowerCase().includes(searchTerm)
       );
     }
     renderCommands(filteredCommands);
@@ -207,44 +210,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const deletedCommandResult = await window.electronAPI.dbQuery(`
                 SELECT 
-                    c.command_id,
-                    c.titel,
-                    c.command,
-                    c.beschreibung,
-                    c.source,
-                    t.tech_name,
-                    t.color as tech_color,
-                    t.tech_id
+                    c.cmd_id,
+                    c.cmd_title,
+                    c.cmd,
+                    c.cmd_description,
+                    c.cmd_source,
+                    t.category_name,
+                    t.category_color,
+                    t.category_id
                 FROM commands c
-                JOIN technologies t ON c.tech_id = t.tech_id
-                WHERE c.command_id = ?
+                JOIN categories t ON c.category_id = t.category_id
+                WHERE c.cmd_id = ?
             `, [commandId]);
       const deletedCommand = deletedCommandResult[0];
-      await window.electronAPI.dbQuery('DELETE FROM commands WHERE command_id = ?', [commandId]);
+      await window.electronAPI.dbQuery('DELETE FROM commands WHERE cmd_id = ?', [commandId]);
       //desc: gelöschter befehl wird in die deleted_commands tabelle verschoben
       console.table(deletedCommand);
       await window.electronAPI.dbQuery(`
                 INSERT INTO deleted_commands 
                 (
-                  command_id, 
-                  tech_id, 
-                  tech_color,
-                  tech_name, 
-                  titel, 
-                  command, 
-                  beschreibung, 
-                  source
+                  cmd_id, 
+                  category_id, 
+                  category_color,
+                  category_name, 
+                  cmd_title, 
+                  cmd, 
+                  cmd_description, 
+                  cmd_source
                 )
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `, [
-        deletedCommand.command_id,
-        deletedCommand.tech_id,
-        deletedCommand.tech_color,
-        deletedCommand.tech_name,
-        deletedCommand.titel,
-        deletedCommand.command,
-        deletedCommand.beschreibung,
-        deletedCommand.source
+        deletedCommand.cmd_id,
+        deletedCommand.category_id,
+        deletedCommand.category_color,
+        deletedCommand.category_name,
+        deletedCommand.cmd_title,
+        deletedCommand.cmd,
+        deletedCommand.cmd_description,
+        deletedCommand.cmd_source
       ]);
       loadCommands();
       showFeedback({ success: true, message: `${window.i18n.translate("pages.viewCommands.messages.cmdDeleted")}` });
@@ -255,29 +258,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //desc: bearbeitet einen command, verwandelt die card in ein editierbares form
   async function editCommand(commandId) {
-    const cmd = commandsArray.find(c => c.command_id == commandId);
+    const cmd = commandsArray.find(c => c.cmd_id == commandId);
     const editedCommand = document.getElementById(commandId);
     const technologies = await loadTechnologies();
 
     // Dropdown-Optionen generieren
     let techOptions = '';
     technologies.forEach(tech => {
-      const selected = tech.tech_name === cmd.tech ? 'selected' : '';
-      techOptions += `<option value="${tech.tech_id}" ${selected}>${tech.tech_name}</option>`;
+      const selected = tech.category_name === cmd.category_name ? 'selected' : '';
+      techOptions += `<option value="${tech.category_id}" ${selected}>${tech.category_name}</option>`;
     });
 
     editedCommand.innerHTML = `<div class="card h-100">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
-                                <select class="form-select" id="edit-tech-${cmd.command_id}">
+                                <select class="form-select" id="edit-tech-${cmd.cmd_id}">
                                     ${techOptions}
                                 </select>
                             </div>
                             <div class="d-flex gap-2">
-                                <button class="btn btn-success btn-sm save-command-btn" data-id="${cmd.command_id}">
+                                <button class="btn btn-success btn-sm save-command-btn" data-id="${cmd.cmd_id}">
                                     <i class="bi bi-check"></i>
                                 </button>
-                                <button class="btn btn-danger btn-sm cancel-edit-btn" data-id="${cmd.command_id}">
+                                <button class="btn btn-danger btn-sm cancel-edit-btn" data-id="${cmd.cmd_id}">
                                     <i class="bi bi-x"></i>
                                 </button>
                             </div>
@@ -285,28 +288,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="card-body">
                         <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.titleLabel")}</label>
                             <h5 class="card-title mb-3">
-                                <input type="text" class="form-control" value="${cmd.titel}" id="edit-titel-${cmd.command_id}">
+                                <input type="text" class="form-control" value="${cmd.cmd_title}" id="edit-titel-${cmd.cmd_id}">
                             </h5>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.cmdBoxLabel")}</label>
                                 <div class="bg-dark text-white p-3 rounded position-relative">
-                                    <textarea class="form-control bg-dark border-0 text-light font-monospace" id="edit-command-${cmd.command_id}" rows="2">${cmd.command}</textarea>
+                                    <textarea class="form-control bg-dark border-0 text-light font-monospace" id="edit-command-${cmd.cmd_id}" rows="2">${cmd.cmd}</textarea>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.descLabel")}</label>
-                                <textarea class="form-control bg-dark border-secondary text-light" id="edit-beschreibung-${cmd.command_id}" rows="5">${cmd.beschreibung || ''}</textarea>
+                                <textarea class="form-control bg-dark border-secondary text-light" id="edit-beschreibung-${cmd.cmd_id}" rows="5">${cmd.cmd_description || ''}</textarea>
                                 <small class="text-muted text-end d-block">${window.i18n.translate("pages.viewCommands.cmdCard.markdownSupported")}</small>
                                 </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted mb-1">${window.i18n.translate("pages.viewCommands.cmdCard.sourceLabel")}</label>
-                                <input type="url" class="form-control bg-dark border-secondary text-light" value="${cmd.source || ''}" id="edit-source-${cmd.command_id}">
+                                <input type="url" class="form-control bg-dark border-secondary text-light" value="${cmd.cmd_source || ''}" id="edit-source-${cmd.cmd_id}">
                             </div>
                         </div>
                     </div>`;
 
     const markdownDescription = new EasyMDE({
-      element: document.getElementById(`edit-beschreibung-${cmd.command_id}`),
+      element: document.getElementById(`edit-beschreibung-${cmd.cmd_id}`),
       spellChecker: false,
       status: false,
       toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "guide"]
@@ -335,7 +338,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const source = document.getElementById(`edit-source-${commandId}`).value;
     try {
       const result = await window.electronAPI.dbQuery(
-        'UPDATE commands SET tech_id = ?, titel = ?, command = ?, beschreibung = ?, source = ? WHERE command_id = ?',
+        'UPDATE commands SET category_id = ?, cmd_title = ?, cmd = ?, cmd_description = ?, cmd_source = ?, modified = 1 WHERE cmd_id = ?',
         [tech_id, titel, command, beschreibung, source, commandId]
       );
       loadCommands();
@@ -348,7 +351,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   //desc: lädt alle technologien aus der db und gibt sie zurück
   async function loadTechnologies() {
     try {
-      const technologies = await window.electronAPI.dbQuery('SELECT * FROM technologies ORDER BY tech_name ASC');
+      const technologies = await window.electronAPI.dbQuery('SELECT * FROM categories ORDER BY category_name ASC');
       return technologies;
     } catch (error) {
       console.error('Fehler beim Laden der Technologien:', error);

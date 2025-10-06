@@ -68,8 +68,9 @@ export async function handleDatabaseReset(event) {
     if (confirmInput.value === requiredText) {
       try {
         await window.electronAPI.dbQuery('DELETE FROM commands');
-        await window.electronAPI.dbQuery('DELETE FROM technologies');
+        await window.electronAPI.dbQuery('DELETE FROM categories');
         await window.electronAPI.dbQuery('DELETE FROM deleted_commands');
+        await window.electronAPI.dbQuery('DELETE FROM sqlite_sequence WHERE name IN ("commands", "categories", "deleted_commands")');
 
         showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.clearDb.messages.dbResetSuccess")}` });
 

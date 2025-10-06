@@ -33,14 +33,14 @@ async function loadDeletedCommands() {
     deletedCommands.forEach(cmd => {
       const row = document.createElement('tr');
       row.innerHTML = `
-                    <td><span class="badge" style="background-color: ${cmd.tech_color};"><span class="fs-5">${cmd.tech_name}</span></span></td>
-                    <td>${cmd.command.length > 9 ? cmd.command.substring(0, 9) + '...' : cmd.command}</td>
+                    <td><span class="badge" style="background-color: ${cmd.category_color};"><span class="fs-5">${cmd.category_name}</span></span></td>
+                    <td>${cmd.cmd.length > 9 ? cmd.cmd.substring(0, 9) + '...' : cmd.cmd}</td>
                     <td>${new Date(cmd.deleted_at).toLocaleDateString()}</td>
                     <td class="text-center">
-                        <button class="btn btn-success btn-sm restore-command-btn" data-id="${cmd.command_id}">
+                        <button class="btn btn-success btn-sm restore-command-btn" data-id="${cmd.cmd_id}">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm fully-delete-cmd-btn" data-id="${cmd.command_id}">
+                        <button class="btn btn-danger btn-sm fully-delete-cmd-btn" data-id="${cmd.cmd_id}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
@@ -59,12 +59,12 @@ async function loadDeletedCommands() {
 
 export async function restoreCommand(commandId) {
   try {
-    const result = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands WHERE command_id = ?', [commandId]);
+    const result = await window.electronAPI.dbQuery('SELECT * FROM deleted_commands WHERE cmd_id = ?', [commandId]);
     const cmd = result[0];
     await window.electronAPI.dbQuery(`INSERT INTO commands
-                (tech_id, titel, command, beschreibung, source)
-                VALUES (?, ?, ?, ?, ?)`, [cmd.tech_id, cmd.titel, cmd.command, cmd.beschreibung, cmd.source]);
-    await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
+                (category_id, cmd_title, cmd, cmd_description, cmd_source)
+                VALUES (?, ?, ?, ?, ?)`, [cmd.category_id, cmd.cmd_title, cmd.cmd, cmd.cmd_description, cmd.cmd_source]);
+    await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE cmd_id = ?', [commandId]);
     showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.restorecommand.messages.restoreSuccess")}` });
   } catch (error) {
     console.log('Fehler beim Wiederherstellen des Commands:', error);
@@ -76,7 +76,7 @@ export async function restoreCommand(commandId) {
 
 export async function fullyDeleteCommand(commandId) {
   try {
-    const result = await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE command_id = ?', [commandId]);
+    const result = await window.electronAPI.dbQuery('DELETE FROM deleted_commands WHERE cmd_id = ?', [commandId]);
     showFeedback({ success: true, message: `${window.i18n.translate("pages.settings.restorecommand.messages.fullyDeleteSuccess")}` });
   } catch (error) {
     console.log('Fehler beim Löschen des Commands:', error);

@@ -32,33 +32,37 @@ app.whenReady().then(() => {
 
   db.run('PRAGMA foreign_keys = ON;');
 
-  db.run(`CREATE TABLE IF NOT EXISTS technologies (
-    tech_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tech_name TEXT NOT NULL UNIQUE,
-    color TEXT NOT NULL,
+  db.run(`CREATE TABLE IF NOT EXISTS categories (
+    category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_name TEXT NOT NULL UNIQUE,
+    category_color TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
   
   db.run(`CREATE TABLE IF NOT EXISTS commands (
-    command_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tech_id INTEGER NOT NULL,
-    titel TEXT NOT NULL,
-    command TEXT NOT NULL,
-    beschreibung TEXT,
-    source TEXT,
+    cmd_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_id INTEGER NOT NULL,
+    cmd_title TEXT NOT NULL,
+    cmd TEXT NOT NULL,
+    cmd_description TEXT,
+    cmd_source TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (tech_id) REFERENCES technologies (tech_id) ON DELETE CASCADE
+    modified INTEGER DEFAULT 0,
+    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE CASCADE
   )`);
   
   db.run(`CREATE TABLE IF NOT EXISTS deleted_commands (
-    command_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tech_id INTEGER NOT NULL,
-    tech_name TEXT NOT NULL,
-    tech_color TEXT NOT NULL,
-    titel TEXT NOT NULL,
-    command TEXT NOT NULL,
-    beschreibung TEXT,
-    source TEXT,
+    cmd_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_id INTEGER NOT NULL,
+    category_name TEXT NOT NULL,
+    category_color TEXT NOT NULL,
+    cmd_title TEXT NOT NULL,
+    cmd TEXT NOT NULL,
+    cmd_description TEXT,
+    cmd_source TEXT,
+    modified INTEGER DEFAULT 0,
+    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP,
     deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
