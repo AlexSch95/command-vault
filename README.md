@@ -8,6 +8,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Intelligente Suche**: Finde Befehle schnell über ihren Titel, den Befehl oder die Beschreibung
 - **One-Click Copy**: Kopiere Commands direkt in die Zwischenablage
 - **Lokale Speicherung**: Alle Daten werden lokal in einer SQLite-Datenbank gespeichert
+- **Mehrere Sprachen**: 1-Klick-Sprachänderung (Aktuell Verfügbar: Deutsch, Englisch)
 
 ### 🎨 **Theme & Personalisierung**
 - **Vordefinierte Themes**: Light-, Dark-, Coffee- und Navytheme
@@ -40,10 +41,7 @@ Command Vault ist eine lokale Desktop-Anwendung, die dir dabei hilft, deine häu
 - **Electron** - Cross-Platform Desktop App Framework
 - **Node.js** - JavaScript Runtime
 - **SQLite3** - Lokale Datenbank für Datenpersistierung
-
-### **Architektur**
 - **IPC (Inter-Process Communication)** - Sichere Kommunikation zwischen Main- und Renderer-Process
-- **Modular JavaScript** - ES6 Module-System
 
 ### **Datenbank und User-Theme**
 - **Speicherort**: Die Datenbank, Datenbank-Backups und das User-Theme wird in folgendem Pfad gespeichert
@@ -67,29 +65,6 @@ npm install
 
 # App ohne Build starten
 npm run start
-```
-
-## 📂 Projektstruktur
-
-```
-command-vault/
-├── main.js                   # Electron Main Process
-├── preload.js                # Preload Script für IPC
-├── index.html                # Hauptseite
-├── add-command.html          # Befehle hinzufügen
-├── view-commands.html        # Befehle anzeigen
-├── settings.html             # Einstellungen & Theme-Management
-├── styles.css                # Globale Styles & CSS Variables
-├── index.js                  # Homepage Logic
-├── add-command.js            # Command-Erstellung Logic
-├── view-commands.js          # Command-Anzeige & Filter Logic
-├── settings.js               # Settings & Theme Logic
-├── shared.js                 # Geteilte Utilities (Theme-Loading, Feedback)
-├── node_modules/             # Dependencies (Bootstrap, Icons etc.)
-├── database.db               # SQLite Datenbank (wird automatisch erstellt)
-├── user-theme.json           # Gespeicherte Theme-Einstellungen
-├── package.json              # Node.js Dependencies & Scripts
-└── README.md                 # Dokumentation
 ```
 
 ## 🎯 Verwendung
